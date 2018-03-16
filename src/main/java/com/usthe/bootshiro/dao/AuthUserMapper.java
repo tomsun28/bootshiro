@@ -23,4 +23,6 @@ public interface AuthUserMapper {
     int updateByPrimaryKeySelective(AuthUser record);
 
     int updateByPrimaryKey(AuthUser record);
+
+    String selectUserRoles(String uid);
 }

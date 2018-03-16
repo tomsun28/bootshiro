@@ -41,9 +41,10 @@ public class PasswordRealm extends AuthorizingRealm {
         }
         String appId = (String)authenticationToken.getPrincipal();
         Account account = accountProvider.loadAccount(appId);
+        System.out.println(((PasswordToken) authenticationToken).getPassword()+"==================================");
         // 用盐对密码进行MD5加密
         ((PasswordToken) authenticationToken).setPassword(MD5Util.md5(((PasswordToken) authenticationToken).getPassword()+account.getSalt()));
-
+        System.out.println(((PasswordToken) authenticationToken).getPassword()+"==================================");
         return new SimpleAuthenticationInfo(appId,account.getPassword(),getName());
     }
 

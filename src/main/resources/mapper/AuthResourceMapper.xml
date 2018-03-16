@@ -228,7 +228,7 @@
     select re.URL as url,GROUP_CONCAT(rol.CODE ORDER BY re.URL) as needRoles
     from auth_resource re
     LEFT JOIN auth_role_resource ro on re.id = ro.RESOURCE_ID
-    LEFT JOIN auth_role rol on ro.ROLE_ID = rol.CODE
+    LEFT JOIN auth_role rol on ro.ROLE_ID = rol.ID
     GROUP BY
     re.URL
   </select>

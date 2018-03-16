@@ -1,5 +1,7 @@
 package com.usthe.bootshiro.domain.vo;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ import java.util.Map;
  * @Author tomsun28
  * @Description 前后端统一消息定义协议 Message  之后前后端数据交互都按照规定的类型进行交互
  * {
- *   meta:{"code":code,“message”:message}
+ *   meta:{"code":code,“msg”:message}
  *   data:{....}
  * }
  * @Date 10:48 2018/2/14
@@ -42,6 +44,20 @@ public class Message {
     }
     public Message addData(String key,Object object) {
         this.data.put(key,object);
+        return this;
+    }
+    public Message ok(int statusCode,String statusMsg) {
+        this.addMeta("success",Boolean.TRUE);
+        this.addMeta("code",statusCode);
+        this.addMeta("msg",statusMsg);
+        this.addMeta("timestamp",new Timestamp(new Date().getTime()));
+        return this;
+    }
+    public Message error(int statusCode,String statusMsg) {
+        this.addMeta("success",Boolean.FALSE);
+        this.addMeta("code",statusCode);
+        this.addMeta("msg",statusMsg);
+        this.addMeta("timestamp",new Timestamp(new Date().getTime()));
         return this;
     }
 }

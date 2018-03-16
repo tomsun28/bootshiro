@@ -10,6 +10,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,11 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BootshiroApplicationTests {
 
 	@Autowired
-    private StringRedisTemplate template = new StringRedisTemplate();
+    private StringRedisTemplate template;
 
 	@Test
 	public void contextLoads() {
-		template.opsForValue().set("hahahaha","lallal");
+		template.opsForValue().set("hahahaha","lallal",10, TimeUnit.SECONDS);
+		System.out.println(new Timestamp(new Date().getTime()));
 		Assert.assertEquals("lallal",template.opsForValue().get("hahahaha"));
 	}
 

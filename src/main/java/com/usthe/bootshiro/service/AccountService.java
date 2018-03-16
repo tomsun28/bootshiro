@@ -12,4 +12,5 @@ public interface AccountService {
 
     Account loadAccount(String appId);
     boolean registerAccount(AuthUser account);
+    String loadAccountRole(String appId);
 }

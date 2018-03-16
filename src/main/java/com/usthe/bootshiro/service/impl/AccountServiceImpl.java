@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account loadAccount(String appId) {
         AuthUserExample userExample = new AuthUserExample();
-        userExample.createCriteria().andUsernameEqualTo(appId);
+        userExample.createCriteria().andUidEqualTo(appId);
         AuthUser user = userMapper.selectByExample(userExample).iterator().next();
         return new Account(user.getUsername(), user.getPassword(), user.getSalt());
     }
@@ -31,6 +31,12 @@ public class AccountServiceImpl implements AccountService {
     public boolean registerAccount(AuthUser account) {
 
         return userMapper.insertSelective(account) >=1 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public String loadAccountRole(String appId) {
+
+        return userMapper.selectUserRoles(appId);
     }
 
 

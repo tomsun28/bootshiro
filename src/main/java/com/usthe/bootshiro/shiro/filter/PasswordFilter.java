@@ -52,14 +52,13 @@ public class PasswordFilter extends AccessControlFilter {
         // 判断若为获取登录注册加密动态秘钥请求
         if (isPasswordTokenGet(request)) {
             //动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期5秒用完即丢弃
-            String tokenKey = CommonUtil.getRandomString(8);
-            redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase(),tokenKey,10, TimeUnit.SECONDS);
+            String tokenKey = CommonUtil.getRandomString(16);
+            redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase(),tokenKey,20, TimeUnit.SECONDS);
             // RedisUtil.set("PASSWORD_TOKEN_KEY_"+request.getRemoteHost().toUpperCase(),tokenKey,10);
             // 动态秘钥response返回给前端
             Message message = new Message();
-            message.addMeta("code",200);
-            message.addMeta("msg","return tokenKey success");
-            message.addData("tokenKey",tokenKey);
+            message.ok(1000,"return the tokenKey success")
+                    .addData("tokenKey",tokenKey);
             RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
             return false;
         }
@@ -98,32 +97,34 @@ public class PasswordFilter extends AccessControlFilter {
         String tokenKey = request.getParameter("tokenKey");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("GET")
-                && null != tokenKey && "required".equals(tokenKey);
+                && null != tokenKey && "get".equals(tokenKey);
     }
 
     private boolean isPasswordLoginPost(ServletRequest request) {
-        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String timestamp = request.getParameter("timestamp");
         String methodName = request.getParameter("methodName");
+        String appId = request.getParameter("appId");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
-                && null != username
                 && null != password
                 && null != timestamp
                 && null != methodName
+                && null != appId
                 && methodName.equals("login");
     }
 
     private boolean isAccountRegisterPost(ServletRequest request) {
+        String uid = request.getParameter("uid");
         String methodName = request.getParameter("methodName");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
                 && null != username
-                && null !=password
-                && null !=methodName
+                && null != password
+                && null != methodName
+                && null != uid
                 && methodName.equals("register");
     }
 

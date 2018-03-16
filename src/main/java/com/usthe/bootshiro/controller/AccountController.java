@@ -2,9 +2,13 @@ package com.usthe.bootshiro.controller;
 
 import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.vo.Message;
+import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.util.*;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /* *
  * @Author tomsun28
@@ -26,9 +31,14 @@ import java.util.UUID;
 @RequestMapping("/account")
 public class AccountController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Autowired(required = false)
+    @Qualifier("AccountService")
+    private AccountService accountService;
 
     /* *
      * @Description 这里已经在 passwordFilter 进行了登录认证
@@ -38,12 +48,15 @@ public class AccountController {
     @PostMapping("/login")
     public Message accountLogin(HttpServletRequest request, HttpServletResponse response) {
         Map<String,String> params = RequestResponseUtil.getRequestParamter(request);
-        String appId = params.get("uid");
-        // 根据appId获取其对应所拥有的角色与权限
-
-
+        String appId = params.get("appId");
+        // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
+        String roles = accountService.loadAccountRole(appId);
+        long refreshPeriodTime = 6000000L;
         String jwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
-                "token-server",600000L,null,null, SignatureAlgorithm.HS512);
+                "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
+        // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
+        redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
+
         return new Message().addMeta("code","200").addMeta("msg","return the jwt success")
                 .addMeta("success",Boolean.TRUE).addData("jwt",jwt);
     }
@@ -55,6 +68,7 @@ public class AccountController {
      */
     @PostMapping("/register")
     public Message accountRegister(HttpServletRequest request,HttpServletResponse response) {
+
         Map<String,String> params = RequestResponseUtil.getRequestParamter(request);
         AuthUser authUser = new AuthUser();
         String username = params.get("username");
@@ -67,6 +81,7 @@ public class AccountController {
         }
         authUser.setUid(uid);
         authUser.setUsername(username);
+
         // 从Redis取出密码传输加密解密秘钥
         String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase());
         String realPassword = AESUtil.aesDecode(password,tokenKey);
@@ -95,8 +110,8 @@ public class AccountController {
         }
         authUser.setStatus((byte)1);
 
-        return null;
+        accountService.registerAccount(authUser);
+        return new Message().ok(206,"register success");
     }
-
 
 }
