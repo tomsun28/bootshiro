@@ -2,7 +2,6 @@ package com.usthe.bootshiro.service.impl;
 
 import com.usthe.bootshiro.dao.AuthUserMapper;
 import com.usthe.bootshiro.domain.bo.AuthUser;
-import com.usthe.bootshiro.domain.bo.AuthUserExample;
 import com.usthe.bootshiro.domain.vo.Account;
 import com.usthe.bootshiro.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account loadAccount(String appId) {
-        AuthUserExample userExample = new AuthUserExample();
-        userExample.createCriteria().andUidEqualTo(appId);
-        AuthUser user = userMapper.selectByExample(userExample).iterator().next();
-        return new Account(user.getUsername(), user.getPassword(), user.getSalt());
+//        AuthUserExample userExample = new AuthUserExample();
+//        userExample.createCriteria().andUidEqualTo(appId);
+//        AuthUser user = userMapper.selectByExample(userExample).iterator().next();
+//        return new Account(user.getUsername(), user.getPassword(), user.getSalt());
+        return null;
     }
 
     @Override

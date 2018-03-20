@@ -1,6 +1,8 @@
 package com.usthe.bootshiro.shiro.filter;
 
 
+import com.usthe.bootshiro.service.AccountService;
+import com.usthe.bootshiro.shiro.provider.AccountProvider;
 import com.usthe.bootshiro.shiro.provider.ShiroFilterRulesProvider;
 import com.usthe.bootshiro.shiro.rule.RolePermRule;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -31,11 +33,13 @@ public class ShiroFilterChainManager {
 
     private final ShiroFilterRulesProvider shiroFilterRulesProvider;
     private final StringRedisTemplate redisTemplate;
+    private final AccountService accountService;
 
     @Autowired
-    public ShiroFilterChainManager(ShiroFilterRulesProvider shiroFilterRulesProvider,StringRedisTemplate redisTemplate){
+    public ShiroFilterChainManager(ShiroFilterRulesProvider shiroFilterRulesProvider,StringRedisTemplate redisTemplate,AccountService accountService){
         this.shiroFilterRulesProvider = shiroFilterRulesProvider;
         this.redisTemplate = redisTemplate;
+        this.accountService = accountService;
     }
 
     // 初始化获取过滤链
@@ -45,6 +49,8 @@ public class ShiroFilterChainManager {
         passwordFilter.setRedisTemplate(redisTemplate);
         filters.put("auth",passwordFilter);
         JwtFilter jwtFilter = new JwtFilter();
+        jwtFilter.setRedisTemplate(redisTemplate);
+        jwtFilter.setAccountService(accountService);
         filters.put("jwt",jwtFilter);
         return filters;
     }
@@ -85,7 +91,5 @@ public class ShiroFilterChainManager {
             }catch (Exception e) {
                 LOGGER.error(e.getMessage(),e);
             }
-
     }
-
 }

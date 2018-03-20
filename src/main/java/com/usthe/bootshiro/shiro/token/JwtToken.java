@@ -11,22 +11,24 @@ public class JwtToken implements AuthenticationToken{
 
     private static final long serialVersionUID = 1L;
 
+    private String appId;         //用户的标识
     private String ipHost;        //用户的IP
     private String deviceInfo;    //设备信息
     private String jwt;           //json web token值
 
-    public JwtToken(String ipHost, String deviceInfo, String jwt) {
+    public JwtToken(String ipHost, String deviceInfo, String jwt,String appId) {
         this.ipHost = ipHost;
         this.deviceInfo = deviceInfo;
         this.jwt = jwt;
+        this.appId = appId;
     }
 
     public Object getPrincipal() {
-        return this.jwt;
+        return this.appId;
     }
 
     public Object getCredentials() {
-        return Boolean.TRUE;
+        return this.jwt;
     }
 
     public String getIpHost() {
@@ -51,5 +53,13 @@ public class JwtToken implements AuthenticationToken{
 
     public void setJwt(String jwt) {
         this.jwt = jwt;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

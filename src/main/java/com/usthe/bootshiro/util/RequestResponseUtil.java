@@ -1,10 +1,12 @@
 package com.usthe.bootshiro.util;
 
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -37,22 +39,25 @@ public class RequestResponseUtil {
     }
 
     /* *
-     * @Description 封装response返回
+     * @Description 封装response  统一json返回
      * @Param [encoding, outStr, response]
      * @Return void
      */
-    public static void responseWrite(String encoding, String outStr, ServletResponse response) {
+    public static void responseWrite(String outStr, ServletResponse response) {
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter printWriter = null;
         try {
-            response.setCharacterEncoding(encoding);
-            PrintWriter printWriter = response.getWriter();
+            printWriter = WebUtils.toHttp(response).getWriter();
             printWriter.write(outStr);
-            printWriter.close();
         }catch (Exception e) {
-            LOGGER.warn(e.getMessage(),e);
+            LOGGER.error(e.getMessage(),e);
+        }finally {
+            if (null != printWriter) {
+                printWriter.close();
+            }
         }
-    }
-    public static void responseWrite(String outStr,ServletResponse response) {
-        responseWrite("UTF8",outStr,response);
     }
 
 }

@@ -10,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,21 @@ public class PasswordFilter extends AccessControlFilter {
         if (isPasswordTokenGet(request)) {
             //动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期5秒用完即丢弃
             String tokenKey = CommonUtil.getRandomString(16);
-            redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase(),tokenKey,20, TimeUnit.SECONDS);
-            // RedisUtil.set("PASSWORD_TOKEN_KEY_"+request.getRemoteHost().toUpperCase(),tokenKey,10);
-            // 动态秘钥response返回给前端
-            Message message = new Message();
-            message.ok(1000,"return the tokenKey success")
-                    .addData("tokenKey",tokenKey);
-            RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
+            try {
+                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase(),tokenKey,5, TimeUnit.SECONDS);
+                // 动态秘钥response返回给前端
+                Message message = new Message();
+                message.ok(1000,"issued tokenKey success")
+                        .addData("tokenKey",tokenKey);
+                RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
+
+            }catch (Exception e) {
+                LOGGER.warn(e.getMessage(),e);
+                // 动态秘钥response返回给前端
+                Message message = new Message();
+                message.ok(1000,"issued tokenKey fail");
+                RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
+            }
             return false;
         }
 
@@ -72,11 +81,15 @@ public class PasswordFilter extends AccessControlFilter {
                 //登录认证成功,进入请求派发json web token url资源内
                 return true;
             }catch (AuthenticationException e) {
-                LOGGER.warn(e.getMessage(),e);
+                LOGGER.warn(authenticationToken.getPrincipal()+"::"+e.getMessage(),e);
                 // 返回response告诉客户端认证失败
-                Message message = new Message();
-                message.addMeta("code",400);
-                message.addMeta("msg","login fail");
+                Message message = new Message().error(1002,"login fail");
+                RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
+                return false;
+            }catch (Exception e) {
+                LOGGER.error(e.getMessage(),e);
+                // 返回response告诉客户端认证失败
+                Message message = new Message().error(1002,"login fail");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
                 return false;
             }
@@ -85,10 +98,10 @@ public class PasswordFilter extends AccessControlFilter {
         if (isAccountRegisterPost(request)) {
             return true;
         }
+        // 之后添加对账户的找回等
+
         // response 告知无效请求
-        Message message = new Message();
-        message.addMeta("code",400);
-        message.addMeta("msg","无效的请求！");
+        Message message = new Message().error(1111,"error request");
         RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
         return false;
     }
@@ -129,6 +142,7 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private AuthenticationToken createPasswordToken(ServletRequest request) {
+
         String appId = request.getParameter("appId");
         String password = request.getParameter("password");
         String timestamp = request.getParameter("timestamp");

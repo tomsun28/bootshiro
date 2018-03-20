@@ -1,11 +1,17 @@
 package com.usthe.bootshiro.domain.bo;
 
+import java.util.Date;
+
 public class AuthRoleResource {
     private Integer id;
 
     private Integer roleId;
 
     private Integer resourceId;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -29,5 +35,21 @@ public class AuthRoleResource {
 
     public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

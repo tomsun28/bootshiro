@@ -22,7 +22,6 @@ public class PasswordMatcher implements CredentialsMatcher {
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {
         LOGGER.info(authenticationInfo.getPrincipals().getPrimaryPrincipal()+"======"+authenticationToken.getPrincipal());
-        LOGGER.info(authenticationInfo.getCredentials()+"====="+authenticationToken.getCredentials());
 
         return authenticationToken.getPrincipal().toString().equals(authenticationInfo.getPrincipals().getPrimaryPrincipal().toString())
                 && authenticationToken.getCredentials().toString().equals(authenticationInfo.getCredentials().toString());

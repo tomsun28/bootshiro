@@ -1,11 +1,9 @@
 package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthResource;
-import com.usthe.bootshiro.domain.bo.AuthResourceExample;
-import java.util.List;
-
 import com.usthe.bootshiro.shiro.rule.RolePermRule;
-import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AuthResourceMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,13 +12,7 @@ public interface AuthResourceMapper {
 
     int insertSelective(AuthResource record);
 
-    List<AuthResource> selectByExample(AuthResourceExample example);
-
     AuthResource selectByPrimaryKey(Integer id);
-
-    int updateByExampleSelective(@Param("record") AuthResource record, @Param("example") AuthResourceExample example);
-
-    int updateByExample(@Param("record") AuthResource record, @Param("example") AuthResourceExample example);
 
     int updateByPrimaryKeySelective(AuthResource record);
 

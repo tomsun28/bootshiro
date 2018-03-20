@@ -1,5 +1,8 @@
 package com.usthe.bootshiro.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 
 /* *
@@ -8,6 +11,8 @@ import java.security.MessageDigest;
  * @Date 20:48 2018/2/27
  */
 public class MD5Util {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MD5Util.class);
 
     public static String md5(String content) {
         // 用于加密的字符
@@ -38,6 +43,7 @@ public class MD5Util {
             return new String(str);
 
         }catch (Exception e) {
+            LOGGER.warn(e.getMessage(),e);
             return null;
         }
 

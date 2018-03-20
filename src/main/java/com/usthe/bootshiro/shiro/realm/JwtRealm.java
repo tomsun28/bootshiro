@@ -55,19 +55,19 @@ public class JwtRealm extends AuthorizingRealm {
             return null;
         }
         JwtToken jwtToken = (JwtToken)authenticationToken;
-        String jwt = (String)jwtToken.getPrincipal();
+        String jwt = (String)jwtToken.getCredentials();
         String payload = null;
         try{
             // 预先解析Payload
             // 没有做任何的签名校验
             payload = JsonWebTokenUtil.parseJwtPayload(jwt);
         } catch(MalformedJwtException e){
-            throw new AuthenticationException("令牌格式错误");
+            throw new AuthenticationException("errJwt");     //令牌格式错误
         } catch(Exception e){
-            throw new AuthenticationException("令牌无效");
+            throw new AuthenticationException("errsJwt");    //令牌无效
         }
         if(null == payload){
-            throw new AuthenticationException("令牌无效");
+            throw new AuthenticationException("errJwt");    //令牌无效
         }
         return new SimpleAuthenticationInfo("jwt:"+payload,jwt,this.getName());
     }

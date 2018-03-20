@@ -57,8 +57,7 @@ public class AccountController {
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
         redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
 
-        return new Message().addMeta("code","200").addMeta("msg","return the jwt success")
-                .addMeta("success",Boolean.TRUE).addData("jwt",jwt);
+        return new Message().ok(1003,"issue jwt success").addData("jwt",jwt);
     }
 
     /* *
@@ -76,8 +75,7 @@ public class AccountController {
         String password = params.get("password");
         if (StringUtils.isEmpty(username)||StringUtils.isEmpty(uid)||StringUtils.isEmpty(password)) {
             // 三个必须信息缺一不可,返回注册账号信息缺失
-            return new Message().addMeta("code",430).addMeta("msg","the account is not well")
-                    .addMeta("success",Boolean.FALSE);
+            return new Message().error(2001,"lack account info");
         }
         authUser.setUid(uid);
         authUser.setUsername(username);
@@ -111,7 +109,7 @@ public class AccountController {
         authUser.setStatus((byte)1);
 
         accountService.registerAccount(authUser);
-        return new Message().ok(206,"register success");
+        return new Message().ok(2002,"register success");
     }
 
 }

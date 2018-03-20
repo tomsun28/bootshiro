@@ -16,7 +16,7 @@
 
 
         <!--数据库链接地址账号密码-->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/authcenter" userId="root"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:12345/usthe" userId="root"
                         password="admin">
         </jdbcConnection>
         <!--不知道做什么用的。。。反正贴上来了~-->
@@ -40,8 +40,8 @@
         <!--生成对应表及类名-->
 
         <table tableName="auth_resource" domainObjectName="AuthResource" enableCountByExample="false"
-               enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
@@ -49,15 +49,15 @@
         </table>
 
         <table tableName="auth_role" domainObjectName="AuthRole" enableCountByExample="false"
-               enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
         <table tableName="auth_role_resource" domainObjectName="AuthRoleResource" enableCountByExample="false"
-               enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>
             <property name="useActualColumnNames" value="false"/>
@@ -65,16 +65,16 @@
         </table>
 
         <table tableName="auth_user" domainObjectName="AuthUser" enableCountByExample="false"
-               enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
         <table tableName="auth_user_role" domainObjectName="AuthUserRole" enableCountByExample="false"
-               enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
             <property name="my.isgen.usekeys" value="true"/>
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
