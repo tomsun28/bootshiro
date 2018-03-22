@@ -154,4 +154,14 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectRoleRules" resultType="com.usthe.bootshiro.shiro.rule.RolePermRule">
+    select re.URI as url,GROUP_CONCAT(rol.CODE ORDER BY re.URI) as needRoles
+    from auth_resource re
+    LEFT JOIN auth_role_resource ro on re.id = ro.RESOURCE_ID
+    LEFT JOIN auth_role rol on ro.ROLE_ID = rol.ID
+    GROUP BY
+    re.URI
+  </select>
+
 </mapper>

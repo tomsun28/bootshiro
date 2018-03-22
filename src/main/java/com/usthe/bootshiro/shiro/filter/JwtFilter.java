@@ -12,10 +12,12 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
+
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -116,8 +118,8 @@ public class JwtFilter extends AccessControlFilter {
     }
 
     private boolean isJwtSubmission(ServletRequest request) {
-        String jwt = request.getParameter("jwt");
-        String appId = request.getParameter("appId");
+        String jwt = WebUtils.toHttp(request).getHeader("jwt");
+        String appId = WebUtils.toHttp(request).getHeader("appId");
         return (request instanceof HttpServletRequest)
                 && !StringUtils.isEmpty(jwt)
                 && !StringUtils.isEmpty(appId);

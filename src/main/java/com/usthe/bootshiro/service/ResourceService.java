@@ -1,5 +1,9 @@
 package com.usthe.bootshiro.service;
 
+import com.usthe.bootshiro.domain.bo.AuthResource;
+
+import java.util.List;
+
 /* *
  * @Author tomsun28
  * @Description 
@@ -7,4 +11,5 @@ package com.usthe.bootshiro.service;
  */
 public interface ResourceService {
 
+    List<AuthResource> getAuthorityMenusByAppId(String appId);
 }

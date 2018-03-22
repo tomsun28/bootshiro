@@ -185,4 +185,19 @@
       CREATE_WHERE = #{createWhere,jdbcType=TINYINT}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectUserRoles" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT GROUP_CONCAT(rol.CODE) AS Roles
+    FROM auth_user usr
+    JOIN auth_user_role uro ON usr.uid = uro.USER_ID
+    JOIN auth_role rol ON uro.ROLE_ID = rol.ID
+    WHERE usr.uid = #{uid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUniqueKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT uid, username, password, salt, real_name, avatar, phone, email, sex, status, CREATE_TIME,
+    UPDATE_TIME, CREATE_WHERE
+    FROM auth_user user
+    WHERE user.uid = #{appId,jdbcType=VARCHAR} or user.phone = #{appId,jdbcType=VARCHAR} or user.email = #{appId,jdbcType=VARCHAR}
+  </select>
 </mapper>

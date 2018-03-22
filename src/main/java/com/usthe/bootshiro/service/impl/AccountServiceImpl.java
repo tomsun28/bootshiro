@@ -20,11 +20,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account loadAccount(String appId) {
-//        AuthUserExample userExample = new AuthUserExample();
-//        userExample.createCriteria().andUidEqualTo(appId);
-//        AuthUser user = userMapper.selectByExample(userExample).iterator().next();
-//        return new Account(user.getUsername(), user.getPassword(), user.getSalt());
-        return null;
+        AuthUser user = userMapper.selectByUniqueKey(appId);
+        return new Account(user.getUsername(),user.getPassword(),user.getSalt());
     }
 
     @Override

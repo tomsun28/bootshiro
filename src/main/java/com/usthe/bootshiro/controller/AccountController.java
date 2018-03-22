@@ -5,6 +5,7 @@ import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.util.*;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping("/account")
-public class AccountController {
+public class AccountController extends BasicAction{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
@@ -45,6 +46,7 @@ public class AccountController {
      * @Param [] 登录签发 JWT
      * @Return java.lang.String
      */
+    @ApiOperation(value = "用户登录",notes = "POST用户登录签发JWT")
     @PostMapping("/login")
     public Message accountLogin(HttpServletRequest request, HttpServletResponse response) {
         Map<String,String> params = RequestResponseUtil.getRequestParamter(request);
@@ -65,6 +67,7 @@ public class AccountController {
      * @Param [request, response]
      * @Return com.usthe.bootshiro.domain.vo.Message
      */
+    @ApiOperation(value = "用户注册",notes = "POST用户注册")
     @PostMapping("/register")
     public Message accountRegister(HttpServletRequest request,HttpServletResponse response) {
 

@@ -1,5 +1,9 @@
 package com.usthe.bootshiro.service;
 
+import com.usthe.bootshiro.domain.bo.AuthUser;
+
+import java.util.List;
+
 /* *
  * @Author tomsun28
  * @Description 
@@ -8,4 +12,10 @@ package com.usthe.bootshiro.service;
 public interface UserService {
 
     String loadAccountRole(String appId);
+
+    List<AuthUser> getUserList();
+
+    List<AuthUser> getUserListByRoleId(Integer roleId);
+
+    boolean authorityUserRole(String appId, int roleId);
 }
