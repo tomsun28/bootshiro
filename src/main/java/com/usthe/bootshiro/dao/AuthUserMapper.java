@@ -2,6 +2,8 @@ package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthUser;
 
+import java.util.List;
+
 public interface AuthUserMapper {
     int deleteByPrimaryKey(String uid);
 
@@ -18,4 +20,9 @@ public interface AuthUserMapper {
     String selectUserRoles(String appId);
 
     AuthUser selectByUniqueKey(String appId);
+
+    List<AuthUser> selectUserList();
+
+    List<AuthUser> selectUserListByRoleId(Integer roleId);
+
 }

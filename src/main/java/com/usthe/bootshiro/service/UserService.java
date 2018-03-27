@@ -18,4 +18,6 @@ public interface UserService {
     List<AuthUser> getUserListByRoleId(Integer roleId);
 
     boolean authorityUserRole(String appId, int roleId);
+
+    boolean deleteAuthorityUserRole(String uid,int roleId);
 }

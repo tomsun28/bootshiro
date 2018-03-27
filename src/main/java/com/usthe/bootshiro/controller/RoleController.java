@@ -41,7 +41,7 @@ public class RoleController extends BasicAction {
         List<AuthUser> users = userService.getUserListByRoleId(roleId);
         users.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
-        return new Message().ok(0000,"return users success").addData("pageInfo",pageInfo);
+        return new Message().ok(0000,"return users success").addData("data",pageInfo);
     }
 
     @ApiOperation(value = "授权资源给角色",httpMethod = "POST")

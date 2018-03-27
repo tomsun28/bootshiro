@@ -14,4 +14,6 @@ public interface AuthUserRoleMapper {
     int updateByPrimaryKeySelective(AuthUserRole record);
 
     int updateByPrimaryKey(AuthUserRole record);
+
+    int deleteByUniqueKey(AuthUserRole record);
 }

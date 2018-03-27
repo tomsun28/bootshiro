@@ -19,4 +19,6 @@ public interface AuthResourceMapper {
     int updateByPrimaryKey(AuthResource record);
 
     List<RolePermRule> selectRoleRules();
+
+    List<AuthResource> selectAuthorityMenusByUid(String appId);
 }

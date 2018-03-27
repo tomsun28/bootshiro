@@ -200,4 +200,17 @@
     FROM auth_user user
     WHERE user.uid = #{appId,jdbcType=VARCHAR} or user.phone = #{appId,jdbcType=VARCHAR} or user.email = #{appId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectUserList" resultMap="BaseResultMap">
+    select uid,username,"" as password,"" as salt,real_name,avatar,phone,email,sex,status,create_time,update_time,create_where
+    from auth_user
+  </select>
+
+  <select id="selectUserListByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select b.uid,b.username,"" as password,"" as salt,b.real_name,b.avatar,b.phone,b.email,b.sex,b.status,b.create_time,b.update_time,b.create_where
+    from auth_user_role a
+    join auth_user b on a.user_id = b.uid
+    where a.role_id = #{roleId,jdbcType=Integer}
+  </select>
+
 </mapper>

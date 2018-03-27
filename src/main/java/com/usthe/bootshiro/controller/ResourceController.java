@@ -35,9 +35,9 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "获取用户被授权菜单",notes = "通过appId获取对应用户被授权的菜单列表,获取完整菜单树形结构")
     @GetMapping("authorityMenu/get")
     public Message getAuthorityMenu(HttpServletRequest request) {
-        String appId = request.getParameter("appId");
+        String uid = request.getParameter("uid");
         List<MenuTreeNode> treeNodes = new ArrayList<>();
-        List<AuthResource> resources = resourceService.getAuthorityMenusByAppId(appId);
+        List<AuthResource> resources = resourceService.getAuthorityMenusByUid(uid);
 
         for (AuthResource resource : resources) {
             MenuTreeNode node = new MenuTreeNode();

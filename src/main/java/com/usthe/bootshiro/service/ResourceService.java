@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface ResourceService {
 
-    List<AuthResource> getAuthorityMenusByAppId(String appId);
+    List<AuthResource> getAuthorityMenusByUid(String appId);
 }

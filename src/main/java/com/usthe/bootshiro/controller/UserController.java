@@ -51,19 +51,28 @@ public class UserController extends BasicAction{
 
         PageHelper.startPage(start,limit);
         List<AuthUser> authUsers = userService.getUserList();
-        authUsers.forEach(user->user.setPassword(null));
+//        authUsers.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(authUsers);
         return new Message().ok(0000,"return user list success").addData("pageInfo",pageInfo);
     }
 
-    @ApiOperation(value = "给用户添加角色",httpMethod = "POST")
+    @ApiOperation(value = "给用户授权添加角色",httpMethod = "POST")
     @PostMapping("/authority/role")
     public Message authorityUserRole(HttpServletRequest request) {
         Map<String,String> map = getRequestParameter(request);
-        String appId = map.get("appId");
+        String uid = map.get("uid");
         int roleId = Integer.valueOf(map.get("roleId"));
-        boolean flag = userService.authorityUserRole(appId,roleId);
+        boolean flag = userService.authorityUserRole(uid,roleId);
         return flag ? new Message().ok(0000,"authority success") : new Message().error(1111,"authority error");
+    }
+
+    @ApiOperation(value = "删除已经授权的用户角色",httpMethod = "DELETE")
+    @DeleteMapping("/authority/role")
+    public Message deleteAuthorityUserRole(HttpServletRequest request) {
+        Map<String,String> map = getRequestParameter(request);
+        String uid = map.get("uid");
+        int roleId = Integer.valueOf(map.get("roleId"));
+        return userService.deleteAuthorityUserRole(uid,roleId) ? new Message().ok(0000,"delete success") : new Message().error(1111,"delete fail");
     }
 
 

@@ -26,7 +26,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean registerAccount(AuthUser account) {
-
         return userMapper.insertSelective(account) >=1 ? Boolean.TRUE : Boolean.FALSE;
     }
 

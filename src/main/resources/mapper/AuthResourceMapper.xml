@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.usthe.bootshiro.dao.AuthResourceMapper">
-  <resultMap id="BaseResultMap" type="com.usthe.bootshiro.domain.bo.AuthResource">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="CODE" jdbcType="VARCHAR" property="code" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="PARENT_ID" jdbcType="INTEGER" property="parentId" />
-    <result column="URI" jdbcType="VARCHAR" property="uri" />
-    <result column="TYPE" jdbcType="SMALLINT" property="type" />
-    <result column="METHOD" jdbcType="VARCHAR" property="method" />
-    <result column="ICON" jdbcType="VARCHAR" property="icon" />
-    <result column="STATUS" jdbcType="SMALLINT" property="status" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.usthe.bootshiro.domain.bo.AuthResource">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PARENT_ID" jdbcType="INTEGER" property="parentId"/>
+        <result column="URI" jdbcType="VARCHAR" property="uri"/>
+        <result column="TYPE" jdbcType="SMALLINT" property="type"/>
+        <result column="METHOD" jdbcType="VARCHAR" property="method"/>
+        <result column="ICON" jdbcType="VARCHAR" property="icon"/>
+        <result column="STATUS" jdbcType="SMALLINT" property="status"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     ID, CODE, NAME, PARENT_ID, URI, TYPE, METHOD, ICON, STATUS, CREATE_TIME, UPDATE_TIME
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from auth_resource
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auth_resource
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from auth_resource
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.usthe.bootshiro.domain.bo.AuthResource" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.usthe.bootshiro.domain.bo.AuthResource"
+            useGeneratedKeys="true">
     insert into auth_resource (CODE, NAME, PARENT_ID, 
       URI, TYPE, METHOD, 
       ICON, STATUS, CREATE_TIME, 
@@ -37,110 +38,111 @@
       #{icon,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.usthe.bootshiro.domain.bo.AuthResource" useGeneratedKeys="true">
-    insert into auth_resource
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="code != null">
-        CODE,
-      </if>
-      <if test="name != null">
-        NAME,
-      </if>
-      <if test="parentId != null">
-        PARENT_ID,
-      </if>
-      <if test="uri != null">
-        URI,
-      </if>
-      <if test="type != null">
-        TYPE,
-      </if>
-      <if test="method != null">
-        METHOD,
-      </if>
-      <if test="icon != null">
-        ICON,
-      </if>
-      <if test="status != null">
-        STATUS,
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME,
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="uri != null">
-        #{uri,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=SMALLINT},
-      </if>
-      <if test="method != null">
-        #{method,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=SMALLINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.usthe.bootshiro.domain.bo.AuthResource">
-    update auth_resource
-    <set>
-      <if test="code != null">
-        CODE = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        PARENT_ID = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="uri != null">
-        URI = #{uri,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        TYPE = #{type,jdbcType=SMALLINT},
-      </if>
-      <if test="method != null">
-        METHOD = #{method,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        ICON = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        STATUS = #{status,jdbcType=SMALLINT},
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.usthe.bootshiro.domain.bo.AuthResource">
+    <insert id="insertSelective" keyColumn="ID" keyProperty="id"
+            parameterType="com.usthe.bootshiro.domain.bo.AuthResource" useGeneratedKeys="true">
+        insert into auth_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                CODE,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="uri != null">
+                URI,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="method != null">
+                METHOD,
+            </if>
+            <if test="icon != null">
+                ICON,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="uri != null">
+                #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.usthe.bootshiro.domain.bo.AuthResource">
+        update auth_resource
+        <set>
+            <if test="code != null">
+                CODE = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="uri != null">
+                URI = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="method != null">
+                METHOD = #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                ICON = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.usthe.bootshiro.domain.bo.AuthResource">
     update auth_resource
     set CODE = #{code,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
@@ -155,13 +157,21 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectRoleRules" resultType="com.usthe.bootshiro.shiro.rule.RolePermRule">
+    <select id="selectRoleRules" resultType="com.usthe.bootshiro.shiro.rule.RolePermRule">
     select re.URI as url,GROUP_CONCAT(rol.CODE ORDER BY re.URI) as needRoles
     from auth_resource re
     LEFT JOIN auth_role_resource ro on re.id = ro.RESOURCE_ID
     LEFT JOIN auth_role rol on ro.ROLE_ID = rol.ID
     GROUP BY
     re.URI
+  </select>
+
+    <select id="selectAuthorityMenusByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select d.* from auth_user a
+    join auth_user_role b on a.uid = b.user_id
+    join auth_role_resource c on b.role_id = c.role_id
+    join auth_resource d on c.resource_id = d.id
+    where a.uid = #{uid,jdbcType=INTEGER} and d.type = 1 and d.status = 1
   </select>
 
 </mapper>
