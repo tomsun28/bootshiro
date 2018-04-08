@@ -27,4 +27,8 @@ public interface ResourceService {
     List<AuthResource> getApiList();
 
     List<AuthResource> getApiListByTeamId(Integer teamId);
+
+    List<AuthResource> getAuthorityApisByRoleId(Integer roleId);
+
+    List<AuthResource> getAuthorityMenusByRoleId(Integer roleId);
 }

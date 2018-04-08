@@ -29,4 +29,8 @@ public interface AuthResourceMapper {
     List<AuthResource> selectApiList();
 
     List<AuthResource> selectApiListByTeamId(Integer teamId);
+
+    List<AuthResource> selectApisByRoleId(Integer roleId);
+
+    List<AuthResource> selectMenusByRoleId(Integer roleId);
 }

@@ -1,5 +1,7 @@
 package com.usthe.bootshiro.service;
 
+import com.usthe.bootshiro.domain.bo.AuthRole;
+
 /* *
  * @Author tomsun28
  * @Description 
@@ -9,4 +11,12 @@ public interface RoleService {
 
 
     boolean authorityRoleResource(int roleId, int resourceId);
+
+    boolean addRole(AuthRole role);
+
+    boolean updateRole(AuthRole role);
+
+    boolean deleteRoleByRoleId(Integer roleId);
+
+    boolean deleteAuthorityRoleResource(Integer roleId, Integer resourceId);
 }

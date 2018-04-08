@@ -84,4 +84,8 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteByUniqueKey" parameterType="java.lang.Integer">
+    delete from auth_role_resource au
+    where au.role_id = #{roleId,jdbcType=INTEGER} and au.resource_id = #{resourceId,jdbcType=INTEGER}
+  </delete>
 </mapper>

@@ -51,7 +51,7 @@ public class UserController extends BasicAction{
 
         PageHelper.startPage(start,limit);
         List<AuthUser> authUsers = userService.getUserList();
-//        authUsers.forEach(user->user.setPassword(null));
+        authUsers.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(authUsers);
         return new Message().ok(6666,"return user list success").addData("pageInfo",pageInfo);
     }
@@ -67,11 +67,8 @@ public class UserController extends BasicAction{
     }
 
     @ApiOperation(value = "删除已经授权的用户角色",httpMethod = "DELETE")
-    @DeleteMapping("/authority/role")
-    public Message deleteAuthorityUserRole(HttpServletRequest request) {
-        Map<String,String> map = getRequestParameter(request);
-        String uid = map.get("uid");
-        int roleId = Integer.valueOf(map.get("roleId"));
+    @DeleteMapping("/authority/role/{uid}/{roleId}")
+    public Message deleteAuthorityUserRole(@PathVariable String uid, @PathVariable Integer roleId) {
         return userService.deleteAuthorityUserRole(uid,roleId) ? new Message().ok(6666,"delete success") : new Message().error(1111,"delete fail");
     }
 

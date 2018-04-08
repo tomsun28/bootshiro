@@ -195,4 +195,17 @@
         where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type = 2;
     </select>
 
+    <select id="selectApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.* from auth_resource a
+        join auth_role_resource b on a.id = b.resource_id
+        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 2;
+    </select>
+
+    <select id="selectMenusByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.* from auth_resource a
+        join auth_role_resource b on a.id = b.resource_id
+        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 1;
+    </select>
+
+
 </mapper>

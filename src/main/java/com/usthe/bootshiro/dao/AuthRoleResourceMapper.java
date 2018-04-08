@@ -14,4 +14,6 @@ public interface AuthRoleResourceMapper {
     int updateByPrimaryKeySelective(AuthRoleResource record);
 
     int updateByPrimaryKey(AuthRoleResource record);
+
+    int deleteByUniqueKey(Integer roleId, Integer resourceId);
 }

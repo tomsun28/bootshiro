@@ -2,8 +2,11 @@ package com.usthe.bootshiro.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.usthe.bootshiro.domain.bo.AuthResource;
+import com.usthe.bootshiro.domain.bo.AuthRole;
 import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.vo.Message;
+import com.usthe.bootshiro.service.ResourceService;
 import com.usthe.bootshiro.service.RoleService;
 import com.usthe.bootshiro.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -33,15 +36,37 @@ public class RoleController extends BasicAction {
     @Autowired
     private UserService userService;
 
+    private ResourceService resourceService;
+
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色为roleId对应用户",httpMethod = "GET")
-    @GetMapping("/users/{roleId}/{start}/{limit}")
-    public Message getUserListByRoleId(@PathVariable Integer roleId, Integer start, Integer limit) {
-        PageHelper.startPage(start,limit);
+    @GetMapping("user/{roleId}/{currentPage}/{pageSize}")
+    public Message getUserListByRoleId(@PathVariable Integer roleId, Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage,pageSize);
         List<AuthUser> users = userService.getUserListByRoleId(roleId);
         users.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
         return new Message().ok(6666,"return users success").addData("data",pageInfo);
+    }
+
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色(roleId)所被授权的API资源")
+    @GetMapping("api/{roleId}/{currentPage}/{pageSize}")
+    public Message getRestApiByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthResource> authResources = resourceService.getAuthorityApisByRoleId(roleId);
+        PageInfo pageInfo = new PageInfo(authResources);
+        return new Message().ok(6666, "return api success").addData("data", pageInfo);
+    }
+
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色(roleId)所被授权的menu资源")
+    @GetMapping("menu/{roleId}/{currentPage}/{pageSize}")
+    public Message getMenusByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthResource> authResources = resourceService.getAuthorityMenusByRoleId(roleId);
+        PageInfo pageInfo = new PageInfo(authResources);
+        return new Message().ok(6666, "return api success").addData("data", pageInfo);
     }
 
     @ApiOperation(value = "授权资源给角色",httpMethod = "POST")
@@ -52,6 +77,49 @@ public class RoleController extends BasicAction {
         int resourceId = Integer.valueOf(map.get("resourceId"));
         boolean flag = roleService.authorityRoleResource(roleId,resourceId);
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
+    }
+
+    @ApiOperation(value = "删除对应的角色的授权资源",httpMethod = "DELETE")
+    @DeleteMapping("/authority/resource/{roleId}/{resourceId}")
+    public Message deleteAuthorityRoleResource(@PathVariable Integer roleId, @PathVariable Integer resourceId ) {
+        boolean flag = roleService.deleteAuthorityRoleResource(roleId,resourceId);
+        return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
+    }
+
+    @ApiOperation(value = "添加角色", httpMethod = "POST")
+    @PostMapping("")
+    public Message addRole(@RequestBody AuthRole role) {
+        LOGGER.info(role.toString());
+        boolean flag = roleService.addRole(role);
+        if (flag) {
+            return new Message().ok(6666, "add role success");
+        } else {
+            return new Message().error(111, "add role fail");
+        }
+    }
+
+    @ApiOperation(value = "更新角色", httpMethod = "PUT")
+    @PutMapping("")
+    public Message updateRole(@RequestBody AuthRole role) {
+        LOGGER.info(role.toString());
+        boolean flag = roleService.updateRole(role);
+        if (flag) {
+            return new Message().ok(6666, "update success");
+        } else {
+            return new Message().error(1111, "update fail");
+        }
+    }
+
+    @ApiOperation(value = "根据角色ID删除角色", httpMethod = "DELETE")
+    @DeleteMapping("{roleId}")
+    public Message deleteRoleByRoleId(@PathVariable Integer roleId) {
+        LOGGER.info(roleId.toString() + "==========");
+        boolean flag = roleService.deleteRoleByRoleId(roleId);
+        if (flag) {
+            return new Message().ok(6666, "delete success");
+        } else {
+            return new Message().error(1111, "delete fail");
+        }
     }
 
 

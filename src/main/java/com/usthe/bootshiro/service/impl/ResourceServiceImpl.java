@@ -66,4 +66,14 @@ public class ResourceServiceImpl implements ResourceService {
         return authResourceMapper.selectApiListByTeamId(teamId);
     }
 
+    @Override
+    public List<AuthResource> getAuthorityApisByRoleId(Integer roleId) {
+        return authResourceMapper.selectApisByRoleId(roleId);
+    }
+
+    @Override
+    public List<AuthResource> getAuthorityMenusByRoleId(Integer roleId) {
+        return authResourceMapper.selectMenusByRoleId(roleId);
+    }
+
 }
