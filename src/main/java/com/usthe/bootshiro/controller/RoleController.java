@@ -41,7 +41,7 @@ public class RoleController extends BasicAction {
         List<AuthUser> users = userService.getUserListByRoleId(roleId);
         users.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
-        return new Message().ok(0000,"return users success").addData("data",pageInfo);
+        return new Message().ok(6666,"return users success").addData("data",pageInfo);
     }
 
     @ApiOperation(value = "授权资源给角色",httpMethod = "POST")
@@ -51,7 +51,7 @@ public class RoleController extends BasicAction {
         int roleId = Integer.valueOf(map.get("roleId"));
         int resourceId = Integer.valueOf(map.get("resourceId"));
         boolean flag = roleService.authorityRoleResource(roleId,resourceId);
-        return flag ? new Message().ok(0000,"authority success") : new Message().error(1111,"authority error");
+        return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
     }
 
 

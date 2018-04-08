@@ -210,7 +210,7 @@
     select b.uid,b.username,"" as password,"" as salt,b.real_name,b.avatar,b.phone,b.email,b.sex,b.status,b.create_time,b.update_time,b.create_where
     from auth_user_role a
     join auth_user b on a.user_id = b.uid
-    where a.role_id = #{roleId,jdbcType=Integer}
+    where a.role_id = #{roleId}
   </select>
 
 </mapper>

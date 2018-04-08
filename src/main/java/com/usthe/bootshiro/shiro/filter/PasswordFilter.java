@@ -108,6 +108,7 @@ public class PasswordFilter extends AccessControlFilter {
 
     private boolean isPasswordTokenGet(ServletRequest request) {
         String tokenKey = request.getParameter("tokenKey");
+
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("GET")
                 && null != tokenKey && "get".equals(tokenKey);

@@ -59,7 +59,7 @@ public class JsonWebTokenUtil {
         jwtBuilder.setIssuedAt(new Date(currentTimeMillis));
         // 设置到期时间
         if (null != period) {
-            jwtBuilder.setExpiration(new Date(currentTimeMillis+period));
+            jwtBuilder.setExpiration(new Date(currentTimeMillis+period*1000));
         }
         if (!StringUtils.isEmpty(roles)) {
             jwtBuilder.claim("roles",roles);

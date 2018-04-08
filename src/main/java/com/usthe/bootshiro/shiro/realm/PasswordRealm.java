@@ -41,9 +41,14 @@ public class PasswordRealm extends AuthorizingRealm {
         }
         String appId = (String)authenticationToken.getPrincipal();
         Account account = accountProvider.loadAccount(appId);
-        // 用盐对密码进行MD5加密
-        ((PasswordToken) authenticationToken).setPassword(MD5Util.md5(((PasswordToken) authenticationToken).getPassword()+account.getSalt()));
-        return new SimpleAuthenticationInfo(appId,account.getPassword(),getName());
+        if (account != null) {
+            // 用盐对密码进行MD5加密
+            ((PasswordToken) authenticationToken).setPassword(MD5Util.md5(((PasswordToken) authenticationToken).getPassword()+account.getSalt()));
+            return new SimpleAuthenticationInfo(appId,account.getPassword(),getName());
+        } else {
+            return new SimpleAuthenticationInfo(appId,"",getName());
+        }
+
     }
 
     public void setAccountProvider(AccountProvider accountProvider) {

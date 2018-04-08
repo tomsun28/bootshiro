@@ -20,4 +20,6 @@ public interface UserService {
     boolean authorityUserRole(String appId, int roleId);
 
     boolean deleteAuthorityUserRole(String uid,int roleId);
+
+    AuthUser getUserByAppId(String appId);
 }

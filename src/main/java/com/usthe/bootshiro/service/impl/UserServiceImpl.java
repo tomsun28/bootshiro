@@ -59,4 +59,10 @@ public class UserServiceImpl implements UserService {
         authUserRole.setRoleId(roleId);
         return authUserRoleMapper.deleteByUniqueKey(authUserRole) == 1? Boolean.TRUE : Boolean.FALSE;
     }
+
+    @Override
+    public AuthUser getUserByAppId(String appId) {
+
+        return userMapper.selectByUniqueKey(appId);
+    }
 }

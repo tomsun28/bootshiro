@@ -162,6 +162,7 @@
     from auth_resource re
     LEFT JOIN auth_role_resource ro on re.id = ro.RESOURCE_ID
     LEFT JOIN auth_role rol on ro.ROLE_ID = rol.ID
+    where re.type = 2
     GROUP BY
     re.URI
   </select>
@@ -171,7 +172,27 @@
     join auth_user_role b on a.uid = b.user_id
     join auth_role_resource c on b.role_id = c.role_id
     join auth_resource d on c.resource_id = d.id
-    where a.uid = #{uid,jdbcType=INTEGER} and d.type = 1 and d.status = 1
+    where a.uid = #{uid,jdbcType=VARCHAR} and d.type = 1 and d.status = 1
   </select>
+
+    <select id="selectMenus" resultMap="BaseResultMap">
+        select a.* from auth_resource a
+        where a.type = 1;
+    </select>
+
+    <select id="selectApiTeamList" resultMap="BaseResultMap">
+        select * from auth_resource a
+        where a.type = 3;
+    </select>
+
+    <select id="selectApiList" resultMap="BaseResultMap">
+        select a.* from auth_resource a
+        where a.type = 2;
+    </select>
+
+    <select id="selectApiListByTeamId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.* from auth_resource a
+        where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type = 2;
+    </select>
 
 </mapper>

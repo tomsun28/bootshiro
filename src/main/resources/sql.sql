@@ -225,7 +225,7 @@ CREATE TABLE `auth_resource` (
   `NAME` varchar(20) DEFAULT NULL COMMENT '资源描述',
   `PARENT_ID` int(11) DEFAULT NULL COMMENT '父资源编码->菜单',
   `URI` varchar(100) DEFAULT NULL COMMENT '访问地址URL',
-  `TYPE` smallint(4) DEFAULT NULL COMMENT '类型 1:菜单menu 2:资源element',
+  `TYPE` smallint(4) DEFAULT NULL COMMENT '类型 1:菜单menu 2:资源element(rest-api) 3:资源分类',
   `METHOD` varchar(10) DEFAULT NULL COMMENT '访问方式 GET POST PUT DELETE PATCH',
   `ICON` varchar(100) DEFAULT NULL COMMENT '图标',
   `STATUS` smallint(4) DEFAULT '1' COMMENT '状态   1:正常、9：禁用',

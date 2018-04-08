@@ -3,6 +3,7 @@ package com.usthe.bootshiro.controller;
 import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.AccountService;
+import com.usthe.bootshiro.service.UserService;
 import com.usthe.bootshiro.util.*;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,9 @@ public class AccountController extends BasicAction{
     @Qualifier("AccountService")
     private AccountService accountService;
 
+    @Autowired
+    private UserService userService;
+
     /* *
      * @Description 这里已经在 passwordFilter 进行了登录认证
      * @Param [] 登录签发 JWT
@@ -53,13 +57,15 @@ public class AccountController extends BasicAction{
         String appId = params.get("appId");
         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
         String roles = accountService.loadAccountRole(appId);
-        long refreshPeriodTime = 6000000L;
+        // 时间以秒计算,token有效刷新时间是token有效过期时间的2倍
+        long refreshPeriodTime = 36000L;
         String jwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
                 "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
         redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
+        AuthUser authUser = userService.getUserByAppId(appId);
 
-        return new Message().ok(1003,"issue jwt success").addData("jwt",jwt);
+        return new Message().ok(1003,"issue jwt success").addData("jwt",jwt).addData("user",authUser);
     }
 
     /* *

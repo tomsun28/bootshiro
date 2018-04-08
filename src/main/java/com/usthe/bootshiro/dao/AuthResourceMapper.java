@@ -21,4 +21,12 @@ public interface AuthResourceMapper {
     List<RolePermRule> selectRoleRules();
 
     List<AuthResource> selectAuthorityMenusByUid(String appId);
+
+    List<AuthResource> selectMenus();
+
+    List<AuthResource> selectApiTeamList();
+
+    List<AuthResource> selectApiList();
+
+    List<AuthResource> selectApiListByTeamId(Integer teamId);
 }

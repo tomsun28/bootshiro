@@ -45,7 +45,8 @@ public class JwtFilter extends AccessControlFilter {
             AuthenticationToken token = createJwtToken(servletRequest);
             try {
                 subject.login(token);
-                return this.checkRoles(subject,mappedValue) && this.checkPerms(subject,mappedValue);
+//                return this.checkRoles(subject,mappedValue) && this.checkPerms(subject,mappedValue);
+                return this.checkRoles(subject,mappedValue);
             }catch (AuthenticationException e) {
                 LOGGER.info(e.getMessage(),e);
                 // 如果是JWT过期
@@ -55,14 +56,14 @@ public class JwtFilter extends AccessControlFilter {
                     // refresh也过期则告知客户端JWT时间过期重新认证
 
                     // 当存储在redis的JWT没有过期，即refresh time 没有过期
-                    String appId = servletRequest.getParameter("appId");
-                    String jwt = servletRequest.getParameter("jwt");
+                    String appId = WebUtils.toHttp(servletRequest).getHeader("appId");
+                    String jwt = WebUtils.toHttp(servletRequest).getHeader("authorization");
                     String refreshJwt = redisTemplate.opsForValue().get("JWT-SESSION-"+appId);
                     if (null != refreshJwt && refreshJwt.equals(jwt)) {
                         // 重新申请新的JWT
                         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
                         String roles = accountService.loadAccountRole(appId);
-                        long refreshPeriodTime = 360000000L;  //100 hours
+                        long refreshPeriodTime = 36000L;  //seconds为单位,10 hours
                         String newJwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
                                 "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
@@ -118,7 +119,7 @@ public class JwtFilter extends AccessControlFilter {
     }
 
     private boolean isJwtSubmission(ServletRequest request) {
-        String jwt = WebUtils.toHttp(request).getHeader("jwt");
+        String jwt = WebUtils.toHttp(request).getHeader("authorization");
         String appId = WebUtils.toHttp(request).getHeader("appId");
         return (request instanceof HttpServletRequest)
                 && !StringUtils.isEmpty(jwt)
@@ -126,10 +127,10 @@ public class JwtFilter extends AccessControlFilter {
     }
 
     private AuthenticationToken createJwtToken(ServletRequest request) {
-        String appId = request.getParameter("appId");
+        String appId = WebUtils.toHttp(request).getHeader("appId");
         String ipHost = request.getRemoteAddr();
-        String jwt = request.getParameter("jwt");
-        String deviceInfo = request.getParameter("deviceInfo");
+        String jwt = WebUtils.toHttp(request).getHeader("authorization");
+        String deviceInfo = WebUtils.toHttp(request).getHeader("deviceInfo");
 
         return new JwtToken(ipHost,deviceInfo,jwt,appId);
     }
