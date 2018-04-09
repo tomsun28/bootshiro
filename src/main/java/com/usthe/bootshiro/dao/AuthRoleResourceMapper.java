@@ -1,6 +1,7 @@
 package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthRoleResource;
+import org.apache.ibatis.annotations.Param;
 
 public interface AuthRoleResourceMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,5 +16,5 @@ public interface AuthRoleResourceMapper {
 
     int updateByPrimaryKey(AuthRoleResource record);
 
-    int deleteByUniqueKey(Integer roleId, Integer resourceId);
+    int deleteByUniqueKey(@Param("roleId") Integer roleId,@Param("resourceId") Integer resourceId);
 }

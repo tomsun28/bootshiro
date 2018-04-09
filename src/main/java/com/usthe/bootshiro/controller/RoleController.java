@@ -36,18 +36,21 @@ public class RoleController extends BasicAction {
     @Autowired
     private UserService userService;
 
+    @Autowired
     private ResourceService resourceService;
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色为roleId对应用户",httpMethod = "GET")
     @GetMapping("user/{roleId}/{currentPage}/{pageSize}")
-    public Message getUserListByRoleId(@PathVariable Integer roleId, Integer currentPage, Integer pageSize) {
+    public Message getUserListByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
         PageHelper.startPage(currentPage,pageSize);
         List<AuthUser> users = userService.getUserListByRoleId(roleId);
         users.forEach(user->user.setPassword(null));
         PageInfo pageInfo = new PageInfo(users);
         return new Message().ok(6666,"return users success").addData("data",pageInfo);
     }
+
+    
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色(roleId)所被授权的API资源")
@@ -84,6 +87,17 @@ public class RoleController extends BasicAction {
     public Message deleteAuthorityRoleResource(@PathVariable Integer roleId, @PathVariable Integer resourceId ) {
         boolean flag = roleService.deleteAuthorityRoleResource(roleId,resourceId);
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
+    }
+
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色LIST", httpMethod = "GET")
+    @GetMapping("{currentPage}/{pageSize}")
+    public Message getRoles(@PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthRole> roles = roleService.getRoleList();
+        PageInfo pageInfo = new PageInfo(roles);
+        return new Message().ok(6666, "return roles success").addData("data", pageInfo);
     }
 
     @ApiOperation(value = "添加角色", httpMethod = "POST")

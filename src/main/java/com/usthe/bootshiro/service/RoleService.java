@@ -2,6 +2,8 @@ package com.usthe.bootshiro.service;
 
 import com.usthe.bootshiro.domain.bo.AuthRole;
 
+import java.util.List;
+
 /* *
  * @Author tomsun28
  * @Description 
@@ -19,4 +21,6 @@ public interface RoleService {
     boolean deleteRoleByRoleId(Integer roleId);
 
     boolean deleteAuthorityRoleResource(Integer roleId, Integer resourceId);
+
+    List<AuthRole> getRoleList();
 }

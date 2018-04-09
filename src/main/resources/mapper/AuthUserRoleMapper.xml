@@ -85,6 +85,6 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <delete id="deleteByUniqueKey" parameterType="com.usthe.bootshiro.domain.bo.AuthUserRole">
-    delete from auth_user_role t where t.user_id = #{userId} and t.role_id = #{roleId}
+    delete from auth_user_role  where user_id = #{userId} and role_id = #{roleId}
   </delete>
 </mapper>

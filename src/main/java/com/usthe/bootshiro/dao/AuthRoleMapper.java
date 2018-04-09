@@ -2,6 +2,8 @@ package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthRole;
 
+import java.util.List;
+
 public interface AuthRoleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface AuthRoleMapper {
     int updateByPrimaryKeySelective(AuthRole record);
 
     int updateByPrimaryKey(AuthRole record);
+
+    List<AuthRole> selectRoles();
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /* *
  * @Author tomsun28
@@ -55,6 +56,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean deleteAuthorityRoleResource(Integer roleId, Integer resourceId) {
         int num = authRoleResourceMapper.deleteByUniqueKey(roleId, resourceId);
-        return false;
+        return num == 1? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public List<AuthRole> getRoleList() {
+        return authRoleMapper.selectRoles();
     }
 }
