@@ -65,4 +65,10 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.selectByUniqueKey(appId);
     }
+
+    @Override
+    public List<AuthUser> getNotAuthorityUserListByRoleId(Integer roleId) {
+
+        return userMapper.selectUserListExtendByRoleId(roleId);
+    }
 }

@@ -207,5 +207,22 @@
         where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 1;
     </select>
 
+    <select id="selectNotAuthorityApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.*
+        from auth_resource a
+        where a.type = 2 and not exists (
+          select 1 from auth_role_resource b
+		  where a.id = b.resource_id and b.role_id = #{roleId,jdbcType=INTEGER}
+		)
+    </select>
+
+    <select id="selectNotAuthorityMenusByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select a.*
+        from auth_resource a
+        where a.type = 1 and not exists (
+          select 1 from auth_role_resource b
+		  where a.id = b.resource_id and b.role_id = #{roleId,jdbcType=INTEGER}
+		)
+    </select>
 
 </mapper>

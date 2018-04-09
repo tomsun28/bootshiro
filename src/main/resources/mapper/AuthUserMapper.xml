@@ -213,4 +213,13 @@
     where a.role_id = #{roleId}
   </select>
 
+  <select id="selectUserListExtendByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select b.uid,b.username,"" as password,"" as salt,b.real_name,b.avatar,b.phone,b.email,b.sex,b.status,b.create_time,b.update_time,b.create_where
+    from auth_user b
+	where not exists (
+  	   select 1 from auth_user_role c
+  	   where b.uid = c.user_id and c.role_id = #{roleId,jdbcType=INTEGER}
+	)
+  </select>
+
 </mapper>

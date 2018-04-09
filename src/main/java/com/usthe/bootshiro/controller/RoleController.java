@@ -40,7 +40,7 @@ public class RoleController extends BasicAction {
     private ResourceService resourceService;
 
     @SuppressWarnings("unchecked")
-    @ApiOperation(value = "获取角色为roleId对应用户",httpMethod = "GET")
+    @ApiOperation(value = "获取角色关联的(roleId)对应用户列表",httpMethod = "GET")
     @GetMapping("user/{roleId}/{currentPage}/{pageSize}")
     public Message getUserListByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
         PageHelper.startPage(currentPage,pageSize);
@@ -50,14 +50,34 @@ public class RoleController extends BasicAction {
         return new Message().ok(6666,"return users success").addData("data",pageInfo);
     }
 
-    
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色未关联的用户列表", httpMethod = "GET")
+    @GetMapping("user/-/{roleId}/{currentPage}/{pageSize}")
+    public Message getUserListExtendByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthUser> users = userService.getNotAuthorityUserListByRoleId(roleId);
+        users.forEach(user -> user.setPassword(null));
+        PageInfo pageInfo = new PageInfo(users);
+        return new Message().ok(6666, "return users success").addData("data", pageInfo);
+    }
+
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色(roleId)所被授权的API资源")
     @GetMapping("api/{roleId}/{currentPage}/{pageSize}")
-    public Message getRestApiByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+    public Message getRestApiExtendByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
         PageHelper.startPage(currentPage, pageSize);
         List<AuthResource> authResources = resourceService.getAuthorityApisByRoleId(roleId);
+        PageInfo pageInfo = new PageInfo(authResources);
+        return new Message().ok(6666, "return api success").addData("data", pageInfo);
+    }
+
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色(roleId)未被授权的API资源")
+    @GetMapping("api/-/{roleId}/{currentPage}/{pageSize}")
+    public Message getRestApiByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthResource> authResources = resourceService.getNotAuthorityApisByRoleId(roleId);
         PageInfo pageInfo = new PageInfo(authResources);
         return new Message().ok(6666, "return api success").addData("data", pageInfo);
     }
@@ -68,6 +88,16 @@ public class RoleController extends BasicAction {
     public Message getMenusByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
         PageHelper.startPage(currentPage, pageSize);
         List<AuthResource> authResources = resourceService.getAuthorityMenusByRoleId(roleId);
+        PageInfo pageInfo = new PageInfo(authResources);
+        return new Message().ok(6666, "return api success").addData("data", pageInfo);
+    }
+
+    @SuppressWarnings("unchecked")
+    @ApiOperation(value = "获取角色(roleId)未被授权的menu资源")
+    @GetMapping("menu/-/{roleId}/{currentPage}/{pageSize}")
+    public Message getMenusExtendByRoleId(@PathVariable Integer roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<AuthResource> authResources = resourceService.getNotAuthorityMenusByRoleId(roleId);
         PageInfo pageInfo = new PageInfo(authResources);
         return new Message().ok(6666, "return api success").addData("data", pageInfo);
     }

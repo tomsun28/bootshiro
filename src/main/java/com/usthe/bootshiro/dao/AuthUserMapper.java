@@ -25,4 +25,5 @@ public interface AuthUserMapper {
 
     List<AuthUser> selectUserListByRoleId(Integer roleId);
 
+    List<AuthUser> selectUserListExtendByRoleId(Integer roleId);
 }

@@ -22,4 +22,6 @@ public interface UserService {
     boolean deleteAuthorityUserRole(String uid,int roleId);
 
     AuthUser getUserByAppId(String appId);
+
+    List<AuthUser> getNotAuthorityUserListByRoleId(Integer roleId);
 }

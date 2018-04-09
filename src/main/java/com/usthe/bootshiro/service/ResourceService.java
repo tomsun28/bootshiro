@@ -31,4 +31,8 @@ public interface ResourceService {
     List<AuthResource> getAuthorityApisByRoleId(Integer roleId);
 
     List<AuthResource> getAuthorityMenusByRoleId(Integer roleId);
+
+    List<AuthResource> getNotAuthorityApisByRoleId(Integer roleId);
+
+    List<AuthResource> getNotAuthorityMenusByRoleId(Integer roleId);
 }

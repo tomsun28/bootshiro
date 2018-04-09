@@ -33,4 +33,8 @@ public interface AuthResourceMapper {
     List<AuthResource> selectApisByRoleId(Integer roleId);
 
     List<AuthResource> selectMenusByRoleId(Integer roleId);
+
+    List<AuthResource> selectNotAuthorityApisByRoleId(Integer roleId);
+
+    List<AuthResource> selectNotAuthorityMenusByRoleId(Integer roleId);
 }
