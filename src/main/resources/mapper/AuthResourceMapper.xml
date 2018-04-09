@@ -192,7 +192,7 @@
 
     <select id="selectApiListByTeamId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select a.* from auth_resource a
-        where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type = 2;
+        where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type in (2,3);
     </select>
 
     <select id="selectApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
