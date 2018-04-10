@@ -11,18 +11,18 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       # 下面为连接池的补充设置，应用到上面所有数据源中
       # 初始化大小，最小，最大
-      initialSize: 1
-      minIdle: 3
-      maxActive: 20
+      initialSize: 2
+      minIdle: 2
+      maxActive: 100
       # 配置获取连接等待超时的时间
-      maxWait: 60000
+      maxWait: 10000
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
       # 配置一个连接在池中最小生存的时间，单位是毫秒
       minEvictableIdleTimeMillis: 30000
-      validationQuery: select 'x'
+      validationQuery: select 1
       testWhileIdle: true
-      testOnBorrow: false
+      testOnBorrow: true
       testOnReturn: false
       # 打开PSCache，并且指定每个连接上PSCache的大小
       poolPreparedStatements: true
@@ -50,13 +50,13 @@ spring:
         # 连接池最大连接数（使用负值表示没有限制）
         max-active: 800
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: 1000
+        max-wait: 10000
         # 连接池中的最大空闲连接
-        max-idle: 800
+        max-idle: 20
         # 连接池中的最小空闲连接
-        min-idle: 0
+        min-idle: 2
     # 连接超时时间（毫秒）
-    timeout: 3000
+    timeout: 30000
   cache:
     type: redis
 
