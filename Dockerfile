@@ -9,7 +9,7 @@ MAINTAINER tomsun28 "tomsun28@outlook.com"
 
 #加入WAR包到tomcat下
 #RUN rm -rf /usr/local/tomcat/webapps
-#ADD ./target/tmall2.war /usr/local/tomcat/webapps/tmall2.war
+#ADD ./target/bootshiro.war /usr/local/tomcat/webapps/bootshiro.war
 
-RUN rm -rf /opt/tomcat/webapps/tmall2*
-ADD ./target/tmall2.war /opt/tomcat/webapps/tmall2.war
+RUN rm -rf /opt/tomcat/webapps/bootshiro*
+ADD ./target/bootshiro.war /opt/tomcat/webapps/bootshiro.war
