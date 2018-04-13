@@ -1,7 +1,7 @@
 #VERSION 1.0.0
-#基础镜像为tomcat
+#基础镜像为oracle java-8
 
-FROM tomsun28/tomcat:1.1
+FROM tomsun28/oracle-java-8:1.0
 
 #签名
 MAINTAINER tomsun28 "tomsun28@outlook.com"
