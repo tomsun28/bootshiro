@@ -130,12 +130,12 @@ spring:
 spring:
     profiles: prod
     datasource:
-      url: jdbc:mysql://127.0.0.1:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://192.168.0.3:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
       password: admin
     redis:
       # 服务器IP地址
-      host: 127.0.0.1
+      host: 192.168.0.3
       # 连接端口
       port: 6379
       # Redis服务器连接密码（默认为空）
