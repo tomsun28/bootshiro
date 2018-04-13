@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>bootshiro</name>
-	<description>Demo project for Spring Boot</description>
+	<description>bootshiro project for Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -160,6 +160,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
