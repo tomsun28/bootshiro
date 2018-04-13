@@ -7,7 +7,6 @@ import com.usthe.bootshiro.domain.vo.MenuTreeNode;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.ResourceService;
 import com.usthe.bootshiro.util.TreeUtil;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jnlp.IntegrationService;
 import javax.servlet.http.HttpServletRequest;
-import java.awt.geom.FlatteningPathIterator;
 import java.util.ArrayList;
 import java.util.List;
 

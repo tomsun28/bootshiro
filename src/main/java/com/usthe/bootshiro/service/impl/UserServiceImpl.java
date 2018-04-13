@@ -1,6 +1,5 @@
 package com.usthe.bootshiro.service.impl;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.usthe.bootshiro.dao.AuthUserMapper;
 import com.usthe.bootshiro.dao.AuthUserRoleMapper;
 import com.usthe.bootshiro.domain.bo.AuthUser;
