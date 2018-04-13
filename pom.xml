@@ -6,7 +6,7 @@
 	<groupId>com.usthe</groupId>
 	<artifactId>bootshiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>bootshiro</name>
 	<description>bootshiro project for Spring Boot</description>

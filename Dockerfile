@@ -7,9 +7,10 @@ FROM tomsun28/tomcat:1.1
 MAINTAINER tomsun28 "tomsun28@outlook.com"
 
 
-#加入WAR包到tomcat下
-#RUN rm -rf /usr/local/tomcat/webapps
-#ADD ./target/bootshiro.war /usr/local/tomcat/webapps/bootshiro.war
-
 RUN rm -rf /opt/tomcat/webapps/bootshiro*
-ADD ./target/bootshiro.war /opt/tomcat/webapps/bootshiro.war
+ADD ./target/bootshiro.jar /opt/tomcat/webapps/bootshiro.jar
+
+EXPORT 8080
+WORKDIR /opt/tomcat/webapps/
+
+CMD ["java", "-jar", "bootshiro.jar","--spring.profiles.active=prod"]
