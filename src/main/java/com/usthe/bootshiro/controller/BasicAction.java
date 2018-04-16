@@ -23,6 +23,6 @@ public abstract class BasicAction {
     @SuppressWarnings("rawtypes")
     protected Map<String, String> getRequestParameter(HttpServletRequest request) {
 
-        return RequestResponseUtil.getRequestParamter(request);
+        return RequestResponseUtil.getRequestParameters(request);
     }
 }

@@ -22,6 +22,8 @@ import org.springframework.util.StringUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -119,27 +121,36 @@ public class JwtFilter extends AccessControlFilter {
     }
 
     private boolean isJwtSubmission(ServletRequest request) {
-        String jwt = WebUtils.toHttp(request).getHeader("authorization");
-        String appId = WebUtils.toHttp(request).getHeader("appId");
+//        String jwt = WebUtils.toHttp(request).getHeader("authorization");
+//        String appId = WebUtils.toHttp(request).getHeader("appId");
+        String jwt = RequestResponseUtil.getHeader(request,"authorization");
+        String appId = RequestResponseUtil.getHeader(request,"appId");
         return (request instanceof HttpServletRequest)
                 && !StringUtils.isEmpty(jwt)
                 && !StringUtils.isEmpty(appId);
     }
 
     private AuthenticationToken createJwtToken(ServletRequest request) {
-        String appId = WebUtils.toHttp(request).getHeader("appId");
+//        String appId = WebUtils.toHttp(request).getHeader("appId");
+//        String ipHost = request.getRemoteAddr();
+//        String jwt = WebUtils.toHttp(request).getHeader("authorization");
+//        String deviceInfo = WebUtils.toHttp(request).getHeader("deviceInfo");
+        Map<String,String> maps = RequestResponseUtil.getRequestHeaders(request);
+        String appId = maps.get("appId");
         String ipHost = request.getRemoteAddr();
-        String jwt = WebUtils.toHttp(request).getHeader("authorization");
-        String deviceInfo = WebUtils.toHttp(request).getHeader("deviceInfo");
+        String jwt = maps.get("authorization");
+        String deviceInfo = maps.get("deviceInfo");
 
         return new JwtToken(ipHost,deviceInfo,jwt,appId);
     }
 
+    // 验证当前用户是否属于mappedValue任意一个角色
     private boolean checkRoles(Subject subject, Object mappedValue){
         String[] rolesArray = (String[]) mappedValue;
-        return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role));
+        return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role.trim()));
     }
 
+    // 验证当前用户是否拥有mappedValue任意一个权限
     private boolean checkPerms(Subject subject, Object mappedValue){
         String[] perms = (String[]) mappedValue;
         boolean isPermitted = true;

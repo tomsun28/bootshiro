@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -107,7 +108,8 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isPasswordTokenGet(ServletRequest request) {
-        String tokenKey = request.getParameter("tokenKey");
+//        String tokenKey = request.getParameter("tokenKey");
+        String tokenKey = RequestResponseUtil.getParameter(request,"tokenKey");
 
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("GET")
@@ -115,10 +117,15 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isPasswordLoginPost(ServletRequest request) {
-        String password = request.getParameter("password");
-        String timestamp = request.getParameter("timestamp");
-        String methodName = request.getParameter("methodName");
-        String appId = request.getParameter("appId");
+//        String password = request.getParameter("password");
+//        String timestamp = request.getParameter("timestamp");
+//        String methodName = request.getParameter("methodName");
+//        String appId = request.getParameter("appId");
+        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        String password = map.get("password");
+        String timestamp = map.get("timestamp");
+        String methodName = map.get("methodName");
+        String appId = map.get("appId");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
                 && null != password
@@ -129,10 +136,15 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isAccountRegisterPost(ServletRequest request) {
-        String uid = request.getParameter("uid");
-        String methodName = request.getParameter("methodName");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+//        String uid = request.getParameter("uid");
+//        String methodName = request.getParameter("methodName");
+//        String username = request.getParameter("username");
+//        String password = request.getParameter("password");
+        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        String uid = map.get("uid");
+        String username = map.get("username");
+        String methodName = map.get("methodName");
+        String password = map.get("password");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
                 && null != username
@@ -144,9 +156,13 @@ public class PasswordFilter extends AccessControlFilter {
 
     private AuthenticationToken createPasswordToken(ServletRequest request) {
 
-        String appId = request.getParameter("appId");
-        String password = request.getParameter("password");
-        String timestamp = request.getParameter("timestamp");
+//        String appId = request.getParameter("appId");
+//        String password = request.getParameter("password");
+//        String timestamp = request.getParameter("timestamp");
+        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        String appId = map.get("appId");
+        String timestamp = map.get("timestamp");
+        String password = map.get("password");
         String host = request.getRemoteAddr();
         String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+host.toUpperCase());
         return new PasswordToken(appId,password,timestamp,host,tokenKey);

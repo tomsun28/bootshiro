@@ -38,8 +38,7 @@ public class AccountController extends BasicAction{
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Autowired(required = false)
-    @Qualifier("AccountService")
+    @Autowired
     private AccountService accountService;
 
     @Autowired
@@ -53,7 +52,7 @@ public class AccountController extends BasicAction{
     @ApiOperation(value = "用户登录",notes = "POST用户登录签发JWT")
     @PostMapping("/login")
     public Message accountLogin(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,String> params = RequestResponseUtil.getRequestParamter(request);
+        Map<String,String> params = RequestResponseUtil.getRequestParameters(request);
         String appId = params.get("appId");
         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
         String roles = accountService.loadAccountRole(appId);
@@ -77,7 +76,7 @@ public class AccountController extends BasicAction{
     @PostMapping("/register")
     public Message accountRegister(HttpServletRequest request,HttpServletResponse response) {
 
-        Map<String,String> params = RequestResponseUtil.getRequestParamter(request);
+        Map<String,String> params = RequestResponseUtil.getRequestParameters(request);
         AuthUser authUser = new AuthUser();
         String username = params.get("username");
         String uid = params.get("uid");
