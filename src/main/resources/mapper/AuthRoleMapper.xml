@@ -97,6 +97,6 @@
   </update>
 
   <select id="selectRoles" resultMap="BaseResultMap">
-    select * from auth_role;
+    select * from auth_role
   </select>
 </mapper>

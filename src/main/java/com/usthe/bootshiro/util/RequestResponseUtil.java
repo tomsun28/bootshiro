@@ -1,6 +1,6 @@
 package com.usthe.bootshiro.util;
 
-import com.usthe.bootshiro.support.RequestWrapper;
+import com.usthe.bootshiro.support.XssSqlHttpServletRequestWrapper;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -78,7 +77,7 @@ public class RequestResponseUtil {
     }
 
     public static HttpServletRequest getRequest(ServletRequest request) {
-        return new RequestWrapper((HttpServletRequest) request);
+        return new XssSqlHttpServletRequestWrapper((HttpServletRequest) request);
     }
 
     /* *

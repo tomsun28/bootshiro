@@ -177,34 +177,34 @@
 
     <select id="selectMenus" resultMap="BaseResultMap">
         select a.* from auth_resource a
-        where a.type = 1;
+        where a.type = 1
     </select>
 
     <select id="selectApiTeamList" resultMap="BaseResultMap">
         select * from auth_resource a
-        where a.type = 3;
+        where a.type = 3
     </select>
 
     <select id="selectApiList" resultMap="BaseResultMap">
         select a.* from auth_resource a
-        where a.type = 2;
+        where a.type = 2
     </select>
 
     <select id="selectApiListByTeamId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select a.* from auth_resource a
-        where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type in (2,3);
+        where a.parent_id = #{teamId,jdbcType=INTEGER} and a.type in (2,3)
     </select>
 
     <select id="selectApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select a.* from auth_resource a
         join auth_role_resource b on a.id = b.resource_id
-        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 2;
+        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 2
     </select>
 
     <select id="selectMenusByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select a.* from auth_resource a
         join auth_role_resource b on a.id = b.resource_id
-        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 1;
+        where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 1
     </select>
 
     <select id="selectNotAuthorityApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">

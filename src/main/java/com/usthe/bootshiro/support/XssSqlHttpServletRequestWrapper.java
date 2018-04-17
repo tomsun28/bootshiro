@@ -9,14 +9,14 @@ import java.util.Map;
 
 /* *
  * @Author tomsun28
- * @Description request请求过滤包装类
+ * @Description request请求安全过滤包装类
  * @Date 20:41 2018/4/15
  */
-public class RequestWrapper extends HttpServletRequestWrapper {
+public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 
 
-    public RequestWrapper(HttpServletRequest request) {
+    public XssSqlHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
     }
 
