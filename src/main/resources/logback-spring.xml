@@ -21,7 +21,7 @@
 		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 归档的日志文件的路径。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
-			<fileNamePattern>/opt/tomcat/logs/demo/SystemOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/opt/tomcat/logs/bootshiro/sys_bak/SystemOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始 -->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -46,11 +46,11 @@
 	<!--输出每天的运行日志到文件SystemErrOut.log-->
 	<appender name="ErrOutFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 正在记录的日志文件的路径及文件名 -->
-		<file>/opt/tomcat/logs/bootshiro/err/SystemErrOut.log</file>
+		<file>/opt/tomcat/logs/bootshiro/SystemErrOut.log</file>
 		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 归档的日志文件的路径。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
-			<fileNamePattern>/opt/tomcat/logs/bootshiro/err/SystemErrOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/opt/tomcat/logs/bootshiro/err_bak/SystemErrOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始 -->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -75,11 +75,11 @@
 	<!-- 输出运行的SQL语句日志到文件SqlOut.log -->
 	<appender name="SqlOutFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 正在记录的日志文件的路径及文件名 -->
-		<file>/opt/tomcat/logs/bootshiro/sql/SystemSqlOut.log</file>
+		<file>/opt/tomcat/logs/bootshiro/SystemSqlOut.log</file>
 		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 归档的日志文件的路径。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
-			<fileNamePattern>/opt/tomcat/logs/bootshiro/sql/SystemSqlOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/opt/tomcat/logs/bootshiro/sql_bak/SystemSqlOut-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始 -->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -111,10 +111,10 @@
 	<logger name="ch.qos.logback" level="info"/>
 
 	<!-- 下面是打印 mybatis sql语句日志的配置 -->
-	<!--<logger name="com.usthe.demo.mapper">-->
-		<!--<level value="debug"/>-->
-		<!--<appender-ref ref="SqlOutFileAppender"/>-->
-	<!--</logger>-->
+	<logger name="com.usthe.bootshiro.dao">
+		<level value="debug"/>
+		<appender-ref ref="SqlOutFileAppender"/>
+	</logger>
 
 	<root level="debug">
 		<appender-ref ref="ErrOutFileAppender"/>
