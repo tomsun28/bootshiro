@@ -112,7 +112,7 @@
 
 	<!-- 下面是打印 mybatis sql语句日志的配置 -->
 	<logger name="com.usthe.bootshiro.dao">
-		<level value="trace"/>
+		<level value="debug"/>
 		<appender-ref ref="SqlOutFileAppender"/>
 	</logger>
 
