@@ -71,7 +71,7 @@
 		</filter>
 	</appender>
 
-	<!-- 输出日志到文件   文件大小到达指定尺寸的时候文件会自动回滚 -->
+	<!-- 输出日志到文件  文件大小到达指定尺寸的时候文件会自动回滚 -->
 	<!-- 输出运行的SQL语句日志到文件SqlOut.log -->
 	<appender name="SqlOutFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 正在记录的日志文件的路径及文件名 -->
