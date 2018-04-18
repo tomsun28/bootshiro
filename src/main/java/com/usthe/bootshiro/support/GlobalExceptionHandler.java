@@ -4,6 +4,7 @@ import com.usthe.bootshiro.domain.vo.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,13 +22,22 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 
+
+
+    @ExceptionHandler(DataAccessException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public Message sqlException(DataAccessException e) {
+        LOGGER.error("数据操作异常:",e);
+        return new Message().error(1111, "服务器开小差");
+    }
+
     /* *
      * @Description拦截未知的运行时异常
      * @Param [e]
      * @Return com.usthe.bootshiro.domain.vo.Message
      */
     @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public Message notFoundException(RuntimeException e) {
         LOGGER.error("运行时异常:",e);
         return new Message().error(1111,"服务器开小差");

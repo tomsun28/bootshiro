@@ -1,29 +1,31 @@
 package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthUser;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
 public interface AuthUserMapper {
-    int deleteByPrimaryKey(String uid);
 
-    int insert(AuthUser record);
+    int deleteByPrimaryKey(String uid) throws DataAccessException;
 
-    int insertSelective(AuthUser record);
+    int insert(AuthUser record) throws DataAccessException;
 
-    AuthUser selectByPrimaryKey(String uid);
+    int insertSelective(AuthUser record) throws DataAccessException;
 
-    int updateByPrimaryKeySelective(AuthUser record);
+    AuthUser selectByPrimaryKey(String uid) throws DataAccessException;
 
-    int updateByPrimaryKey(AuthUser record);
+    int updateByPrimaryKeySelective(AuthUser record) throws DataAccessException;
 
-    String selectUserRoles(String appId);
+    int updateByPrimaryKey(AuthUser record) throws DataAccessException;
 
-    AuthUser selectByUniqueKey(String appId);
+    String selectUserRoles(String appId) throws DataAccessException;
 
-    List<AuthUser> selectUserList();
+    AuthUser selectByUniqueKey(String appId) throws DataAccessException;
 
-    List<AuthUser> selectUserListByRoleId(Integer roleId);
+    List<AuthUser> selectUserList() throws DataAccessException;
 
-    List<AuthUser> selectUserListExtendByRoleId(Integer roleId);
+    List<AuthUser> selectUserListByRoleId(Integer roleId) throws DataAccessException;
+
+    List<AuthUser> selectUserListExtendByRoleId(Integer roleId) throws DataAccessException;
 }

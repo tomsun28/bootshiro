@@ -6,6 +6,7 @@ import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.bo.AuthUserRole;
 import com.usthe.bootshiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,23 +27,23 @@ public class UserServiceImpl implements UserService {
     private AuthUserRoleMapper authUserRoleMapper;
 
     @Override
-    public String loadAccountRole(String appId) {
+    public String loadAccountRole(String appId) throws DataAccessException {
 
         return userMapper.selectUserRoles(appId);
     }
 
     @Override
-    public List<AuthUser> getUserList() {
+    public List<AuthUser> getUserList() throws DataAccessException {
         return userMapper.selectUserList();
     }
 
     @Override
-    public List<AuthUser> getUserListByRoleId(Integer roleId) {
+    public List<AuthUser> getUserListByRoleId(Integer roleId) throws DataAccessException {
         return userMapper.selectUserListByRoleId(roleId);
     }
 
     @Override
-    public boolean authorityUserRole(String uid, int roleId) {
+    public boolean authorityUserRole(String uid, int roleId) throws DataAccessException {
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setRoleId(roleId);
         authUserRole.setUserId(uid);
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteAuthorityUserRole(String uid, int roleId) {
+    public boolean deleteAuthorityUserRole(String uid, int roleId) throws DataAccessException {
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setUserId(uid);
         authUserRole.setRoleId(roleId);
@@ -60,13 +61,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthUser getUserByAppId(String appId) {
+    public AuthUser getUserByAppId(String appId) throws DataAccessException {
 
         return userMapper.selectByUniqueKey(appId);
     }
 
     @Override
-    public List<AuthUser> getNotAuthorityUserListByRoleId(Integer roleId) {
+    public List<AuthUser> getNotAuthorityUserListByRoleId(Integer roleId) throws DataAccessException {
 
         return userMapper.selectUserListExtendByRoleId(roleId);
     }

@@ -1,19 +1,21 @@
 package com.usthe.bootshiro.dao;
 
 import com.usthe.bootshiro.domain.bo.AuthUserRole;
+import org.springframework.dao.DataAccessException;
 
 public interface AuthUserRoleMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(AuthUserRole record);
+    int deleteByPrimaryKey(Integer id) throws DataAccessException;
 
-    int insertSelective(AuthUserRole record);
+    int insert(AuthUserRole record) throws DataAccessException;
 
-    AuthUserRole selectByPrimaryKey(Integer id);
+    int insertSelective(AuthUserRole record) throws DataAccessException;
 
-    int updateByPrimaryKeySelective(AuthUserRole record);
+    AuthUserRole selectByPrimaryKey(Integer id) throws DataAccessException;
 
-    int updateByPrimaryKey(AuthUserRole record);
+    int updateByPrimaryKeySelective(AuthUserRole record) throws DataAccessException;
 
-    int deleteByUniqueKey(AuthUserRole record);
+    int updateByPrimaryKey(AuthUserRole record) throws DataAccessException;
+
+    int deleteByUniqueKey(AuthUserRole record) throws DataAccessException;
 }
