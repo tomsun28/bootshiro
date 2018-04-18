@@ -29,12 +29,12 @@
 		<shiro.version>1.3.2</shiro.version>
 		<fastjson.version>1.2.38</fastjson.version>
 		<jjwt.version>0.9.0</jjwt.version>
+		<mysql.version>5.1.6</mysql.version>
 
 
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.16</log4j.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<mysql.version>5.1.6</mysql.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<commons-fileupload.version>1.2.1</commons-fileupload.version>
 		<commons-io.version>1.3.2</commons-io.version>
@@ -67,7 +67,8 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<version>${mysql.version}</version>
+			<!--<scope>runtime</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>

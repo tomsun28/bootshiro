@@ -1,5 +1,6 @@
 package com.usthe.bootshiro.support;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.usthe.bootshiro.domain.vo.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +23,20 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 
-
-
+    /* *
+     * @Description 拦截操作数据库异常
+     * @Param [e]
+     * @Return com.usthe.bootshiro.domain.vo.Message
+     */
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.OK)
     public Message sqlException(DataAccessException e) {
         LOGGER.error("数据操作异常:",e);
+        final Throwable cause = e.getCause();
+        // 之后判断cause类型进一步记录日志处理
+        if (cause instanceof MySQLIntegrityConstraintViolationException ) {
+
+        }
         return new Message().error(1111, "服务器开小差");
     }
 
