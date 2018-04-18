@@ -94,7 +94,7 @@
 		</encoder>
 		<!-- 此日志文件记录sql trace -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>trace</level>
+			<level>debug</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
