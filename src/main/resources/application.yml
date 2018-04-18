@@ -11,6 +11,7 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       # 下面为连接池的补充设置，应用到上面所有数据源中
       # 初始化大小，最小，最大
+      # druid 配置: https://github.com/alibaba/druid/wiki/
       initialSize: 2
       minIdle: 2
       maxActive: 100
@@ -27,8 +28,8 @@ spring:
       # 打开PSCache，并且指定每个连接上PSCache的大小
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-      filters: stat,wall,slf4j
+      # 配置监控统计拦截的filters，stat用于监控界面，'wall'用于防火墙防御sql注入, slf4j用于druid记录sql日志
+      filters: stat,slf4j,wall
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
