@@ -4,6 +4,7 @@ import com.usthe.bootshiro.dao.AuthUserMapper;
 import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.vo.Account;
 import com.usthe.bootshiro.service.AccountService;
+import com.usthe.bootshiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AuthUserMapper userMapper;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public Account loadAccount(String appId) throws DataAccessException {
         AuthUser user = userMapper.selectByUniqueKey(appId);
@@ -27,6 +31,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean registerAccount(AuthUser account) throws DataAccessException {
+
+        // 给新用户授权访客角色
+        userService.authorityUserRole(account.getUid(),103);
+
         return userMapper.insertSelective(account) >=1 ? Boolean.TRUE : Boolean.FALSE;
     }
 
