@@ -230,11 +230,6 @@ github:
 
 
 
-
-
-[github代码bootshiro](https://github.com/tomsun28/bootshiro)  
-[github代码usthe](https://github.com/tomsun28/usthe)  
-
 <br>
 <br>
 <br>
