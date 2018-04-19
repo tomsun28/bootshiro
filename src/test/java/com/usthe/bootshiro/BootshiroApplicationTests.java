@@ -1,5 +1,6 @@
 package com.usthe.bootshiro;
 
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +30,15 @@ public class BootshiroApplicationTests {
 		System.out.println(new Timestamp(new Date().getTime()));
 		Assert.assertEquals("lallal",template.opsForValue().get("hahahaha"));
 	}
+
+	@Autowired
+	StringEncryptor stringEncryptor;
+
+	@Test
+	public void test() {
+		System.out.println(stringEncryptor.encrypt("admin"));
+	}
+
+
 
 }

@@ -61,6 +61,7 @@ spring:
   cache:
     type: redis
 
+
   # 设置使用哪个环境的配置
   # 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
   #   测试环境：java -jar bootshiro.jar --spring.profiles.active=test
@@ -92,6 +93,10 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
+jasypt:
+  encryptor:
+    password: e!swhdg&d763jo
+
 
 ---
 # 开发环境配置(配置项只包括环境不同项)
@@ -100,7 +105,7 @@ spring:
     datasource:
       url: jdbc:mysql://localhost:12345/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
-      password: admin
+      password: ENC(/V4cv84T4SW13xRhR1/FXw==)
     redis:
       # 服务器IP地址
       host: 127.0.0.1
@@ -134,7 +139,7 @@ spring:
     datasource:
       url: jdbc:mysql://192.168.0.3:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
-      password: admin
+      password: ENC(xavHMZH/U29PVokVvwxLSQ==)
     redis:
       # 服务器IP地址
       host: 192.168.0.3

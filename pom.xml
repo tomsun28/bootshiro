@@ -151,6 +151,13 @@
 			<version>1.16.18</version>
 		</dependency>
 
+		<!--明文配置密码加密解密-->
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
         <!--test-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
