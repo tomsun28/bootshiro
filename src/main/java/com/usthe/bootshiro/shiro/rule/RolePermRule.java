@@ -38,11 +38,11 @@ public class RolePermRule extends AuthorizedRule {
         Set<String> setRole = JsonWebTokenUtil.split(this.getNeedRoles());
 
         // 若anon角色拥有此uri资源的权限,则此uri资源直接访问不需要认证和权限
-        if (!StringUtils.isEmpty(this.getNeedRoles()) && setRole.contains("anon")) {
+        if (!StringUtils.isEmpty(this.getNeedRoles()) && setRole.contains("role_anon")) {
             stringBuilder.append("anon");
         }
         //  其他自定义资源uri需通过jwt认证和角色认证
-        if (!StringUtils.isEmpty(this.getNeedRoles()) && !setRole.contains("anon")) {
+        if (!StringUtils.isEmpty(this.getNeedRoles()) && !setRole.contains("role_anon")) {
             stringBuilder.append("jwt"+"["+this.getNeedRoles()+"]");
         }
 
