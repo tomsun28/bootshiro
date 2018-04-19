@@ -36,7 +36,7 @@ public class BootshiroApplicationTests {
 
 	@Test
 	public void test() {
-		System.out.println(stringEncryptor.encrypt("admin"));
+		System.out.println(stringEncryptor.encrypt("hahhaha"));
 	}
 
 

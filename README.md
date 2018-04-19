@@ -156,13 +156,75 @@ export class LoginService {
     }
 ````
 
-#### shiro 认证等  
-。。。。。。   
+#### jwt令牌(json web token)  
+
+jwt是自包含的令牌,自包含即整个令牌已经包含自己的角色，权限，用户信息等各种认证一个用户的必要信息，这样就不用后端根据用户标识再去数据库查询对应用户的角色权限等。  
+
+jwt包含头信息,载荷信息，签名信息三个部分:  
+
+````
+Header //头信息
+{
+  "alg": "HS256",  //摘要算法
+  "typ": "JWT"     //token类型
+}
+payload //载荷信息
+{
+  "sub": "1234567890", //用户标识,subject
+  "name": "John Doe",  //用户名
+  "exp": "Mon Nov 13 15:28:41 CST 2018" //有效期
+}
+verify signature //签名信息
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+secret
+)
+````
+详细到官网[jwt](https://jwt.io)试一波吧，输入对应信息可以生成JWT  
+
+jwt签发解析使用的是jjwt,maven导入如下:
+
+````
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+````
+
+
+
+
 
 <br>
 <br>
 
 。。。。。持续更新中。。。。
+
+### 效果展示  
+
+![image4](/image/image4.PNG)   
+
+![image5](/image/image5.PNG)   
+
+![image6](/image/image6.PNG)   
+
+![image7](/image/image7.PNG)   
+
+
+
+github:  
+[bootshiro](https://github.com/tomsun28/bootshiro)  
+[usthe](https://github.com/tomsun28/usthe)  
+
+码云:  
+[bootshiro](https://gitee.com/tomsun28/bootshiro)  
+[usthe](https://gitee.com/tomsun28/usthe)  
+
+
+<br>
+持续更新。。。。。。
 
 
 
