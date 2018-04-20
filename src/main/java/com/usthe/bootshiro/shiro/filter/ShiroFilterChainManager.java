@@ -48,7 +48,8 @@ public class ShiroFilterChainManager {
         PasswordFilter passwordFilter = new PasswordFilter();
         passwordFilter.setRedisTemplate(redisTemplate);
         filters.put("auth",passwordFilter);
-        JwtFilter jwtFilter = new JwtFilter();
+//        JwtFilter jwtFilter = new JwtFilter();
+        BJwtFilter jwtFilter = new BJwtFilter();
         jwtFilter.setRedisTemplate(redisTemplate);
         jwtFilter.setAccountService(accountService);
         filters.put("jwt",jwtFilter);
