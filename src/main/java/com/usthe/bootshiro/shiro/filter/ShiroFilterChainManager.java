@@ -5,6 +5,7 @@ import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.shiro.provider.AccountProvider;
 import com.usthe.bootshiro.shiro.provider.ShiroFilterRulesProvider;
 import com.usthe.bootshiro.shiro.rule.RolePermRule;
+import com.usthe.bootshiro.support.SpringContextHolder;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
@@ -79,7 +80,8 @@ public class ShiroFilterChainManager {
         return filterChain;
     }
     // 动态重新加载过滤链规则
-    public void reloadFilterChain( ShiroFilterFactoryBean shiroFilterFactoryBean) {
+    public void reloadFilterChain() {
+            ShiroFilterFactoryBean shiroFilterFactoryBean = SpringContextHolder.getBean(ShiroFilterFactoryBean.class);
             AbstractShiroFilter abstractShiroFilter = null;
             try {
                 abstractShiroFilter = (AbstractShiroFilter)shiroFilterFactoryBean.getObject();

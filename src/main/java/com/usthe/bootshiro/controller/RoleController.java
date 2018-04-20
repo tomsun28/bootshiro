@@ -9,6 +9,7 @@ import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.ResourceService;
 import com.usthe.bootshiro.service.RoleService;
 import com.usthe.bootshiro.service.UserService;
+import com.usthe.bootshiro.shiro.filter.ShiroFilterChainManager;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class RoleController extends BasicAction {
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private ShiroFilterChainManager shiroFilterChainManager;
 
     @SuppressWarnings("unchecked")
     @ApiOperation(value = "获取角色关联的(roleId)对应用户列表",httpMethod = "GET")
@@ -109,6 +113,7 @@ public class RoleController extends BasicAction {
         int roleId = Integer.valueOf(map.get("roleId"));
         int resourceId = Integer.valueOf(map.get("resourceId"));
         boolean flag = roleService.authorityRoleResource(roleId,resourceId);
+        shiroFilterChainManager.reloadFilterChain();
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
     }
 
@@ -116,6 +121,7 @@ public class RoleController extends BasicAction {
     @DeleteMapping("/authority/resource/{roleId}/{resourceId}")
     public Message deleteAuthorityRoleResource(@PathVariable Integer roleId, @PathVariable Integer resourceId ) {
         boolean flag = roleService.deleteAuthorityRoleResource(roleId,resourceId);
+        shiroFilterChainManager.reloadFilterChain();
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
     }
 
