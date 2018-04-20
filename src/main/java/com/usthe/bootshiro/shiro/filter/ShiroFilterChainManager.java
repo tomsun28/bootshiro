@@ -2,6 +2,7 @@ package com.usthe.bootshiro.shiro.filter;
 
 
 import com.usthe.bootshiro.service.AccountService;
+import com.usthe.bootshiro.shiro.config.RestPathMatchingFilterChainResolver;
 import com.usthe.bootshiro.shiro.provider.AccountProvider;
 import com.usthe.bootshiro.shiro.provider.ShiroFilterRulesProvider;
 import com.usthe.bootshiro.shiro.rule.RolePermRule;
@@ -85,7 +86,7 @@ public class ShiroFilterChainManager {
             AbstractShiroFilter abstractShiroFilter = null;
             try {
                 abstractShiroFilter = (AbstractShiroFilter)shiroFilterFactoryBean.getObject();
-                PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver)abstractShiroFilter.getFilterChainResolver();
+                RestPathMatchingFilterChainResolver filterChainResolver = (RestPathMatchingFilterChainResolver)abstractShiroFilter.getFilterChainResolver();
                 DefaultFilterChainManager filterChainManager = (DefaultFilterChainManager)filterChainResolver.getFilterChainManager();
                 filterChainManager.getFilterChains().clear();
                 shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();

@@ -7,6 +7,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 /* *
  * @Author tomsun28
@@ -31,11 +32,11 @@ public abstract class BPathMatchingFilter extends PathMatchingFilter {
         String[] strings = path.split("==");
         if (strings.length <= 1) {
             // 分割出来只有URL
-            return this.pathsMatch(path, requestURI);
+            return this.pathsMatch(strings[0], requestURI);
         } else {
             // 分割出url+httpMethod,判断httpMethod和request请求的method是否一致,不一致直接false
             String httpMethod = WebUtils.toHttp(request).getMethod().toUpperCase();
-            return httpMethod.equals(strings[2].toUpperCase()) && this.pathsMatch(path, requestURI);
+            return httpMethod.equals(strings[1].toUpperCase()) && this.pathsMatch(strings[0], requestURI);
         }
     }
 
@@ -55,5 +56,13 @@ public abstract class BPathMatchingFilter extends PathMatchingFilter {
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         return this.isAccessAllowed(request, response, mappedValue) || this.onAccessDenied(request, response, mappedValue);
     }
+
+
+
+    protected void saveRequest(ServletRequest request) {
+        WebUtils.saveRequest(request);
+    }
+
+
 
 }
