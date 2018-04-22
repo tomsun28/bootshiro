@@ -4,6 +4,8 @@ import com.usthe.bootshiro.domain.bo.AuthUser;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.service.UserService;
+import com.usthe.bootshiro.support.factory.LogTaskFactory;
+import com.usthe.bootshiro.support.manager.LogExeManager;
 import com.usthe.bootshiro.util.*;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
@@ -64,6 +66,8 @@ public class AccountController extends BasicAction{
         redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
         AuthUser authUser = userService.getUserByAppId(appId);
 
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId,request.getRemoteAddr(),(short)1,null));
+
         return new Message().ok(1003,"issue jwt success").addData("jwt",jwt).addData("user",authUser);
     }
 
@@ -117,6 +121,8 @@ public class AccountController extends BasicAction{
         authUser.setStatus((byte)1);
 
         accountService.registerAccount(authUser);
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid,request.getRemoteAddr(),(short)1,null));
+
         return new Message().ok(2002,"register success");
     }
 
