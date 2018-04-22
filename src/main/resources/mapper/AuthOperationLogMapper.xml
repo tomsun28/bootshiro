@@ -15,8 +15,8 @@
         ID, LOG_NAME, USER_ID, CLASS_NAME, METHOD, SUCCEED, MESSAGE, CREATE_TIME
     </sql>
     <insert id="insertSelective" keyColumn="ID" keyProperty="id"
-            parameterType="com.usthe.bootshiro.domain.bo.AuthAccountLog" useGeneratedKeys="true">
-        insert into auth_account_log
+            parameterType="com.usthe.bootshiro.domain.bo.AuthOperationLog" useGeneratedKeys="true">
+        insert into auth_operation_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="logName != null">
                 log_name,
@@ -48,13 +48,13 @@
                 #{userId,jdbcType=VARCHAR},
             </if>
             <if test="className != null">
-                #{ip,jdbcType=VARCHAR},
+                #{className,jdbcType=VARCHAR},
             </if>
             <if test="method != null">
                 #{method,jdbcType=VARCHAR},
             </if>
             <if test="succeed != null">
-                #{uri,jdbcType=SMALLINT},
+                #{succeed,jdbcType=SMALLINT},
             </if>
             <if test="message != null">
                 #{message,jdbcType=VARCHAR},

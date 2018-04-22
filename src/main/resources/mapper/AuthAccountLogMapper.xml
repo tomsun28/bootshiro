@@ -47,7 +47,7 @@
                 #{ip,jdbcType=VARCHAR},
             </if>
             <if test="succeed != null">
-                #{uri,jdbcType=SMALLINT},
+                #{succeed,jdbcType=SMALLINT},
             </if>
             <if test="message != null">
                 #{message,jdbcType=VARCHAR},
@@ -58,7 +58,7 @@
         </trim>
     </insert>
 
-    <select id="selectOperationLogList" resultMap="BaseResultMap">
+    <select id="selectAccountLogList" resultMap="BaseResultMap">
         select * from auth_account_log order by create_time desc
     </select>
 

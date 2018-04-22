@@ -44,7 +44,7 @@ public class BJwtFilter extends BPathMatchingFilter {
 
         //记录调用api日志到数据库
         LogExeManager.getInstance().executeLogTask(LogTaskFactory.bussinssLog(WebUtils.toHttp(servletRequest).getHeader("appId"),
-                WebUtils.toHttp(servletRequest).getRequestURI(),WebUtils.toHttp(servletRequest).getMethod(),(short)1,""));
+                WebUtils.toHttp(servletRequest).getRequestURI(),WebUtils.toHttp(servletRequest).getMethod(),(short)1,null));
 
         // 判断是否为JWT认证请求
         if ((null == subject || !subject.isAuthenticated()) && isJwtSubmission(servletRequest)) {

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface AuthAccountLogMapper {
 
-    List<AuthAccountLog> selectOperationLogList();
+    List<AuthAccountLog> selectAccountLogList();
 
     int insertSelective(AuthAccountLog authAccountLog) throws DataAccessException;
 
