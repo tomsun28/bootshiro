@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usthe.bootshiro.dao.AuthAccountLogMapper">
+    <resultMap id="BaseResultMap" type="com.usthe.bootshiro.domain.bo.AuthAccountLog">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="log_Name" jdbcType="VARCHAR" property="logName"/>
+        <result column="user_Id" jdbcType="VARCHAR" property="userId"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="succeed" jdbcType="SMALLINT" property="succeed"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, LOG_NAME, USER_ID, IP, SUCCEED, MESSAGE, CREATE_TIME
+    </sql>
+    <insert id="insertSelective" keyColumn="ID" keyProperty="id"
+            parameterType="com.usthe.bootshiro.domain.bo.AuthAccountLog" useGeneratedKeys="true">
+        insert into auth_account_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logName != null">
+                log_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="succeed != null">
+                succeed,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logName != null">
+                #{logName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="succeed != null">
+                #{uri,jdbcType=SMALLINT},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectOperationLogList" resultMap="BaseResultMap">
+        select * from auth_account_log order by create_time desc
+    </select>
+
+</mapper>
