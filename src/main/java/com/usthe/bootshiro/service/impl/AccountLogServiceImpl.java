@@ -21,6 +21,6 @@ public class AccountLogServiceImpl implements AccountLogService {
 
     @Override
     public List<AuthAccountLog> getAccountLogList() {
-        return authAccountLogMapper.selectOperationLogList();
+        return authAccountLogMapper.selectAccountLogList();
     }
 }
