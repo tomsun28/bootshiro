@@ -23,11 +23,11 @@ public class LogFactory {
         return accountLog;
     }
 
-    public static AuthOperationLog createOperationLog(String userId,String logName,String className, String method, Short succeed, String message) {
+    public static AuthOperationLog createOperationLog(String userId,String logName,String api, String method, Short succeed, String message) {
         AuthOperationLog operationLog = new AuthOperationLog();
         operationLog.setUserId(userId);
         operationLog.setLogName(logName);
-        operationLog.setClassName(className);
+        operationLog.setApi(api);
         operationLog.setMethod(method);
         operationLog.setSucceed(succeed);
         operationLog.setMessage(message);

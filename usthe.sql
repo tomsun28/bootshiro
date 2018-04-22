@@ -224,7 +224,7 @@ CREATE TABLE `auth_operation_log` (
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户操作日志主键',
   `LOG_NAME` varchar(255) DEFAULT NULL COMMENT '日志名称',
   `USER_ID` varchar(30) DEFAULT NULL COMMENT '用户id',
-  `CLASS_NAME` varchar(255) DEFAULT NULL COMMENT '类名称',
+  `API` varchar(255) DEFAULT NULL COMMENT 'api名称',
   `METHOD` varchar(255) COMMENT '方法名称',
   `CREATE_TIME` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `SUCCEED` tinyint(4) NULL DEFAULT NULL COMMENT '是否执行成功(0失败1成功)',

@@ -15,7 +15,7 @@ public class AuthOperationLog {
 
     private String userId;
 
-    private String className;
+    private String api;
 
     private String method;
 
@@ -49,12 +49,12 @@ public class AuthOperationLog {
         this.userId = userId;
     }
 
-    public String getClassName() {
-        return className;
+    public String getApi() {
+        return api;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setApi(String api) {
+        this.api = api;
     }
 
     public String getMethod() {

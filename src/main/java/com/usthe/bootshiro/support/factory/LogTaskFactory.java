@@ -63,12 +63,12 @@ public class LogTaskFactory {
         };
     }
 
-    public static TimerTask bussinssLog(String userId, String className, String method, Short succeed, String message) {
+    public static TimerTask bussinssLog(String userId, String api, String method, Short succeed, String message) {
         return new TimerTask() {
             @Override
             public void run() {
                 try {
-                    AuthOperationLog operationLog = LogFactory.createOperationLog(userId, "业务操作日志", className, method, succeed, message);
+                    AuthOperationLog operationLog = LogFactory.createOperationLog(userId, "业务操作日志", api, method, succeed, message);
                     operationLogMapper.insertSelective(operationLog);
                 } catch (Exception e) {
                     LOGGER.error("写入业务操作日志异常", e.getCause().getMessage());
@@ -77,12 +77,12 @@ public class LogTaskFactory {
         };
     }
 
-    public static TimerTask exceptionLog(String userId, String className, String method, Short succeed, String message) {
+    public static TimerTask exceptionLog(String userId, String api, String method, Short succeed, String message) {
         return new TimerTask() {
             @Override
             public void run() {
                 try {
-                    AuthOperationLog exceptionLog = LogFactory.createOperationLog(userId, "业务异常日志", className, method, succeed, message);
+                    AuthOperationLog exceptionLog = LogFactory.createOperationLog(userId, "业务异常日志", api, method, succeed, message);
                     operationLogMapper.insertSelective(exceptionLog);
                 } catch (Exception e) {
                     LOGGER.error("写入业务异常日志异常", e.getCause().getMessage());
