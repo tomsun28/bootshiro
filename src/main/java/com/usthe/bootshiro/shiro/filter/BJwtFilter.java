@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.shiro.token.JwtToken;
+import com.usthe.bootshiro.support.factory.LogTaskFactory;
+import com.usthe.bootshiro.support.manager.LogExeManager;
 import com.usthe.bootshiro.util.JsonWebTokenUtil;
 import com.usthe.bootshiro.util.RequestResponseUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,6 +41,11 @@ public class BJwtFilter extends BPathMatchingFilter {
 
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) throws Exception {
         Subject subject = getSubject(servletRequest,servletResponse);
+
+        //记录调用api日志到数据库
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.bussinssLog(WebUtils.toHttp(servletRequest).getHeader("appId"),
+                WebUtils.toHttp(servletRequest).getRequestURI(),WebUtils.toHttp(servletRequest).getMethod(),(short)1,""));
+
         // 判断是否为JWT认证请求
         if ((null == subject || !subject.isAuthenticated()) && isJwtSubmission(servletRequest)) {
             AuthenticationToken token = createJwtToken(servletRequest);
