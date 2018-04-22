@@ -25,4 +25,8 @@ public abstract class BasicAction {
 
         return RequestResponseUtil.getRequestParameters(request);
     }
+
+    protected Map<String, String > getRequestHeader(HttpServletRequest request) {
+        return RequestResponseUtil.getRequestHeaders(request);
+    }
 }
