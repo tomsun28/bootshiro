@@ -168,7 +168,7 @@
   </select>
 
     <select id="selectAuthorityMenusByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select d.* from auth_user a
+    select distinct d.* from auth_user a
     join auth_user_role b on a.uid = b.user_id
     join auth_role_resource c on b.role_id = c.role_id
     join auth_resource d on c.resource_id = d.id
@@ -196,13 +196,13 @@
     </select>
 
     <select id="selectApisByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select a.* from auth_resource a
+        select distinct a.* from auth_resource a
         join auth_role_resource b on a.id = b.resource_id
         where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 2
     </select>
 
     <select id="selectMenusByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select a.* from auth_resource a
+        select distinct a.* from auth_resource a
         join auth_role_resource b on a.id = b.resource_id
         where b.role_id = #{roleId,jdbcType=INTEGER} and a.type = 1
     </select>
