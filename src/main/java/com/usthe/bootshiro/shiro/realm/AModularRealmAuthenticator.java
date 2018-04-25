@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.util.CollectionUtils;
+
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ public class AModularRealmAuthenticator extends ModularRealmAuthenticator {
 
     @Override
     protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
+
         assertRealmsConfigured();
         List<Realm> realms = this.getRealms()
                 .stream()

@@ -3,13 +3,11 @@ package com.usthe.bootshiro.shiro.filter;
 
 import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.shiro.config.RestPathMatchingFilterChainResolver;
-import com.usthe.bootshiro.shiro.provider.AccountProvider;
 import com.usthe.bootshiro.shiro.provider.ShiroFilterRulesProvider;
 import com.usthe.bootshiro.shiro.rule.RolePermRule;
 import com.usthe.bootshiro.support.SpringContextHolder;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
-import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

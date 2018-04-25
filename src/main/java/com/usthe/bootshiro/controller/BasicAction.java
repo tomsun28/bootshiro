@@ -3,8 +3,6 @@ package com.usthe.bootshiro.controller;
 import com.usthe.bootshiro.util.RequestResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 /* *

@@ -1,12 +1,10 @@
 package com.usthe.bootshiro.shiro.matcher;
 
-import com.usthe.bootshiro.shiro.provider.AccountProvider;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /* *

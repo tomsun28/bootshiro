@@ -108,7 +108,7 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isPasswordTokenGet(ServletRequest request) {
-//        String tokenKey = request.getParameter("tokenKey");
+
         String tokenKey = RequestResponseUtil.getParameter(request,"tokenKey");
 
         return (request instanceof HttpServletRequest)
@@ -117,10 +117,7 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isPasswordLoginPost(ServletRequest request) {
-//        String password = request.getParameter("password");
-//        String timestamp = request.getParameter("timestamp");
-//        String methodName = request.getParameter("methodName");
-//        String appId = request.getParameter("appId");
+
         Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
         String password = map.get("password");
         String timestamp = map.get("timestamp");
@@ -136,10 +133,7 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     private boolean isAccountRegisterPost(ServletRequest request) {
-//        String uid = request.getParameter("uid");
-//        String methodName = request.getParameter("methodName");
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
+
         Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
         String uid = map.get("uid");
         String username = map.get("username");
@@ -156,9 +150,6 @@ public class PasswordFilter extends AccessControlFilter {
 
     private AuthenticationToken createPasswordToken(ServletRequest request) {
 
-//        String appId = request.getParameter("appId");
-//        String password = request.getParameter("password");
-//        String timestamp = request.getParameter("timestamp");
         Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
         String appId = map.get("appId");
         String timestamp = map.get("timestamp");
