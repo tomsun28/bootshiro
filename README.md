@@ -71,6 +71,16 @@ docker run -d -p 8085:8080 --name $JOB_NAME -v /opt/dockerWorkspace/tomcat/$JOB_
 由于这个跨域是在nginx上解决的,要使前端真正能访问api还得使用nginx反向代理bootshiro后端
 [nginx反向代理配置](https://github.com/tomsun28/DockerFile/tree/master/nginx)
 
+如果您不想这样,可以在bootshiro添加拦截器拦截response 给它的header添加点跨域支持:
+````
+response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+response.setHeader("Access-Control-Allow-Credentials", "true");
+response.setHeader("P3P", "CP=CAO PSA OUR");
+response.addHeader("Access-Control-Allow-Methods", "POST,GET,TRACE,OPTIONS");
+response.addHeader("Access-Control-Allow-Headers", "Content-Type,Origin,Accept");
+response.addHeader("Access-Control-Max-Age", "120");
+
+````
 
 
 
