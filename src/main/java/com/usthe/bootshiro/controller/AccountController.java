@@ -9,6 +9,7 @@ import com.usthe.bootshiro.support.manager.LogExeManager;
 import com.usthe.bootshiro.util.*;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,10 @@ public class AccountController extends BasicAction{
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
         redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
         AuthUser authUser = userService.getUserByAppId(appId);
+        authUser.setPassword(null);
+        authUser.setSalt(null);
 
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId,request.getRemoteAddr(),(short)1,null));
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId,IpUtil.getIpFromRequest(WebUtils.toHttp(request)),(short)1,null));
 
         return new Message().ok(1003,"issue jwt success").addData("jwt",jwt).addData("user",authUser);
     }
@@ -120,7 +123,7 @@ public class AccountController extends BasicAction{
         authUser.setStatus((byte)1);
 
         accountService.registerAccount(authUser);
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid,request.getRemoteAddr(),(short)1,null));
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid,IpUtil.getIpFromRequest(WebUtils.toHttp(request)),(short)1,null));
 
         return new Message().ok(2002,"register success");
     }
