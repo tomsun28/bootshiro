@@ -1,5 +1,84 @@
 # bootshiro
 
+## 部署  
+--------
+1.IDE启动调试  
+
+- fork 项目到自己的仓库(欢迎star^.^)  
+- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- 用idea导入
+- 更改开发环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
+- 运行BootshiroApplication
+- bootshiro就可以提供api了 http://localhost:8080
+- 推荐使用postman进行api调试
+
+2.docker本地启动  
+
+- fork 项目到自己的仓库(欢迎star^.^)  
+- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- 更改生产环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
+- 前提已经存在maven环境,docker环境([docker常用看这里](http://usthe.com/2017/12/docker_learn/))
+- 在项目目录下 docker build -t bootshiro:1.0 . 
+- docker images看是否生成镜像成功
+- 运行 docker run -d -p 8080:8080 --name haiGirl bootshiro:1.0
+- docker ps 就可以看见您的haiGirl了
+- bootshiro就可以提供api了 http://localhost:8080
+
+3.jenkins+docker持续集成持续部署CICD  
+
+- fork 项目到自己的仓库(欢迎star^.^)  
+- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- 更改生产和开发环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
+- 搭建CICD环境有点繁琐，[看这里最下面](http://usthe.com/2017/12/docker_learn/)
+- 参照搭建完成后,bootshiro对应的jenkins下运行shell:
+````
+#!/bin/bash
+
+#build in jenkins sh
+
+#docker docker hub仓库地址,之后把生成的镜像上传到  registry or docker hub
+REGISTRY_URL=127.0.0.1:5000
+#docker login --username tomsun28 --password xxxx
+
+#根据时间生成版本号
+TAG=$REGISTRY_URL/$JOB_NAME:`date +%y%m%d-%H-%M`
+
+#使用maven 镜像进行编译 打包出 jar 文件
+docker run --rm --name mvn -v /opt/dockerWorkspace/maven:/root/.m2 \
+-v /opt/dockerWorkspace/jenkins_home/workspace/$JOB_NAME:/usr/src/mvn -w /usr/src/mvn/ \
+tomsun28/maven:1.0 mvn clean install -Dmaven.test.skip=true
+
+#使用放在项目下面的Dockerfile打包生成镜像
+docker build -t $TAG $WORKSPACE/.
+
+docker push $TAG
+docker rmi $TAG
+
+#判断之前运行的容器是否还在，在就删除
+if docker ps -a | grep -i $JOB_NAME;then
+docker rm -f $JOB_NAME
+fi
+
+#用最新版本的镜像运行容器
+
+docker run -d -p 8085:8080 --name $JOB_NAME -v /opt/dockerWorkspace/tomcat/$JOB_NAME/logs:/opt/tomcat/logs $TAG
+
+
+````
+
+4.nginx反向代理  
+
+由于这个跨域是在nginx上解决的,要使前端真正能访问api还得使用nginx反向代理bootshiro后端
+[nginx反向代理配置](https://github.com/tomsun28/DockerFile/tree/master/nginx)
+
+
+
+
+欢迎一起完善哦^^
+
+
+========
+
 ## 自己在前后端分离上的实践    
 
 要想实现完整的前后端分离，安全这块是绕不开的，这个系统主要功能就是动态restful api管理，这次实践包含两个模块,基于```springBoot + shiro```搭建的权限管理系统后台**bootshiro**, ```angular5 + typeScript```编写的前端管理**usthe**。(ps:考虑到我幼小的心灵和水平,大神误喷啊^_^~)  

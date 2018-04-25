@@ -27,13 +27,7 @@ public class AModularRealmAuthenticator extends ModularRealmAuthenticator {
                     return realm.supports(authenticationToken);
                 })
                 .collect(toList());
-        if (CollectionUtils.isEmpty(realms))
-            throw new IllegalStateException("configure error: no realm support token type:" + authenticationToken.getClass());
-        if (realms.size()==1) {
-            return doSingleRealmAuthentication(realms.iterator().next(),authenticationToken);
-        }else {
-            return doMultiRealmAuthentication(realms,authenticationToken);
-        }
+        return realms.size() == 1 ? this.doSingleRealmAuthentication(realms.iterator().next(), authenticationToken) : this.doMultiRealmAuthentication(realms, authenticationToken);
 
     }
 }

@@ -23,7 +23,6 @@ public class ShiroConfiguration {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,ShiroFilterChainManager filterChainManager) {
-//        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         RestShiroFilterFactoryBean shiroFilterFactoryBean = new RestShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setFilters(filterChainManager.initGetFilters());

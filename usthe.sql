@@ -119,11 +119,7 @@ CREATE TABLE `auth_role_resource`  (
 -- ----------------------------
 -- Records of auth_role_resource
 -- ----------------------------
-INSERT INTO `auth_role_resource` VALUES (1, 100, 100, NULL, NULL);
-INSERT INTO `auth_role_resource` VALUES (3, 102, 100, NULL, NULL);
-INSERT INTO `auth_role_resource` VALUES (5, 100, 101, NULL, NULL);
-INSERT INTO `auth_role_resource` VALUES (6, 101, 100, NULL, NULL);
-INSERT INTO `auth_role_resource` VALUES (9, 102, 103, NULL, NULL);
+
 INSERT INTO `auth_role_resource` VALUES (10, 103, 105, '2018-04-01 12:50:19', '2018-04-01 12:50:19');
 INSERT INTO `auth_role_resource` VALUES (21, 102, 102, '2018-04-09 21:09:09', '2018-04-09 21:09:09');
 INSERT INTO `auth_role_resource` VALUES (23, 103, 101, '2018-04-09 21:51:39', '2018-04-09 21:51:39');
@@ -193,17 +189,8 @@ CREATE TABLE `auth_user_role`  (
 -- ----------------------------
 -- Records of auth_user_role
 -- ----------------------------
-INSERT INTO `auth_user_role` VALUES (2, '5202f', 101, NULL, NULL);
-INSERT INTO `auth_user_role` VALUES (3, 'c0085', 102, NULL, NULL);
-INSERT INTO `auth_user_role` VALUES (5, 'c0085', 104, NULL, NULL);
+
 INSERT INTO `auth_user_role` VALUES (6, 'tom', 103, '2018-04-01 12:19:36', '2018-04-01 12:19:36');
-INSERT INTO `auth_user_role` VALUES (7, '282870345', 102, '2018-04-01 12:19:47', '2018-04-01 12:19:47');
-INSERT INTO `auth_user_role` VALUES (8, '3a50b', 102, '2018-04-09 22:43:49', '2018-04-09 22:43:49');
-INSERT INTO `auth_user_role` VALUES (10, 'dbec2', 102, '2018-04-09 22:43:55', '2018-04-09 22:43:55');
-INSERT INTO `auth_user_role` VALUES (11, '5202f', 102, '2018-04-09 22:43:58', '2018-04-09 22:43:58');
-INSERT INTO `auth_user_role` VALUES (12, 'dbec2', 103, '2018-04-09 22:44:06', '2018-04-09 22:44:06');
-INSERT INTO `auth_user_role` VALUES (13, '5202f', 103, '2018-04-09 22:44:09', '2018-04-09 22:44:09');
-INSERT INTO `auth_user_role` VALUES (14, '3a50b', 103, '2018-04-09 22:44:12', '2018-04-09 22:44:12');
 INSERT INTO `auth_user_role` VALUES (15, '282870345', 103, '2018-04-09 22:44:47', '2018-04-09 22:44:47');
 INSERT INTO `auth_user_role` VALUES (16, 'tom', 102, '2018-04-11 09:36:25', '2018-04-11 09:36:25');
 
