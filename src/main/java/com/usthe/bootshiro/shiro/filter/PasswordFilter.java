@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.shiro.token.PasswordToken;
 import com.usthe.bootshiro.util.CommonUtil;
+import com.usthe.bootshiro.util.IpUtil;
 import com.usthe.bootshiro.util.RequestResponseUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -56,7 +57,7 @@ public class PasswordFilter extends AccessControlFilter {
             //动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期5秒用完即丢弃
             String tokenKey = CommonUtil.getRandomString(16);
             try {
-                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase(),tokenKey,5, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+ IpUtil.getIpFromRequest(WebUtils.toHttp(request)),tokenKey,5, TimeUnit.SECONDS);
                 // 动态秘钥response返回给前端
                 Message message = new Message();
                 message.ok(1000,"issued tokenKey success")
