@@ -95,7 +95,7 @@ public class AccountController extends BasicAction{
         authUser.setUsername(username);
 
         // 从Redis取出密码传输加密解密秘钥
-        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+request.getRemoteAddr().toUpperCase());
+        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase());
         String realPassword = AESUtil.aesDecode(password,tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)

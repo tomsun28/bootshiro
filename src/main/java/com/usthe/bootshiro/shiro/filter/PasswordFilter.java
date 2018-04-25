@@ -57,7 +57,7 @@ public class PasswordFilter extends AccessControlFilter {
             //动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期5秒用完即丢弃
             String tokenKey = CommonUtil.getRandomString(16);
             try {
-                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+ IpUtil.getIpFromRequest(WebUtils.toHttp(request)),tokenKey,20, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+ IpUtil.getIpFromRequest(WebUtils.toHttp(request)),tokenKey,6, TimeUnit.SECONDS);
                 // 动态秘钥response返回给前端
                 Message message = new Message();
                 message.ok(1000,"issued tokenKey success")
@@ -155,7 +155,7 @@ public class PasswordFilter extends AccessControlFilter {
         String appId = map.get("appId");
         String timestamp = map.get("timestamp");
         String password = map.get("password");
-        String host = request.getRemoteAddr();
+        String host = IpUtil.getIpFromRequest(WebUtils.toHttp(request));
         String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+host.toUpperCase());
         return new PasswordToken(appId,password,timestamp,host,tokenKey);
     }
