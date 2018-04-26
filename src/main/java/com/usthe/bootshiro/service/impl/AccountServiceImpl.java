@@ -30,12 +30,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean isAccountExistByUid(String uid) {
+        AuthUser user = userMapper.selectByPrimaryKey(uid);
+        return user != null ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
     public boolean registerAccount(AuthUser account) throws DataAccessException {
 
         // 给新用户授权访客角色
         userService.authorityUserRole(account.getUid(),103);
 
-        return userMapper.insertSelective(account) >=1 ? Boolean.TRUE : Boolean.FALSE;
+        return userMapper.insertSelective(account) ==1 ? Boolean.TRUE : Boolean.FALSE;
     }
 
     @Override

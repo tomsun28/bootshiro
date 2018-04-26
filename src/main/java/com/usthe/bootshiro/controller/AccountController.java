@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping("/account")
-public class AccountController extends BasicAction{
+public class AccountController extends BasicAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
@@ -51,26 +51,26 @@ public class AccountController extends BasicAction{
      * @Param [] 登录签发 JWT
      * @Return java.lang.String
      */
-    @ApiOperation(value = "用户登录",notes = "POST用户登录签发JWT")
+    @ApiOperation(value = "用户登录", notes = "POST用户登录签发JWT")
     @PostMapping("/login")
     public Message accountLogin(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,String> params = RequestResponseUtil.getRequestParameters(request);
+        Map<String, String> params = RequestResponseUtil.getRequestParameters(request);
         String appId = params.get("appId");
         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
         String roles = accountService.loadAccountRole(appId);
         // 时间以秒计算,token有效刷新时间是token有效过期时间的2倍
         long refreshPeriodTime = 36000L;
-        String jwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
-                "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
+        String jwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(), appId,
+                "token-server", refreshPeriodTime >> 2, roles, null, SignatureAlgorithm.HS512);
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
-        redisTemplate.opsForValue().set("JWT-SESSION-"+appId,jwt,refreshPeriodTime, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("JWT-SESSION-" + appId, jwt, refreshPeriodTime, TimeUnit.SECONDS);
         AuthUser authUser = userService.getUserByAppId(appId);
         authUser.setPassword(null);
         authUser.setSalt(null);
 
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId,IpUtil.getIpFromRequest(WebUtils.toHttp(request)),(short)1,null));
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "登录成功"));
 
-        return new Message().ok(1003,"issue jwt success").addData("jwt",jwt).addData("user",authUser);
+        return new Message().ok(1003, "issue jwt success").addData("jwt", jwt).addData("user", authUser);
     }
 
     /* *
@@ -78,30 +78,36 @@ public class AccountController extends BasicAction{
      * @Param [request, response]
      * @Return com.usthe.bootshiro.domain.vo.Message
      */
-    @ApiOperation(value = "用户注册",notes = "POST用户注册")
+    @ApiOperation(value = "用户注册", notes = "POST用户注册")
     @PostMapping("/register")
-    public Message accountRegister(HttpServletRequest request,HttpServletResponse response) {
+    public Message accountRegister(HttpServletRequest request, HttpServletResponse response) {
 
-        Map<String,String> params = RequestResponseUtil.getRequestParameters(request);
+        Map<String, String> params = RequestResponseUtil.getRequestParameters(request);
         AuthUser authUser = new AuthUser();
-        String username = params.get("username");
         String uid = params.get("uid");
         String password = params.get("password");
-        if (StringUtils.isEmpty(username)||StringUtils.isEmpty(uid)||StringUtils.isEmpty(password)) {
-            // 三个必须信息缺一不可,返回注册账号信息缺失
-            return new Message().error(2001,"lack account info");
+        if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(password)) {
+            // 必须信息缺一不可,返回注册账号信息缺失
+            return new Message().error(1111, "账户信息缺失");
         }
+        if (accountService.isAccountExistByUid(uid)) {
+            // 账户已存在
+            return new Message().error(1111, "账户已存在");
+        }
+
         authUser.setUid(uid);
-        authUser.setUsername(username);
 
         // 从Redis取出密码传输加密解密秘钥
-        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase());
-        String realPassword = AESUtil.aesDecode(password,tokenKey);
+        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase());
+        String realPassword = AESUtil.aesDecode(password, tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
-        authUser.setPassword(MD5Util.md5(realPassword+salt));
+        authUser.setPassword(MD5Util.md5(realPassword + salt));
         authUser.setSalt(salt);
         authUser.setCreateTime(new Date());
+        if (!StringUtils.isEmpty(params.get("username"))) {
+            authUser.setUsername(params.get("username"));
+        }
         if (!StringUtils.isEmpty(params.get("realName"))) {
             authUser.setRealName(params.get("realName"));
         }
@@ -120,12 +126,15 @@ public class AccountController extends BasicAction{
         if (!StringUtils.isEmpty(params.get("createWhere"))) {
             authUser.setCreateWhere(Byte.valueOf(params.get("createWhere")));
         }
-        authUser.setStatus((byte)1);
+        authUser.setStatus((byte) 1);
 
-        accountService.registerAccount(authUser);
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid,IpUtil.getIpFromRequest(WebUtils.toHttp(request)),(short)1,null));
-
-        return new Message().ok(2002,"register success");
+        if (accountService.registerAccount(authUser)) {
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "注册成功"));
+            return new Message().ok(2002, "注册成功");
+        } else {
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 0, "注册失败"));
+            return new Message().ok(1111, "注册失败");
+        }
     }
 
 }

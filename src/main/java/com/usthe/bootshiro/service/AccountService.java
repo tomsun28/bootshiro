@@ -11,6 +11,7 @@ import com.usthe.bootshiro.domain.vo.Account;
 public interface AccountService {
 
     Account loadAccount(String appId);
+    boolean isAccountExistByUid(String uid);
     boolean registerAccount(AuthUser account);
     String loadAccountRole(String appId);
 }

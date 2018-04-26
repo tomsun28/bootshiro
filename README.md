@@ -1138,7 +1138,11 @@ github:
 持续更新。。。。。。
 
 
+thanks:  
 
+[Howieair](http://iconfont.cn/user/detail?spm=a313x.7781069.0.d214f71f6&uid=187147)的小猪图标  
+[zhangkaitao](http://jinnianshilongnian.iteye.com/blog/2018936)的跟我学shiro   
+网络上前辈们的教程文章开源项目
 
 
 <br>
