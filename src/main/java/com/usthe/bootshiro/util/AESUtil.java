@@ -6,10 +6,6 @@ import org.apache.commons.codec.binary.Base64;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -70,14 +66,14 @@ public class AESUtil {
      */
     public static String aesDecode(String content, String decryptKey) {
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(decryptKey.getBytes(), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(decryptKey.getBytes("utf-8"), "AES");
 
             //根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
             //初始化密码器，第一个参数为加密(Encrypt_mode)或者解密(Decrypt_mode)操作，第二个参数为使用的KEY
             cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(decryptKey.getBytes()));
             //8.将加密并编码base64后的字符串内容base64解码成字节数组
-            byte[] bytesContent = Base64.decodeBase64(content.getBytes());
+            byte[] bytesContent = Base64.decodeBase64(content);
             /*
              * 解密
              */

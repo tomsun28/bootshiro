@@ -56,17 +56,17 @@ public class PasswordFilter extends AccessControlFilter {
         if (isPasswordTokenGet(request)) {
             //动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期5秒用完即丢弃
             String tokenKey = CommonUtil.getRandomString(16);
+            String userKey = CommonUtil.getRandomString(6);
             try {
-                redisTemplate.opsForValue().set("PASSWORD_TOKEN_KEY_"+ IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase(),tokenKey,6, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set("TOKEN_KEY_"+ IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey.toUpperCase(),tokenKey,5, TimeUnit.SECONDS);
                 // 动态秘钥response返回给前端
                 Message message = new Message();
                 message.ok(1000,"issued tokenKey success")
-                        .addData("tokenKey",tokenKey);
+                        .addData("tokenKey",tokenKey).addData("userKey", userKey.toUpperCase());
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
 
             }catch (Exception e) {
                 LOGGER.warn(e.getMessage(),e);
-                // 动态秘钥response返回给前端
                 Message message = new Message();
                 message.ok(1000,"issued tokenKey fail");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
@@ -156,7 +156,8 @@ public class PasswordFilter extends AccessControlFilter {
         String timestamp = map.get("timestamp");
         String password = map.get("password");
         String host = IpUtil.getIpFromRequest(WebUtils.toHttp(request));
-        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_"+host.toUpperCase());
+        String userKey = map.get("userKey");
+        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_"+host.toUpperCase()+userKey);
         return new PasswordToken(appId,password,timestamp,host,tokenKey);
     }
 

@@ -86,6 +86,7 @@ public class AccountController extends BasicAction {
         AuthUser authUser = new AuthUser();
         String uid = params.get("uid");
         String password = params.get("password");
+        String userKey = params.get("userKey");
         if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(password)) {
             // 必须信息缺一不可,返回注册账号信息缺失
             return new Message().error(1111, "账户信息缺失");
@@ -98,7 +99,7 @@ public class AccountController extends BasicAction {
         authUser.setUid(uid);
 
         // 从Redis取出密码传输加密解密秘钥
-        String tokenKey = redisTemplate.opsForValue().get("PASSWORD_TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase());
+        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey);
         String realPassword = AESUtil.aesDecode(password, tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
