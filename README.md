@@ -1,5 +1,15 @@
 # bootshiro
 
+## 使用和一些约定   
+--------
+
+- 您在后端开发好api后,需要在前端页面 资源配置->API管理 新增基于ant匹配风格的api 
+- eg: 获取角色关联的对应用户列表 rest-url为 ```/role/user/{roleId}/{currentPage}/{pageSize}```访问方式为GET, 您需要在页面新增api:```/role/user/*/*/*```GET方式
+- url匹配链约定为 url=```url+"=="+httpMethod```
+- 在 资源配置->角色管理 配置您想要授权角色的API,菜单,关联用户等资源
+- 授权菜单在第一次登录时已经获取存储到sessionStorage防止重复获取,您授权变更菜单之后想要看的效果需要关闭页面重新打开(或者清除sessionStorage之后会自动获取授权菜单)
+- have fun  
+
 ## 部署  
 --------
 1.IDE启动调试  
