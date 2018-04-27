@@ -3,6 +3,7 @@ package com.usthe.bootshiro.shiro.rule;
 import com.usthe.bootshiro.util.JsonWebTokenUtil;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /* *
@@ -10,7 +11,7 @@ import java.util.Set;
  * @Description 
  * @Date 11:23 2018/3/1
  */
-public class RolePermRule extends AuthorizedRule {
+public class RolePermRule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +38,7 @@ public class RolePermRule extends AuthorizedRule {
         StringBuilder stringBuilder = new StringBuilder();
         Set<String> setRole = JsonWebTokenUtil.split(this.getNeedRoles());
 
-        // 若anon角色拥有此uri资源的权限,则此uri资源直接访问不需要认证和权限
+        // 约定若role_anon角色拥有此uri资源的权限,则此uri资源直接访问不需要认证和权限
         if (!StringUtils.isEmpty(this.getNeedRoles()) && setRole.contains("role_anon")) {
             stringBuilder.append("anon");
         }

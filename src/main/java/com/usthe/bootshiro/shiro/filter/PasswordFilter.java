@@ -66,7 +66,7 @@ public class PasswordFilter extends AccessControlFilter {
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
 
             }catch (Exception e) {
-                LOGGER.warn(e.getMessage(),e);
+                LOGGER.warn("签发动态秘钥失败"+e.getMessage(),e);
                 Message message = new Message();
                 message.ok(1000,"issued tokenKey fail");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
@@ -83,13 +83,13 @@ public class PasswordFilter extends AccessControlFilter {
                 //登录认证成功,进入请求派发json web token url资源内
                 return true;
             }catch (AuthenticationException e) {
-                LOGGER.warn(authenticationToken.getPrincipal()+"::"+e.getMessage(),e);
+                LOGGER.warn(authenticationToken.getPrincipal()+"::"+e.getMessage());
                 // 返回response告诉客户端认证失败
                 Message message = new Message().error(1002,"login fail");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
                 return false;
             }catch (Exception e) {
-                LOGGER.error(e.getMessage(),e);
+                LOGGER.error(authenticationToken.getPrincipal()+"::认证异常::"+e.getMessage(),e);
                 // 返回response告诉客户端认证失败
                 Message message = new Message().error(1002,"login fail");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);

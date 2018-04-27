@@ -6,6 +6,7 @@ import com.usthe.bootshiro.service.AccountService;
 import com.usthe.bootshiro.shiro.token.JwtToken;
 import com.usthe.bootshiro.support.factory.LogTaskFactory;
 import com.usthe.bootshiro.support.manager.LogExeManager;
+import com.usthe.bootshiro.util.IpUtil;
 import com.usthe.bootshiro.util.JsonWebTokenUtil;
 import com.usthe.bootshiro.util.RequestResponseUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -54,7 +55,7 @@ public class BJwtFilter extends BPathMatchingFilter {
 //                return this.checkRoles(subject,mappedValue) && this.checkPerms(subject,mappedValue);
                 return this.checkRoles(subject,mappedValue);
             }catch (AuthenticationException e) {
-                LOGGER.info(e.getMessage(),e);
+
                 // 如果是JWT过期
                 if (e.getMessage().equals("expiredJwt")) {
                     // 这里初始方案先抛出令牌过期，之后设计为在Redis中查询当前appId对应令牌，其设置的过期时间是JWT的两倍，此作为JWT的refresh时间
@@ -92,7 +93,7 @@ public class BJwtFilter extends BPathMatchingFilter {
 
             }catch (Exception e) {
                 // 其他错误
-                LOGGER.warn(servletRequest.getRemoteAddr()+"JWT认证"+e.getMessage(),e);
+                LOGGER.error(IpUtil.getIpFromRequest(WebUtils.toHttp(servletRequest))+"--JWT认证失败"+e.getMessage(),e);
                 // 告知客户端JWT错误1005,需重新登录申请jwt
                 Message message = new Message().error(1007,"error jwt");
                 RequestResponseUtil.responseWrite(JSON.toJSONString(message),servletResponse);
@@ -150,7 +151,7 @@ public class BJwtFilter extends BPathMatchingFilter {
         return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role.trim()));
     }
 
-    // 验证当前用户是否拥有mappedValue任意一个权限
+    // 验证当前用户是否拥有mappedValue任意一个权限  未使用
     private boolean checkPerms(Subject subject, Object mappedValue){
         String[] perms = (String[]) mappedValue;
         boolean isPermitted = true;
