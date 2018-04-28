@@ -1,7 +1,10 @@
 package com.usthe.bootshiro.util;
 
 
+import ch.qos.logback.core.joran.conditional.ThenOrElseActionBase;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -15,6 +18,8 @@ import java.security.NoSuchAlgorithmException;
  * @Date 20:04 2018/2/11
  */
 public class AESUtil {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AESUtil.class);
 
     // 默认加密秘钥 AES加密秘钥为约定16位，小于16位会报错
     private static final String ENCODE_RULES = "tomsun28hahahaha";
@@ -71,7 +76,7 @@ public class AESUtil {
             //根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
             //初始化密码器，第一个参数为加密(Encrypt_mode)或者解密(Decrypt_mode)操作，第二个参数为使用的KEY
-            cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(decryptKey.getBytes()));
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(decryptKey.getBytes("utf-8")));
             //8.将加密并编码base64后的字符串内容base64解码成字节数组
             byte[] bytesContent = Base64.decodeBase64(content);
             /*
@@ -80,16 +85,19 @@ public class AESUtil {
             byte[] byteDecode = cipher.doFinal(bytesContent);
             return new String(byteDecode, "utf-8");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LOGGER.error("没有指定的加密算法::"+e.getMessage(),e);
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            LOGGER.error("非法的块大小"+"::"+e.getMessage(),e);
             throw new RuntimeException("密文解密失败");
             //e.printStackTrace();
+        } catch (NullPointerException e) {
+            LOGGER.error("秘钥解析空指针异常"+"::"+e.getMessage(),e);
+            throw new RuntimeException("秘钥解析空指针异常");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("秘钥AES解析出现未知错误"+"::"+e.getMessage(),e);
             throw new RuntimeException("密文解密失败");
         }
-        //如果有错就返加nulll
+        //如果有错就返null
         return null;
 
     }
