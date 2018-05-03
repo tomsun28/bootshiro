@@ -141,7 +141,7 @@ public class JsonWebTokenUtil {
      *
      * @param jwt json web token
      */
-    public static JwtAccount parseJwt(String jwt, String appKey) {
+    public static JwtAccount parseJwt(String jwt, String appKey) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(appKey))
                 .parseClaimsJws(jwt)
@@ -163,6 +163,7 @@ public class JsonWebTokenUtil {
      * @Param [val] 从json数据中读取格式化map
      * @Return java.util.Map<java.lang.String,java.lang.Object>
      */
+    @SuppressWarnings("unchecked")
     public static Map<String, Object> readValue(String val) {
         try {
             return MAPPER.readValue(val, Map.class);
@@ -174,21 +175,13 @@ public class JsonWebTokenUtil {
     /**
      * 分割字符串进SET
      */
+    @SuppressWarnings("unchecked")
     public static Set<String> split(String str) {
-        return split(str, ",");
-    }
-    /**
-     * 分割字符串进SET
-     */
-    public static Set<String> split(String str, String separator) {
 
         Set<String> set = new HashSet<>();
         if (StringUtils.isEmpty(str))
             return set;
-        //CollectionUtils.arrayToList(str.split(separator)).forEach(item -> set.add(String.valueOf(item)));
-        for (String s : str.split(separator)) {
-            set.add(s);
-        }
+        set.addAll(CollectionUtils.arrayToList(str.split(",")));
         return set;
     }
 
