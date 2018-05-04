@@ -24,21 +24,16 @@ public class BootshiroApplicationTests {
 	@Autowired
     private StringRedisTemplate template;
 
+	@Autowired
+	StringEncryptor stringEncryptor;
+
 	@Test
 	public void contextLoads() {
 		template.opsForValue().set("hahahaha","lallal",10, TimeUnit.SECONDS);
 		System.out.println(new Timestamp(new Date().getTime()));
 		Assert.assertEquals("lallal",template.opsForValue().get("hahahaha"));
+		System.out.println(stringEncryptor.encrypt("hahahaha"));
 	}
-
-	@Autowired
-	StringEncryptor stringEncryptor;
-
-	@Test
-	public void test() {
-		System.out.println(stringEncryptor.encrypt("hahhaha"));
-	}
-
 
 
 }
