@@ -14,6 +14,39 @@
 - 授权菜单在第一次登录时已经获取存储到```sessionStorage```防止重复获取,您授权变更菜单之后想要看的效果需要关闭页面重新打开(或者清除```sessionStorage```之后会自动获取授权菜单)
 - have fun  
 
+
+## 项目的基础框架设计：  
+
+总的长这样：  
+
+![image1](/image/image1.PNG)  
+
+<br>
+
+#### 前端usthe  
+
+基于```angular5 + angular-cli + typeScript + rxjs + bootstrap + adminLTE```,践行angular最佳实践。  
+过程中node,webpack等有用到过,但我不熟。。。
+
+#### 后端bootshiro  
+
+基于```springboot + apache shiro + mybatis```框架，restful风格api，自定义状态码，json-web-token，druid数据库连接池，swagger文档生成，redis存储refreshtoken和动态秘钥，maven，MD5单向加密和AES双向等。。。  
+
+#### gate -nginx  
+
+这个nginx作为反向代理服务器，解决了跨域请求的问题。另一个nginx作为angular应用服务器，tomcat作为bootshiro的服务器。  
+
+反向代理的nginx.conf见: [conf](https://github.com/tomsun28/DockerFile/blob/master/nginx/nginx.conf)  
+
+#### 持续集成  
+
+流程长这样~：    
+
+![image2](/image/image2.PNG)  
+
+详细实现技术见另一篇:  [docker学习](https://segmentfault.com/a/1190000013088818)  
+
+
 ## 相关文档  
 --------
 
@@ -23,6 +56,8 @@
 - [签发的用户认证token超时刷新策略](https://segmentfault.com/a/1190000014545422)  
 - [传输密码动态加密解密](https://segmentfault.com/a/1190000014544933)  
 ps(之前是写在下面的太长有点乱)  
+
+
 
 
 ## 部署  
