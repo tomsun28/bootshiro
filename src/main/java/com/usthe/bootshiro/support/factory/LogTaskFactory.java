@@ -21,6 +21,10 @@ public class LogTaskFactory {
     private static AuthOperationLogMapper operationLogMapper = SpringContextHolder.getBean(AuthOperationLogMapper.class);
     private static AuthAccountLogMapper accountLogMapper = SpringContextHolder.getBean(AuthAccountLogMapper.class);
 
+    private LogTaskFactory() {
+
+    }
+
     public static TimerTask loginLog(String userId, String ip, Short succeed, String message) {
         return new TimerTask() {
             @Override

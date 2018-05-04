@@ -4,7 +4,9 @@ package com.usthe.bootshiro.shiro.matcher;
 import com.usthe.bootshiro.domain.vo.JwtAccount;
 import com.usthe.bootshiro.util.JsonWebTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -25,11 +27,10 @@ public class JwtMatcher implements CredentialsMatcher {
     public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {
 
         String jwt = (String) authenticationInfo.getCredentials();
-        String appId = (String) authenticationToken.getPrincipal();
         JwtAccount jwtAccount = null;
         try{
             jwtAccount = JsonWebTokenUtil.parseJwt(jwt,JsonWebTokenUtil.SECRET_KEY);
-        } catch(SignatureException e){
+        } catch(SignatureException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
             throw new AuthenticationException("errJwt"); // 令牌错误
         } catch(ExpiredJwtException e){
 

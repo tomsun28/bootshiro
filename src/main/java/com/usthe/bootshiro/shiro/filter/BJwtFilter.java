@@ -56,7 +56,7 @@ public class BJwtFilter extends BPathMatchingFilter {
             }catch (AuthenticationException e) {
 
                 // 如果是JWT过期
-                if (e.getMessage().equals("expiredJwt")) {
+                if ("expiredJwt".equals(e.getMessage())) {
                     // 这里初始方案先抛出令牌过期，之后设计为在Redis中查询当前appId对应令牌，其设置的过期时间是JWT的两倍，此作为JWT的refresh时间
                     // 当JWT的有效时间过期后，查询其refresh时间，refresh时间有效即重新派发新的JWT给客户端，
                     // refresh也过期则告知客户端JWT时间过期重新认证

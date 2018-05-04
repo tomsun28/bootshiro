@@ -12,6 +12,10 @@ import java.util.Date;
  */
 public class LogFactory {
 
+    private LogFactory() {
+
+    }
+
     public static AuthAccountLog createAccountLog(String userId,String logName, String ip, Short succeed, String message) {
         AuthAccountLog accountLog = new AuthAccountLog();
         accountLog.setUserId(userId);

@@ -24,11 +24,14 @@ import java.util.*;
  */
 public class JsonWebTokenUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonWebTokenUtil.class);
-
     public static final String SECRET_KEY = "?::4343fdf4fdf6cvf):";
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static  CompressionCodecResolver CODECRESOLVER = new DefaultCompressionCodecResolver();
+    private static  CompressionCodecResolver codecResolver = new DefaultCompressionCodecResolver();
+
+    private JsonWebTokenUtil() {
+
+    }
+
     /* *
      * @Description  json web token 签发
      * @param id 令牌ID
@@ -123,7 +126,7 @@ public class JsonWebTokenUtil {
             } else {
                 header = new DefaultHeader(m);
             }
-            compressionCodec = CODECRESOLVER.resolveCompressionCodec(header);
+            compressionCodec = codecResolver.resolveCompressionCodec(header);
         }
         // =============== Body =================
         String payload;
