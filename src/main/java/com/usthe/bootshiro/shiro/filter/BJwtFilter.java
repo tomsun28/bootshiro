@@ -48,11 +48,10 @@ public class BJwtFilter extends BPathMatchingFilter {
                 WebUtils.toHttp(servletRequest).getRequestURI(),WebUtils.toHttp(servletRequest).getMethod(),(short)1,null));
 
         // 判断是否为JWT认证请求
-        if ((null == subject || !subject.isAuthenticated()) && isJwtSubmission(servletRequest)) {
+        if ((null != subject && !subject.isAuthenticated()) && isJwtSubmission(servletRequest)) {
             AuthenticationToken token = createJwtToken(servletRequest);
             try {
                 subject.login(token);
-//                return this.checkRoles(subject,mappedValue) && this.checkPerms(subject,mappedValue);
                 return this.checkRoles(subject,mappedValue);
             }catch (AuthenticationException e) {
 
@@ -151,23 +150,6 @@ public class BJwtFilter extends BPathMatchingFilter {
         return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role.trim()));
     }
 
-    // 验证当前用户是否拥有mappedValue任意一个权限  未使用
-    private boolean checkPerms(Subject subject, Object mappedValue){
-        String[] perms = (String[]) mappedValue;
-        boolean isPermitted = true;
-        if (perms != null && perms.length > 0) {
-            if (perms.length == 1) {
-                if (!subject.isPermitted(perms[0])) {
-                    isPermitted = false;
-                }
-            } else {
-                if (!subject.isPermittedAll(perms)) {
-                    isPermitted = false;
-                }
-            }
-        }
-        return isPermitted;
-    }
 
     public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
