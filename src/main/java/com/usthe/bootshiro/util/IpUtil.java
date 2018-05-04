@@ -12,10 +12,14 @@ import java.util.regex.Pattern;
  */
 public class IpUtil {
 
-    public static final String _255 = "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-    public static final Pattern pattern = Pattern.compile("^(?:" + _255 + "\\.){3}" + _255 + "$");
+    private static final String N255 = "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    private static final Pattern PATTERN = Pattern.compile("^(?:" + N255 + "\\.){3}" + N255 + "$");
 
-    public static String longToIpV4(long longIp) {
+    private IpUtil() {
+
+    }
+
+    private static String longToIpV4(long longIp) {
         int octet3 = (int) ((longIp >> 24) % 256);
         int octet2 = (int) ((longIp >> 16) % 256);
         int octet1 = (int) ((longIp >> 8) % 256);
@@ -23,21 +27,21 @@ public class IpUtil {
         return octet3 + "." + octet2 + "." + octet1 + "." + octet0;
     }
 
-    public static long ipV4ToLong(String ip) {
+    private static long ipV4ToLong(String ip) {
         String[] octets = ip.split("\\.");
         return (Long.parseLong(octets[0]) << 24) + (Integer.parseInt(octets[1]) << 16)
                 + (Integer.parseInt(octets[2]) << 8) + Integer.parseInt(octets[3]);
     }
 
-    public static boolean isIPv4Private(String ip) {
+    private static boolean isIPv4Private(String ip) {
         long longIp = ipV4ToLong(ip);
         return (longIp >= ipV4ToLong("10.0.0.0") && longIp <= ipV4ToLong("10.255.255.255"))
                 || (longIp >= ipV4ToLong("172.16.0.0") && longIp <= ipV4ToLong("172.31.255.255"))
                 || longIp >= ipV4ToLong("192.168.0.0") && longIp <= ipV4ToLong("192.168.255.255");
     }
 
-    public static boolean isIPv4Valid(String ip) {
-        return pattern.matcher(ip).matches();
+    private static boolean isIPv4Valid(String ip) {
+        return PATTERN.matcher(ip).matches();
     }
 
     public static String getIpFromRequest(HttpServletRequest request) {
