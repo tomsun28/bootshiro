@@ -1,5 +1,7 @@
 package com.usthe.bootshiro.util;
 
+
+import com.alibaba.fastjson.JSON;
 import com.usthe.bootshiro.support.XssSqlHttpServletRequestWrapper;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -8,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +41,32 @@ public class RequestResponseUtil {
         }
         return dataMap;
     }
+
+    /* *
+     * @Description 获取request中的body json 数据转化为map
+     * @Param [request]
+     * @Return java.util.Map<java.lang.String,java.lang.String>
+     */
+    @SuppressWarnings("unchecked")
+    public static Map<String, String> getRequestBodyMap(ServletRequest request) {
+        Map<String ,String > dataMap = new HashMap<>();
+        // 判断是否已经将 inputStream 流中的 body 数据读出放入 attribute
+        if (request.getAttribute("body") != null) {
+            // 已经读出则返回attribute中的body
+            return (Map<String,String>)request.getAttribute("body");
+        } else {
+            try {
+                Map<String,String > maps = JSON.parseObject(request.getInputStream(),Map.class);
+                dataMap.putAll(maps);
+                request.setAttribute("body",dataMap);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+            return dataMap;
+        }
+    }
+
+
 
     /* *
      * @Description 读取request 已经被防止XSS，SQL注入过滤过的 请求参数key 对应的value

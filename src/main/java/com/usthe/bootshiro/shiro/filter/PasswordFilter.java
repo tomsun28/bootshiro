@@ -115,7 +115,7 @@ public class PasswordFilter extends AccessControlFilter {
 
     private boolean isPasswordLoginPost(ServletRequest request) {
 
-        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        Map<String ,String> map = RequestResponseUtil.getRequestBodyMap(request);
         String password = map.get("password");
         String timestamp = map.get("timestamp");
         String methodName = map.get("methodName");
@@ -147,7 +147,7 @@ public class PasswordFilter extends AccessControlFilter {
 
     private AuthenticationToken createPasswordToken(ServletRequest request) {
 
-        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        Map<String ,String> map = RequestResponseUtil.getRequestBodyMap(request);
         String appId = map.get("appId");
         String timestamp = map.get("timestamp");
         String password = map.get("password");
