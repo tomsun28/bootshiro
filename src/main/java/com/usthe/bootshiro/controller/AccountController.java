@@ -82,7 +82,7 @@ public class AccountController extends BasicAction {
     @PostMapping("/register")
     public Message accountRegister(HttpServletRequest request, HttpServletResponse response) {
 
-        Map<String, String> params = RequestResponseUtil.getRequestParameters(request);
+        Map<String, String> params = RequestResponseUtil.getRequestBodyMap(request);
         AuthUser authUser = new AuthUser();
         String uid = params.get("uid");
         String password = params.get("password");

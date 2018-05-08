@@ -131,7 +131,7 @@ public class PasswordFilter extends AccessControlFilter {
 
     private boolean isAccountRegisterPost(ServletRequest request) {
 
-        Map<String ,String> map = RequestResponseUtil.getRequestParameters(request);
+        Map<String ,String> map = RequestResponseUtil.getRequestBodyMap(request);
         String uid = map.get("uid");
         String username = map.get("username");
         String methodName = map.get("methodName");
