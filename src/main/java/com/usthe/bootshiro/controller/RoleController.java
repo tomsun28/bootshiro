@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -109,9 +108,9 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "授权资源给角色",httpMethod = "POST")
     @PostMapping("/authority/resource")
     public Message authorityRoleResource(HttpServletRequest request) {
-        Map<String,String> map = getRequestParameter(request);
-        int roleId = Integer.valueOf(map.get("roleId"));
-        int resourceId = Integer.valueOf(map.get("resourceId"));
+        Map<String,String> map = getRequestBody(request);
+        int roleId = Integer.valueOf(String.valueOf(map.get("roleId")));
+        int resourceId = Integer.valueOf(String.valueOf(map.get("resourceId")));
         boolean flag = roleService.authorityRoleResource(roleId,resourceId);
         shiroFilterChainManager.reloadFilterChain();
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
@@ -139,7 +138,7 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "添加角色", httpMethod = "POST")
     @PostMapping("")
     public Message addRole(@RequestBody AuthRole role) {
-        LOGGER.info(role.toString());
+
         boolean flag = roleService.addRole(role);
         if (flag) {
             return new Message().ok(6666, "add role success");
@@ -151,7 +150,7 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "更新角色", httpMethod = "PUT")
     @PutMapping("")
     public Message updateRole(@RequestBody AuthRole role) {
-        LOGGER.info(role.toString());
+
         boolean flag = roleService.updateRole(role);
         if (flag) {
             return new Message().ok(6666, "update success");
@@ -163,7 +162,7 @@ public class RoleController extends BasicAction {
     @ApiOperation(value = "根据角色ID删除角色", httpMethod = "DELETE")
     @DeleteMapping("{roleId}")
     public Message deleteRoleByRoleId(@PathVariable Integer roleId) {
-        LOGGER.info(roleId.toString() + "==========");
+
         boolean flag = roleService.deleteRoleByRoleId(roleId);
         if (flag) {
             return new Message().ok(6666, "delete success");

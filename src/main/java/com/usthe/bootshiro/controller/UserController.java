@@ -12,12 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -67,9 +65,9 @@ public class UserController extends BasicAction{
     @ApiOperation(value = "给用户授权添加角色",httpMethod = "POST")
     @PostMapping("/authority/role")
     public Message authorityUserRole(HttpServletRequest request) {
-        Map<String,String> map = getRequestParameter(request);
+        Map<String,String> map = getRequestBody(request);
         String uid = map.get("uid");
-        int roleId = Integer.valueOf(map.get("roleId"));
+        int roleId = Integer.valueOf(String.valueOf(map.get("roleId")));
         boolean flag = userService.authorityUserRole(uid,roleId);
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
     }

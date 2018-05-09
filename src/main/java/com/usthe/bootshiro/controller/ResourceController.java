@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "获取用户被授权菜单",notes = "通过uid获取对应用户被授权的菜单列表,获取完整菜单树形结构")
     @GetMapping("authorityMenu")
     public Message getAuthorityMenu(HttpServletRequest request) {
-//        String uid = request.getParameter("uid");
         String uid = request.getHeader("appId");
         List<MenuTreeNode> treeNodes = new ArrayList<>();
         List<AuthResource> resources = resourceService.getAuthorityMenusByUid(uid);
@@ -69,7 +67,6 @@ public class ResourceController extends BasicAction{
     @PostMapping("menu")
     public Message addMenu(@RequestBody AuthResource menu ) {
 
-        LOGGER.info(menu.toString());
         Boolean flag = resourceService.addMenu(menu);
         if (flag) {
             return new Message().ok(6666,"add menu success");
@@ -81,7 +78,6 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "修改菜单",httpMethod = "PUT")
     @PutMapping("menu")
     public Message updateMenu(@RequestBody AuthResource menu) {
-        LOGGER.info(menu.toString());
 
         Boolean flag = resourceService.modifyMenu(menu);
         if (flag) {
@@ -94,8 +90,6 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "删除菜单", notes = "根据菜单ID删除菜单", httpMethod = "DELETE")
     @DeleteMapping("menu/{menuId}")
     public Message deleteMenuByMenuId(@PathVariable Integer menuId) {
-
-        LOGGER.info(menuId.toString());
 
         Boolean flag = resourceService.deleteMenuByMenuId(menuId);
         if (flag) {
@@ -132,7 +126,6 @@ public class ResourceController extends BasicAction{
     @PostMapping("api")
     public Message addApi(@RequestBody AuthResource api ) {
 
-        LOGGER.info(api.toString());
         Boolean flag = resourceService.addMenu(api);
         if (flag) {
             return new Message().ok(6666,"add api success");
@@ -144,7 +137,6 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "修改API",httpMethod = "PUT")
     @PutMapping("api")
     public Message updateApi(@RequestBody AuthResource api) {
-        LOGGER.info(api.toString());
 
         Boolean flag = resourceService.modifyMenu(api);
         if (flag) {
@@ -157,8 +149,6 @@ public class ResourceController extends BasicAction{
     @ApiOperation(value = "删除API", notes = "根据API_ID删除API", httpMethod = "DELETE")
     @DeleteMapping("api/{apiId}")
     public Message deleteApiByApiId(@PathVariable Integer apiId) {
-
-        LOGGER.info(apiId.toString());
 
         Boolean flag = resourceService.deleteMenuByMenuId(apiId);
         if (flag) {
