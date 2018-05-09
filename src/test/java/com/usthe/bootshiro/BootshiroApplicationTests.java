@@ -25,7 +25,6 @@ public class BootshiroApplicationTests {
 	@Test
 	public void contextLoads() {
 		template.opsForValue().set("hahahaha","lallal",10, TimeUnit.SECONDS);
-		System.out.println(new Timestamp(new Date().getTime()));
 		Assert.assertEquals("lallal",template.opsForValue().get("hahahaha"));
 	}
 
