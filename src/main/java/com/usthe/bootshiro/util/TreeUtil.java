@@ -1,9 +1,6 @@
 package com.usthe.bootshiro.util;
 
 import com.usthe.bootshiro.domain.vo.TreeNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,6 @@ import java.util.List;
  */
 public class TreeUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TreeUtil.class);
 
     /* *
      * @Description 用双重循环建树
