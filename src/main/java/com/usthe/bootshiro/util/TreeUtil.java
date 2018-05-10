@@ -36,39 +36,4 @@ public class TreeUtil {
         return trees;
     }
 
-
-    /* *
-     * @Description 递归建树
-     * @Param [treeNodes, root]
-     * @Return java.util.List<T>
-     */
-    public static <T extends TreeNode> List<T> buildTreeByRecursive(List<T> treeNodes,Object root) {
-        List<T> trees = new ArrayList<>();
-        for (T node : treeNodes) {
-            if (root.equals(node.getParentId())) {
-                trees.add(findChildren(node,treeNodes));
-            }
-        }
-        return trees;
-    }
-
-    /* *
-     * @Description 递归查找子节点
-     * @Param [treeNode, treeNodes]
-     * @Return T
-     */
-    private static <T extends TreeNode> T findChildren(T treeNode, List<T> treeNodes) {
-        for (T it : treeNodes) {
-            if (treeNode.getId().equals(it.getParentId())) {
-                if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<>());
-                }
-                treeNode.addChilren(findChildren(it, treeNodes));
-            }
-        }
-        return treeNode;
-    }
-
-
-
 }
