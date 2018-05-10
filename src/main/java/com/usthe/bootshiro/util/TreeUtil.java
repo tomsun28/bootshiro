@@ -1,9 +1,6 @@
 package com.usthe.bootshiro.util;
 
 import com.usthe.bootshiro.domain.vo.TreeNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,6 @@ import java.util.List;
  */
 public class TreeUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TreeUtil.class);
 
     /* *
      * @Description 用双重循环建树
@@ -39,40 +35,5 @@ public class TreeUtil {
         }
         return trees;
     }
-
-
-    /* *
-     * @Description 递归建树
-     * @Param [treeNodes, root]
-     * @Return java.util.List<T>
-     */
-    public static <T extends TreeNode> List<T> buildTreeByRecursive(List<T> treeNodes,Object root) {
-        List<T> trees = new ArrayList<>();
-        for (T node : treeNodes) {
-            if (root.equals(node.getParentId())) {
-                trees.add(findChildren(node,treeNodes));
-            }
-        }
-        return trees;
-    }
-
-    /* *
-     * @Description 递归查找子节点
-     * @Param [treeNode, treeNodes]
-     * @Return T
-     */
-    private static <T extends TreeNode> T findChildren(T treeNode, List<T> treeNodes) {
-        for (T it : treeNodes) {
-            if (treeNode.getId().equals(it.getParentId())) {
-                if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<>());
-                }
-                treeNode.addChilren(findChildren(it, treeNodes));
-            }
-        }
-        return treeNode;
-    }
-
-
 
 }
