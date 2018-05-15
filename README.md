@@ -66,7 +66,7 @@ ps(之前是写在下面的太长有点乱)
 1.IDE启动调试  
 
 - fork 项目到自己的仓库(欢迎star^.^)  
-- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- clone 项目到本地 git clone https://gitee.com/yourName/bootshiro.git
 - 用idea导入
 - 更改开发环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
 - 运行BootshiroApplication
@@ -76,7 +76,7 @@ ps(之前是写在下面的太长有点乱)
 2.docker本地启动  
 
 - fork 项目到自己的仓库(欢迎star^.^)  
-- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- clone 项目到本地 git clone https://gitee.com/yourName/bootshiro.git
 - 更改生产环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
 - 前提已经存在maven环境,docker环境([docker常用看这里](https://segmentfault.com/a/1190000013088818))
 - mvn clean install -Dmaven.test.skip=true打出jar包
@@ -89,7 +89,7 @@ ps(之前是写在下面的太长有点乱)
 3.jenkins+docker持续集成持续部署CICD  
 
 - fork 项目到自己的仓库(欢迎star^.^)  
-- clone 项目到本地 git clone https://github.com/yourName/bootshiro.git
+- clone 项目到本地 git clone https://gitee.com/yourName/bootshiro.git
 - 更改生产和开发环境mysql数据库和redis地址(前提安装数据库并导入usthe.sql创建数据库usthe)
 - 搭建CICD环境有点繁琐，[看这里最下面](https://segmentfault.com/a/1190000013088818)
 - 参照搭建完成后,bootshiro对应的jenkins下运行shell:
@@ -146,15 +146,16 @@ response.addHeader("Access-Control-Max-Age", "120");
 
 ## 仓库 
  
+gitee:  
+ 
+ [bootshiro](https://gitee.com/tomsun28/bootshiro)  
+ [usthe](https://gitee.com/tomsun28/usthe) 
+ 
 github: 
 
 [bootshiro](https://github.com/tomsun28/bootshiro)  
 [usthe](https://github.com/tomsun28/usthe)  
          
-gitee:  
-
-[bootshiro](https://gitee.com/tomsun28/bootshiro)  
-[usthe](https://gitee.com/tomsun28/usthe) 
 
 。。。。。持续同步更新。。。。
 
