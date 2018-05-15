@@ -146,7 +146,7 @@ response.addHeader("Access-Control-Max-Age", "120");
 
 ## 仓库 
  
-gitee:  
+gitee(main rep):  
  
  [bootshiro](https://gitee.com/tomsun28/bootshiro)  
  [usthe](https://gitee.com/tomsun28/usthe) 
