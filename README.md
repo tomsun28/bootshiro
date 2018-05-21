@@ -1,16 +1,16 @@
 # bootshiro
 
 - ```bootshiro```是基于```springboot+shiro+jwt```的真正```restful URL```资源无状态认证权限管理系统的后端,前端[usthe](https://gitee.com/tomsun28/usthe)  
-- 提供页面可配置式的,动态的 ```restful api``` 安全管理  
+- 区别于一般,提供页面可配置式的,动态的 ```restful api``` 安全管理支持  
 - 数据传输动态秘钥加密,```jwt```过期刷新,用户操作监控等 加固应用安全  
 
 ## 使用和一些约定   
 --------
 
-- 您使用此项目在后端开发好```api```后,需要在前端页面 资源配置->API管理 新增基于```ant```匹配风格的```api``` 
+- 您使用此项目在后端开发好```api```后,需要在前端页面 资源配置->API管理 新增基于```ant```匹配风格的```api```(约定没有配置的api没有保护)
 - ```eg:``` 获取角色关联的对应用户列表 ```rest-url```为 ```/role/user/{roleId}/{currentPage}/{pageSize}```访问方式为```GET```, 您需要在页面新增```api:``` ```/role/user/*/*/*``` ```GET```方式
 - 自定义```url```匹配链约定为 ```url=``` ```url+"=="+httpMethod```
-- 页面添加了```api```后,您需要在 资源配置->角色管理 配置您想要授权角色的API,菜单,关联用户等资源(约定授权给```auth_anon```角色的```api```可以被所有人访问)
+- 页面添加了```api```后,您需要在 资源配置->角色管理 配置您想要授权角色的API,菜单,关联用户等资源(约定授权给```auth_anon```角色的```api```可以被所有人访问,注意没有授权给任何角色的api是可以被任何人访问的)
 - 授权菜单在第一次登录时已经获取存储到```sessionStorage```防止重复获取,您授权变更菜单之后想要看的效果需要关闭页面重新打开(或者清除```sessionStorage```之后会自动获取授权菜单)
 - have fun  
 
@@ -35,7 +35,7 @@
 
 #### gate -nginx  
 
-这个nginx作为反向代理服务器，解决了跨域请求的问题(现服务器端支持跨域可不用nginx)。另一个nginx作为angular应用服务器，tomcat作为bootshiro的服务器。  
+这个nginx作为反向代理服务器，解决了跨域,真实IP头(现服务器端支持跨域可不用nginx)。另一个nginx作为angular应用服务器，tomcat作为bootshiro的服务器。  
 
 反向代理的nginx.conf见: [conf](https://github.com/tomsun28/DockerFile/blob/master/nginx/nginx.conf)  
 
