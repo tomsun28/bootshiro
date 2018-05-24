@@ -1,7 +1,7 @@
 **线上演示**  
   
 [管理系统](http://tom.usthe.com)  
-[druid sql监控](http://tom.usthe.com/api/druid.login.html)  admin/admin  
+[druid sql监控](http://tom.usthe.com/api/druid/login.html)  admin/admin  
 [Swagger api文档](http://tom.usthe.com/api/swagger-ui.html)
 
 # bootshiro
