@@ -97,7 +97,7 @@ INSERT INTO `auth_resource` VALUES (112, 'ACCOUNT_REGISTER', '用户注册', 103
 INSERT INTO `auth_resource` VALUES (115, 'GROUP_USER', '用户系列', 110, '', 3, 'GET', NULL, 1, '2018-04-07 16:31:01', '2018-04-07 16:31:01');
 INSERT INTO `auth_resource` VALUES (117, 'ROLE_MANAGE', '角色管理', 106, '/index/role', 1, NULL, 'fa fa-adjust', 1, '2018-04-08 05:36:31', '2018-04-08 05:36:31');
 INSERT INTO `auth_resource` VALUES (118, 'GROUP_RESOURCE', '资源系列', 110, NULL, 3, NULL, NULL, 1, '2018-04-09 02:29:14', '2018-04-09 02:29:14');
-INSERT INTO `auth_resource` VALUES (119, 'USER_ROLE_APPID', '获取对应用户角色', 115, '/user/role/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 03:07:22', '2018-04-12 03:07:22');
+INSERT INTO `auth_resource` VALUES (119, 'USER_ROLE_APPID', '获取对应用户角色', 115, '/user/role/*', 2, 'GET', NULL, 1, '2018-04-12 03:07:22', '2018-04-12 03:07:22');
 INSERT INTO `auth_resource` VALUES (120, 'USER_LIST', '获取用户列表', 115, '/user/list', 2, 'GET', NULL, 1, '2018-04-12 03:08:30', '2018-04-12 03:08:30');
 INSERT INTO `auth_resource` VALUES (121, 'USER_AUTHORITY_ROLE', '给用户授权添加角色', 115, '/user/authority/role', 2, 'POST', NULL, 1, '2018-04-12 03:15:56', '2018-04-12 03:15:56');
 INSERT INTO `auth_resource` VALUES (122, 'USER_AUTHORITY_ROLE', '删除已经授权的用户角色', 115, '/user/authority/role', 2, 'DELETE', NULL, 1, '2018-04-12 03:29:03', '2018-04-12 03:29:03');
@@ -115,14 +115,14 @@ INSERT INTO `auth_resource` VALUES (133, 'ROLE_USER', '获取角色关联用户�
 INSERT INTO `auth_resource` VALUES (134, 'ROLE_USER', '获取角色未关联用户列表', 132, '/role/user/-/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:24:09', '2018-04-12 06:24:09');
 INSERT INTO `auth_resource` VALUES (135, 'ROLE_API', '获取角色关联API资源', 132, '/role/api/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:25:32', '2018-04-12 06:25:32');
 INSERT INTO `auth_resource` VALUES (136, 'ROLE_API', '获取角色未关联API资源', 132, '/role/api/-/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:26:12', '2018-04-12 06:26:12');
-INSERT INTO `auth_resource` VALUES (137, 'ROLE_MENU', '获取角色关联菜单资源', 132, 'role/menu/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:27:20', '2018-04-12 06:27:20');
+INSERT INTO `auth_resource` VALUES (137, 'ROLE_MENU', '获取角色关联菜单资源', 132, '/role/menu/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:27:20', '2018-04-12 06:27:20');
 INSERT INTO `auth_resource` VALUES (138, 'ROLE_MENU', '获取角色未关联菜单资源', 132, '/role/menu/-/*/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:27:56', '2018-04-12 06:27:56');
 INSERT INTO `auth_resource` VALUES (139, 'ROLE_AUTHORITY_RESOURCE', '授权资源给角色', 132, '/role/authority/resource', 2, 'POST', NULL, 1, '2018-04-12 06:29:45', '2018-04-12 06:29:45');
 INSERT INTO `auth_resource` VALUES (140, 'ROLE_AUTHORITY_RESOURCE', '删除角色的授权资源', 132, '/role/authority/resource', 2, 'DELETE', NULL, 1, '2018-04-12 06:31:12', '2018-04-12 06:31:12');
-INSERT INTO `auth_resource` VALUES (141, 'ROLE', '获取角色LIST', 132, 'role/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:32:34', '2018-04-12 06:32:34');
-INSERT INTO `auth_resource` VALUES (142, 'ROLE', '添加角色', 132, 'role', 2, 'POST', NULL, 1, '2018-04-12 06:33:25', '2018-04-12 06:33:25');
-INSERT INTO `auth_resource` VALUES (143, 'USER', '更新角色', 132, 'role', 2, 'PUT', NULL, 1, '2018-04-12 06:34:27', '2018-04-12 06:34:27');
-INSERT INTO `auth_resource` VALUES (144, 'ROLE', '删除角色', 132, 'role', 2, 'DELETE', NULL, 1, '2018-04-12 06:35:15', '2018-04-12 06:35:15');
+INSERT INTO `auth_resource` VALUES (141, 'ROLE', '获取角色LIST', 132, '/role/*/*', 2, 'GET', NULL, 1, '2018-04-12 06:32:34', '2018-04-12 06:32:34');
+INSERT INTO `auth_resource` VALUES (142, 'ROLE', '添加角色', 132, '/role', 2, 'POST', NULL, 1, '2018-04-12 06:33:25', '2018-04-12 06:33:25');
+INSERT INTO `auth_resource` VALUES (143, 'USER', '更新角色', 132, '/role', 2, 'PUT', NULL, 1, '2018-04-12 06:34:27', '2018-04-12 06:34:27');
+INSERT INTO `auth_resource` VALUES (144, 'ROLE', '删除角色', 132, '/role', 2, 'DELETE', NULL, 1, '2018-04-12 06:35:15', '2018-04-12 06:35:15');
 INSERT INTO `auth_resource` VALUES (145, 'LOG_WATCH', '日志记录', 104, '/index/log', 1, NULL, 'fa fa-rss-square', 1, '2018-04-22 08:12:24', '2018-04-22 08:12:24');
 
 -- ----------------------------
