@@ -110,35 +110,44 @@
 	<logger name="org.slf4j" level="info"/>
 	<logger name="ch.qos.logback" level="info"/>
 
-	<!-- 下面是打印 mybatis sql语句日志的配置 -->
-	<logger name="com.usthe.bootshiro.dao">
-		<level value="debug"/>
-		<appender-ref ref="SqlOutFileAppender"/>
-	</logger>
-
-	<root level="debug">
-		<appender-ref ref="ErrOutFileAppender"/>
-		<appender-ref ref="SystemOutFileAppender"/>
-		<appender-ref ref="ConsoleAppender"/>
-	</root>
-
 
 	<!-- 生产环境配置文件 -->
-	<!--<springProfile name="prod">-->
-		<!--<root level="DEBUG">-->
-			<!--<appender-ref ref="ErrOutFileAppender"/>-->
-			<!--<appender-ref ref="SystemOutFileAppender"/>-->
-			<!--<appender-ref ref="ConsoleAppender"/>-->
-		<!--</root>-->
-	<!--</springProfile>-->
+	<springProfile name="prod">
+
+		<!-- 下面是打印 mybatis sql语句日志的配置 -->
+		<logger name="com.usthe.bootshiro.dao">
+			<level value="debug"/>
+			<appender-ref ref="SqlOutFileAppender"/>
+		</logger>
+
+		<root level="DEBUG">
+			<appender-ref ref="ErrOutFileAppender"/>
+			<appender-ref ref="SystemOutFileAppender"/>
+			<appender-ref ref="ConsoleAppender"/>
+		</root>
+	</springProfile>
+
+	<!-- 测试环境配置文件 -->
+	<springProfile name="test">
+
+		<!-- 下面是打印 mybatis sql语句日志的配置 -->
+		<logger name="com.usthe.bootshiro.dao">
+			<level value="debug"/>
+			<appender-ref ref="SqlOutFileAppender"/>
+		</logger>
+
+		<root level="DEBUG">
+			<appender-ref ref="ErrOutFileAppender"/>
+			<appender-ref ref="SystemOutFileAppender"/>
+			<appender-ref ref="ConsoleAppender"/>
+		</root>
+	</springProfile>
 
 	 <!--开发环境配置文件-->
-	<!--<springProfile name="dev,test">-->
-		<!--<root level="warn">-->
-			<!--<appender-ref ref="ErrOutFileAppender"/>-->
-			<!--<appender-ref ref="SystemOutFileAppender"/>-->
-			<!--<appender-ref ref="ConsoleAppender"/>-->
-		<!--</root>-->
-	<!--</springProfile>-->
+	<springProfile name="dev">
+		<root level="DEBUG">
+			<appender-ref ref="ConsoleAppender"/>
+		</root>
+	</springProfile>
 
 </configuration>
