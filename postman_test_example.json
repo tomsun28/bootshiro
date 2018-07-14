@@ -1,0 +1,192 @@
+{
+	"info": {
+		"name": "bootshiro echo",
+		"_postman_id": "4785e99b-8a3b-d6fb-2639-2e8c423253e1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bootshiro-login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf78a840-a6cd-420d-a614-d8eed4028b51",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.sendRequest(\"http://localhost:8080/account/register?tokenKey=get\", function (err, response) {",
+							"    var key = response.json().data.tokenKey;",
+							"    var userKey = response.json().data.userKey;",
+							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
+							"     console.log(userKey);",
+							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
+							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
+							"    ",
+							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
+							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
+							"    ",
+							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
+							"",
+							"    pm.environment.set(\"password\", password.toString());",
+							"    pm.environment.set(\"userKey\", userKey.toString());",
+							"    ",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"appId\": \"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"login\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/account/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"login"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "bootshiro-jwt",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw"
+					},
+					{
+						"key": "appId",
+						"value": "tom"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/role/tom",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"role",
+						"tom"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw",
+							"equals": true,
+							"disabled": true
+						}
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "bootshiro-register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e2075c45-db6d-436b-96cb-3ffd11b974c9",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.sendRequest(\"http://localhost:8080/account/register?tokenKey=get\", function (err, response) {",
+							"    var key = response.json().data.tokenKey;",
+							"    var userKey = response.json().data.userKey;",
+							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
+							"     console.log(userKey);",
+							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
+							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
+							"    ",
+							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
+							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
+							"    ",
+							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
+							"",
+							"    pm.environment.set(\"password\", password.toString());",
+							"    pm.environment.set(\"userKey\", userKey.toString());",
+							"    ",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"uid\": \"tom\",\r\n      \"username\":\"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"register\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"register"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		}
+	]
+}
