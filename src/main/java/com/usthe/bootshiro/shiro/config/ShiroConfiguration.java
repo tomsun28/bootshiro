@@ -1,6 +1,6 @@
 package com.usthe.bootshiro.shiro.config;
 
-import com.usthe.bootshiro.shiro.filter.ASubjectFactory;
+import com.usthe.bootshiro.shiro.filter.StatelessWebSubjectFactory;
 import com.usthe.bootshiro.shiro.filter.ShiroFilterChainManager;
 import com.usthe.bootshiro.shiro.realm.AModularRealmAuthenticator;
 import com.usthe.bootshiro.shiro.realm.RealmManager;
@@ -34,11 +34,14 @@ public class ShiroConfiguration {
     public SecurityManager securityManager(RealmManager realmManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(new AModularRealmAuthenticator());
-        DefaultSubjectDAO subjectDAO = (DefaultSubjectDAO) securityManager.getSubjectDAO();
-        DefaultSessionStorageEvaluator evaluator = (DefaultSessionStorageEvaluator) subjectDAO.getSessionStorageEvaluator();
-        ASubjectFactory subjectFactory = new ASubjectFactory(evaluator);
-        securityManager.setSubjectFactory(subjectFactory);
         securityManager.setRealms(realmManager.initGetRealm());
+
+        // 无状态subjectFactory设置
+        DefaultSessionStorageEvaluator evaluator = (DefaultSessionStorageEvaluator)((DefaultSubjectDAO) securityManager.getSubjectDAO()).getSessionStorageEvaluator();
+        evaluator.setSessionStorageEnabled(Boolean.FALSE);
+        StatelessWebSubjectFactory subjectFactory = new StatelessWebSubjectFactory();
+        securityManager.setSubjectFactory(subjectFactory);
+
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
     }
