@@ -71,7 +71,7 @@ public class BJwtFilter extends BPathMatchingFilter {
                         String roles = accountService.loadAccountRole(appId);
                         long refreshPeriodTime = 36000L;  //seconds为单位,10 hours
                         String newJwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
-                                "token-server",refreshPeriodTime >> 2,roles,null, SignatureAlgorithm.HS512);
+                                "token-server",refreshPeriodTime >> 1,roles,null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
                         redisTemplate.opsForValue().set("JWT-SESSION-"+appId,newJwt,refreshPeriodTime, TimeUnit.SECONDS);
                         Message message = new Message().ok(1005,"new jwt").addData("jwt",newJwt);
