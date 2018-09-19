@@ -17,7 +17,7 @@ public class PasswordToken implements AuthenticationToken{
     private String host;
     private String tokenKey;
 
-    public PasswordToken(String appId, String password, String timestamp, String host,String tokenKey) {
+    public PasswordToken(String appId, String password, String timestamp, String host,String tokenKey) throws Exception {
         this.appId = appId;
         this.timestamp = timestamp;
         this.host = host;

@@ -72,7 +72,17 @@ public class PasswordFilter extends AccessControlFilter {
 
         // 判断是否是登录请求
         if(isPasswordLoginPost(request)){
-            AuthenticationToken authenticationToken = createPasswordToken(request);
+
+            AuthenticationToken authenticationToken = null;
+            try {
+                authenticationToken = createPasswordToken(request);
+            }catch (Exception e) {
+                // response 告知无效请求
+                Message message = new Message().error(1111,"error request");
+                RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
+                return false;
+            }
+
             Subject subject = getSubject(request,response);
             try {
                 subject.login(authenticationToken);
@@ -145,7 +155,7 @@ public class PasswordFilter extends AccessControlFilter {
                 && methodName.equals("register");
     }
 
-    private AuthenticationToken createPasswordToken(ServletRequest request) {
+    private AuthenticationToken createPasswordToken(ServletRequest request) throws Exception {
 
         Map<String ,String> map = RequestResponseUtil.getRequestBodyMap(request);
         String appId = map.get("appId");
