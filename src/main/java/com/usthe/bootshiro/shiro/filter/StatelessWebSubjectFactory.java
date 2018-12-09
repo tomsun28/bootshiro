@@ -11,20 +11,16 @@ import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
  * @Description 对于无状态的TOKEN不创建session 这里都不使用session
  * @Date 21:52 2018/3/3
  */
-public class ASubjectFactory extends DefaultWebSubjectFactory {
+public class StatelessWebSubjectFactory extends DefaultWebSubjectFactory {
 
-    private final DefaultSessionStorageEvaluator sessionStorageEvaluator;
-
-    public ASubjectFactory(DefaultSessionStorageEvaluator sessionStorageEvaluator) {
-        this.sessionStorageEvaluator = sessionStorageEvaluator;
-    }
     @Override
     public Subject createSubject(SubjectContext context) {
         // 这里都不创建session
         AuthenticationToken token = context.getAuthenticationToken();
         context.setSessionCreationEnabled(Boolean.FALSE);
-        this.sessionStorageEvaluator.setSessionStorageEnabled(Boolean.FALSE);
         return super.createSubject(context);
     }
+
+    public StatelessWebSubjectFactory() {}
 
 }
