@@ -29,12 +29,12 @@ CREATE TABLE `auth_account_log`  (
   `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户账户操作日志主键',
   `LOG_NAME` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志名称(login,register,logout)',
   `USER_ID` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `SUCCEED` tinyint(4) NULL DEFAULT NULL COMMENT '是否执行成功(0失败1成功)',
   `MESSAGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '具体消息',
   `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录注册登出记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录注册登出记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_account_log
@@ -51,11 +51,11 @@ CREATE TABLE `auth_operation_log`  (
   `USER_ID` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id',
   `API` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'api名称',
   `METHOD` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '方法名称',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `SUCCEED` tinyint(4) NULL DEFAULT NULL COMMENT '是否执行成功(0失败1成功)',
   `MESSAGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '具体消息备注',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 610 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 610 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_operation_log
@@ -78,10 +78,10 @@ CREATE TABLE `auth_resource`  (
   `METHOD` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问方式 GET POST PUT DELETE PATCH',
   `ICON` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
   `STATUS` smallint(4) NULL DEFAULT 1 COMMENT '状态   1:正常、9：禁用',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
-  `UPDATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '更新时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 146 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源信息表(菜单,资源)' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 146 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源信息表(菜单,资源)' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_resource
@@ -134,10 +134,10 @@ CREATE TABLE `auth_role`  (
   `CODE` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色编码',
   `NAME` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `STATUS` smallint(4) NULL DEFAULT 1 COMMENT '状态   1:正常、9：禁用',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
-  `UPDATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '更新时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_role
@@ -155,16 +155,15 @@ CREATE TABLE `auth_role_resource`  (
   `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `ROLE_ID` int(11) NOT NULL COMMENT '角色ID',
   `RESOURCE_ID` int(11) NOT NULL COMMENT '资源ID',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
-  `UPDATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '更新时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`ID`) USING BTREE,
   UNIQUE INDEX `ROLE_ID`(`ROLE_ID`, `RESOURCE_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源角色关联表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_role_resource
 -- ----------------------------
-
 INSERT INTO `auth_role_resource` VALUES (10, 103, 105, '2018-04-01 12:50:19', '2018-04-01 12:50:19');
 INSERT INTO `auth_role_resource` VALUES (21, 102, 102, '2018-04-09 21:09:09', '2018-04-09 21:09:09');
 INSERT INTO `auth_role_resource` VALUES (23, 103, 101, '2018-04-09 21:51:39', '2018-04-09 21:51:39');
@@ -245,13 +244,13 @@ CREATE TABLE `auth_user`  (
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件地址(唯一)',
   `sex` tinyint(4) NULL DEFAULT NULL COMMENT '性别(1.男 2.女)',
   `status` tinyint(4) NULL DEFAULT NULL COMMENT '账户状态(1.正常 2.锁定 3.删除 4.非法)',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
-  `UPDATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '更新时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `CREATE_WHERE` tinyint(4) NULL DEFAULT NULL COMMENT '创建来源(1.web 2.android 3.ios 4.win 5.macos 6.ubuntu)',
   PRIMARY KEY (`uid`) USING BTREE,
   UNIQUE INDEX `phone`(`phone`) USING BTREE,
   UNIQUE INDEX `email`(`email`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_user
@@ -266,17 +265,15 @@ CREATE TABLE `auth_user_role`  (
   `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户角色关联表主键',
   `USER_ID` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户UID',
   `ROLE_ID` int(11) NOT NULL COMMENT '角色ID',
-  `CREATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '创建时间',
-  `UPDATE_TIME` datetime(0) NULL DEFAULT current_timestamp() COMMENT '更新时间',
+  `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`ID`) USING BTREE,
   UNIQUE INDEX `USER_ID`(`USER_ID`, `ROLE_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色关联表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_user_role
 -- ----------------------------
-
 INSERT INTO `auth_user_role` VALUES (15, '282870345', 103, '2018-04-09 22:44:47', '2018-04-09 22:44:47');
-
 
 SET FOREIGN_KEY_CHECKS = 1;
