@@ -49,7 +49,10 @@
 
 流程长这样~：    
 
-![image2](/image/image2.PNG)  
+![image2](/image/image2.PNG)    
+
+增加kubernetes支持:  
+bootshiro.yaml
 
 详细实现技术见另一篇:  [docker学习](https://segmentfault.com/a/1190000013088818)  
 
