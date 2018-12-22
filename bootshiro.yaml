@@ -19,7 +19,7 @@ spec:
   spec:
    containers:
    - name: nginx
-     image: registry.cn-hangzhou.aliyuncs.com/tomsun28/bootshiro:latest
+     image: registry.cn-hangzhou.aliyuncs.com/tomsun28/bootshiro:${BUILD_NUMBER}
      ports:
      - containerPort: 8080
 
