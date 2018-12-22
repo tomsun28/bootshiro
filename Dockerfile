@@ -1,16 +1,16 @@
-#VERSION 1.0.0
-#基础镜像为oracle java-8
+#VERSION 1.1.0
+#基础镜像为openjdk:12-alpine
 
-FROM tomsun28/oracle-java-8:1.0
+FROM openjdk:12-alpine
 
 #签名
 MAINTAINER tomsun28 "tomsun28@outlook.com"
 
 
-RUN rm -rf /opt/tomcat/webapps/bootshiro*
-ADD ./target/bootshiro.jar /opt/tomcat/webapps/bootshiro.jar
+RUN rm -rf /opt/running/bootshiro*
+ADD ./target/bootshiro.jar /opt/running/bootshiro.jar
 
 EXPOSE 8080
-WORKDIR /opt/tomcat/webapps/
+WORKDIR /opt/running/
 
 CMD ["java", "-jar", "bootshiro.jar","--spring.profiles.active=prod"]
