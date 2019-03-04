@@ -2,6 +2,11 @@ package com.usthe.bootshiro.domain.bo;
 
 import java.util.Date;
 
+/**
+ *   角色资源绑定
+ * @author tomsun28
+ * @date 11:09 2018/4/22
+ */
 public class AuthRoleResource {
     private Integer id;
 

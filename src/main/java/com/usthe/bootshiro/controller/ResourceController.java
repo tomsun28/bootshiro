@@ -17,16 +17,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-/* *
- * @Author tomsun28
- * @Description 资源URL管理
- * @Date 21:36 2018/3/17
+/**
+ *   资源URL管理
+ * @author tomsun28
+ * @date 21:36 2018/3/17
  */
 @RestController
 @RequestMapping("/resource")
-public class ResourceController extends BasicAction{
+public class ResourceController extends BaseAction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseAction.class);
 
     @Autowired
     private ResourceService resourceService;

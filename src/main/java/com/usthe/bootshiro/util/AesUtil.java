@@ -7,22 +7,27 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 
 
-/* *
- * @Author tomsun28
- * @Description AES 双向加密解密工具
- * @Date 20:04 2018/2/11
+/**
+ * AES 双向加密解密工具
+ * @author tomsun28
+ * @date 20:04 2018/2/11
  */
-public class AESUtil {
+public class AesUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AESUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AesUtil.class);
 
-    // 默认加密秘钥 AES加密秘钥为约定16位，小于16位会报错
+    /**
+     *  默认加密秘钥 AES加密秘钥为约定16位，小于16位会报错
+     */
     private static final String ENCODE_RULES = "tomSun28HaHaHaHa";
 
-    // 默认算法
+    /**
+     *  默认算法
+     */
     private static final String ALGORITHM_STR = "AES/CBC/PKCS5Padding";
 
     public static String aesEncode(String content) {
@@ -34,29 +39,31 @@ public class AESUtil {
     }
 
 
-    private AESUtil() {
+    private AesUtil() {
 
     }
 
-    /* *
-     * @Description  加密 aes cbc模式
-     * @Param [content]
-     * @Return java.lang.String
+    /**
+     * description 加密 aes cbc模式
+     *
+     * @param content 1
+     * @param encryptKey 2
+     * @return java.lang.String
      */
     public static String aesEncode(String content, String encryptKey) {
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(encryptKey.getBytes(), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(encryptKey.getBytes(StandardCharsets.UTF_8), "AES");
 
             //根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(ALGORITHM_STR);
             //初始化密码器，第一个参数为加密(Encrypt_mode)或者解密解密(Decrypt_mode)操作，第二个参数为使用的KEY
-            cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(encryptKey.getBytes()));
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(encryptKey.getBytes(StandardCharsets.UTF_8)));
             //获取加密内容的字节数组(这里要设置为utf-8)不然内容中如果有中文和英文混合中文就会解密为乱码
-            byte[] byteEncode = content.getBytes("utf-8");
+            byte[] byteEncode = content.getBytes(StandardCharsets.UTF_8);
             //根据密码器的初始化方式--加密：将数据加密
             byte[] byteAES = cipher.doFinal(byteEncode);
             //将加密后的byte[]数据转换为Base64字符串
-            return new String(Base64.encodeBase64(byteAES));
+            return new String(Base64.encodeBase64(byteAES),StandardCharsets.UTF_8);
             //将字符串返回
         } catch (Exception e) {
             LOGGER.error("密文加密失败"+e.getMessage(),e);
@@ -67,32 +74,33 @@ public class AESUtil {
 
     }
 
-    /* *
-     * @Description 解密
-     * @Param [cotent]
-     * @Return java.lang.String
+    /**
+     * description 解密
+     *
+     * @param content 1
+     * @param decryptKey 2
+     * @return java.lang.String
      */
     public static String aesDecode(String content, String decryptKey) {
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(decryptKey.getBytes("utf-8"), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(decryptKey.getBytes(StandardCharsets.UTF_8), "AES");
 
             //根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(ALGORITHM_STR);
             //初始化密码器，第一个参数为加密(Encrypt_mode)或者解密(Decrypt_mode)操作，第二个参数为使用的KEY
-            cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(decryptKey.getBytes("utf-8")));
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(decryptKey.getBytes(StandardCharsets.UTF_8)));
             //8.将加密并编码base64后的字符串内容base64解码成字节数组
             byte[] bytesContent = Base64.decodeBase64(content);
             /*
              * 解密
              */
             byte[] byteDecode = cipher.doFinal(bytesContent);
-            return new String(byteDecode, "utf-8");
+            return new String(byteDecode, StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("没有指定的加密算法::"+e.getMessage(),e);
         } catch (IllegalBlockSizeException e) {
             LOGGER.error("非法的块大小"+"::"+e.getMessage(),e);
             throw new RuntimeException("密文解密失败");
-            //e.printStackTrace();
         } catch (NullPointerException e) {
             LOGGER.error("秘钥解析空指针异常"+"::"+e.getMessage(),e);
             throw new RuntimeException("秘钥解析空指针异常");

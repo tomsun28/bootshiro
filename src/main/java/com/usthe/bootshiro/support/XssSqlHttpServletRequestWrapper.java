@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-/* *
- * @Author tomsun28
- * @Description request请求安全过滤包装类
- * @Date 20:41 2018/4/15
+/**
+ * request请求安全过滤包装类
+ * @author tomsun28
+ * @date 20:41 2018/4/15
  */
 public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
@@ -20,10 +20,11 @@ public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
         super(request);
     }
 
-    /* *
-     * @Description 重写  数组参数过滤
-     * @Param [parameter]
-     * @Return java.lang.String[]
+    /**
+     * description 重写  数组参数过滤
+     *
+     * @param parameter 1
+     * @return java.lang.String[]
      */
     @Override
     public String[] getParameterValues(String parameter) {
@@ -42,7 +43,7 @@ public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public Map<String,String[]> getParameterMap() {
         Map<String,String[]> primary = super.getParameterMap();
-        Map<String,String[]> result = new HashMap<>();
+        Map<String,String[]> result = new HashMap<>(16);
         for (Map.Entry<String,String[]> entry : primary.entrySet()) {
             result.put(entry.getKey(),filterEntryString(entry.getValue()));
         }
@@ -71,10 +72,11 @@ public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return cookies;
     }
 
-    /* *
-     * @Description  过滤字符串数组不安全内容
-     * @Param [value]
-     * @Return java.lang.String[]
+    /**
+     * description 过滤字符串数组不安全内容
+     *
+     * @param value 1
+     * @return java.lang.String[]
      */
     private String[] filterEntryString(String[] value) {
         for (int i = 0; i < value.length; i++) {
@@ -83,10 +85,11 @@ public class XssSqlHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return value;
     }
 
-    /* *
-     * @Description 过滤字符串不安全内容
-     * @Param [value]
-     * @Return java.lang.String
+    /**
+     * description 过滤字符串不安全内容
+     *
+     * @param value 1
+     * @return java.lang.String
      */
     private String filterParamString(String value) {
         if (null == value) {

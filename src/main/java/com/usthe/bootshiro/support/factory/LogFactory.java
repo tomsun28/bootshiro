@@ -5,10 +5,10 @@ import com.usthe.bootshiro.domain.bo.AuthOperationLog;
 
 import java.util.Date;
 
-/* *
- * @Author tomsun28
- * @Description 日志对象工厂
- * @Date 9:50 2018/4/22
+/**
+ *   日志对象工厂
+ * @author tomsun28
+ * @date 9:50 2018/4/22
  */
 public class LogFactory {
 

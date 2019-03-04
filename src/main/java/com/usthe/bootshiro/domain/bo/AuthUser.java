@@ -2,6 +2,11 @@ package com.usthe.bootshiro.domain.bo;
 
 import java.util.Date;
 
+/**
+ *   user
+ * @author tomsun28
+ * @date 8:08 2018/4/22
+ */
 public class AuthUser {
     private String uid;
 

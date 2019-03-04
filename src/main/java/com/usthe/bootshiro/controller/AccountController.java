@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -26,16 +25,25 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-/* *
- * @Author tomsun28
- * @Description post新增,get读取,put完整更新,patch部分更新,delete删除
- * @Date 14:40 2018/3/8
+/**
+ *   post新增,get读取,put完整更新,patch部分更新,delete删除
+ * @author tomsun28
+ * @date 14:40 2018/3/8
  */
 @RestController
 @RequestMapping("/account")
-public class AccountController extends BasicAction {
+public class AccountController extends BaseAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+    private static final String STR_USERNAME = "username";
+    private static final String STR_REALNAME = "realName";
+    private static final String STR_AVATAR = "avatar";
+    private static final String STR_PHONE = "phone";
+    private static final String STR_EMAIL = "email";
+    private static final String STR_SEX = "sex";
+    private static final String STR_WHERE = "createWhere";
+
+
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -46,10 +54,12 @@ public class AccountController extends BasicAction {
     @Autowired
     private UserService userService;
 
-    /* *
-     * @Description 这里已经在 passwordFilter 进行了登录认证
-     * @Param [] 登录签发 JWT
-     * @Return java.lang.String
+    /**
+     * description 登录签发 JWT ,这里已经在 passwordFilter 进行了登录认证
+     *
+     * @param request 1
+     * @param response 2
+     * @return com.usthe.bootshiro.domain.vo.Message
      */
     @ApiOperation(value = "用户登录", notes = "POST用户登录签发JWT")
     @PostMapping("/login")
@@ -73,10 +83,12 @@ public class AccountController extends BasicAction {
         return new Message().ok(1003, "issue jwt success").addData("jwt", jwt).addData("user", authUser);
     }
 
-    /* *
-     * @Description 用户账号的注册
-     * @Param [request, response]
-     * @Return com.usthe.bootshiro.domain.vo.Message
+    /**
+     * description 用户账号的注册
+     *
+     * @param request 1
+     * @param response 2
+     * @return com.usthe.bootshiro.domain.vo.Message
      */
     @ApiOperation(value = "用户注册", notes = "POST用户注册")
     @PostMapping("/register")
@@ -100,32 +112,32 @@ public class AccountController extends BasicAction {
 
         // 从Redis取出密码传输加密解密秘钥
         String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey);
-        String realPassword = AESUtil.aesDecode(password, tokenKey);
+        String realPassword = AesUtil.aesDecode(password, tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
-        authUser.setPassword(MD5Util.md5(realPassword + salt));
+        authUser.setPassword(Md5Util.md5(realPassword + salt));
         authUser.setSalt(salt);
         authUser.setCreateTime(new Date());
-        if (!StringUtils.isEmpty(params.get("username"))) {
-            authUser.setUsername(params.get("username"));
+        if (!StringUtils.isEmpty(params.get(STR_USERNAME))) {
+            authUser.setUsername(params.get(STR_USERNAME));
         }
-        if (!StringUtils.isEmpty(params.get("realName"))) {
-            authUser.setRealName(params.get("realName"));
+        if (!StringUtils.isEmpty(params.get(STR_REALNAME))) {
+            authUser.setRealName(params.get(STR_REALNAME));
         }
-        if (!StringUtils.isEmpty(params.get("avatar"))) {
-            authUser.setAvatar(params.get("avatar"));
+        if (!StringUtils.isEmpty(params.get(STR_AVATAR))) {
+            authUser.setAvatar(params.get(STR_AVATAR));
         }
-        if (!StringUtils.isEmpty(params.get("phone"))) {
-            authUser.setPhone(params.get("phone"));
+        if (!StringUtils.isEmpty(params.get(STR_PHONE))) {
+            authUser.setPhone(params.get(STR_PHONE));
         }
-        if (!StringUtils.isEmpty(params.get("email"))) {
-            authUser.setEmail(params.get("email"));
+        if (!StringUtils.isEmpty(params.get(STR_EMAIL))) {
+            authUser.setEmail(params.get(STR_EMAIL));
         }
-        if (!StringUtils.isEmpty(params.get("sex"))) {
-            authUser.setSex(Byte.valueOf(params.get("sex")));
+        if (!StringUtils.isEmpty(params.get(STR_SEX))) {
+            authUser.setSex(Byte.valueOf(params.get(STR_SEX)));
         }
-        if (!StringUtils.isEmpty(params.get("createWhere"))) {
-            authUser.setCreateWhere(Byte.valueOf(params.get("createWhere")));
+        if (!StringUtils.isEmpty(params.get(STR_WHERE))) {
+            authUser.setCreateWhere(Byte.valueOf(params.get(STR_WHERE)));
         }
         authUser.setStatus((byte) 1);
 

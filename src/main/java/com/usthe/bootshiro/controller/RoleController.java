@@ -19,14 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 20:02 2018/3/20
+/**
+ * @author tomsun28
+ * @date 20:02 2018/3/20
  */
 @RequestMapping("/role")
 @RestController
-public class RoleController extends BasicAction {
+public class RoleController extends BaseAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
 
@@ -109,8 +108,8 @@ public class RoleController extends BasicAction {
     @PostMapping("/authority/resource")
     public Message authorityRoleResource(HttpServletRequest request) {
         Map<String,String> map = getRequestBody(request);
-        int roleId = Integer.valueOf(String.valueOf(map.get("roleId")));
-        int resourceId = Integer.valueOf(String.valueOf(map.get("resourceId")));
+        int roleId = Integer.parseInt(map.get("roleId"));
+        int resourceId = Integer.parseInt(map.get("resourceId"));
         boolean flag = roleService.authorityRoleResource(roleId,resourceId);
         shiroFilterChainManager.reloadFilterChain();
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");

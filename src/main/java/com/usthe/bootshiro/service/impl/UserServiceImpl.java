@@ -8,14 +8,12 @@ import com.usthe.bootshiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 21:15 2018/3/17
+/**
+ * @author tomsun28
+ * @date 21:15 2018/3/17
  */
 @Service("UserService")
 public class UserServiceImpl implements UserService {

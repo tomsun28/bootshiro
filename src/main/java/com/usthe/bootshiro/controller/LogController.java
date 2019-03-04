@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 12:20 2018/4/22
+/**
+ * @author tomsun28
+ * @date 12:20 2018/4/22
  */
 @RestController
 @RequestMapping("/log")
-public class LogController extends BasicAction {
+public class LogController extends BaseAction {
 
     @Autowired
     AccountLogService accountLogService;

@@ -17,23 +17,23 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.*;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 16:29 2018/3/8
+/**
+ * @author tomsun28
+ * @date 16:29 2018/3/8
  */
 public class JsonWebTokenUtil {
 
     public static final String SECRET_KEY = "?::4343fdf4fdf6cvf):";
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final int COUNT_2 = 2;
     private static  CompressionCodecResolver codecResolver = new DefaultCompressionCodecResolver();
 
     private JsonWebTokenUtil() {
 
     }
 
-    /* *
-     * @Description  json web token 签发
+    /**
+     *   json web token 签发
      * @param id 令牌ID
      * @param subject 用户ID
      * @param issuer 签发人
@@ -41,7 +41,7 @@ public class JsonWebTokenUtil {
      * @param roles 访问主张-角色
      * @param permissions 访问主张-权限
      * @param algorithm 加密算法
-     * @Return java.lang.String
+     * @return java.lang.String
      */
     public static String issueJWT(String id,String subject, String issuer, Long period, String roles, String permissions, SignatureAlgorithm algorithm) {
         // 当前时间戳
@@ -105,7 +105,7 @@ public class JsonWebTokenUtil {
                 sb.append(c);
             }
         }
-        if (delimiterCount != 2) {
+        if (delimiterCount != COUNT_2) {
             String msg = "JWT strings must contain exactly 2 period characters. Found: " + delimiterCount;
             throw new MalformedJwtException(msg);
         }
@@ -150,21 +150,29 @@ public class JsonWebTokenUtil {
                 .parseClaimsJws(jwt)
                 .getBody();
         JwtAccount jwtAccount = new JwtAccount();
-        jwtAccount.setTokenId(claims.getId());// 令牌ID
-        jwtAccount.setAppId(claims.getSubject());// 客户标识
-        jwtAccount.setIssuer(claims.getIssuer());// 签发者
-        jwtAccount.setIssuedAt(claims.getIssuedAt());// 签发时间
-        jwtAccount.setAudience(claims.getAudience());// 接收方
-        jwtAccount.setRoles(claims.get("roles", String.class));// 访问主张-角色
-        jwtAccount.setPerms(claims.get("perms", String.class));// 访问主张-权限
+        //令牌ID
+        jwtAccount.setTokenId(claims.getId());
+        // 客户标识
+        jwtAccount.setAppId(claims.getSubject());
+        // 签发者
+        jwtAccount.setIssuer(claims.getIssuer());
+        // 签发时间
+        jwtAccount.setIssuedAt(claims.getIssuedAt());
+        // 接收方
+        jwtAccount.setAudience(claims.getAudience());
+        // 访问主张-角色
+        jwtAccount.setRoles(claims.get("roles", String.class));
+        // 访问主张-权限
+        jwtAccount.setPerms(claims.get("perms", String.class));
         return jwtAccount;
     }
 
 
-    /* *
-     * @Description
-     * @Param [val] 从json数据中读取格式化map
-     * @Return java.util.Map<java.lang.String,java.lang.Object>
+    /**
+     * description 从json数据中读取格式化map
+     *
+     * @param val 1
+     * @return java.util.Map<java.lang.String,java.lang.Object>
      */
     @SuppressWarnings("unchecked")
     public static Map<String, Object> readValue(String val) {
@@ -182,8 +190,9 @@ public class JsonWebTokenUtil {
     public static Set<String> split(String str) {
 
         Set<String> set = new HashSet<>();
-        if (StringUtils.isEmpty(str))
+        if (StringUtils.isEmpty(str)) {
             return set;
+        }
         set.addAll(CollectionUtils.arrayToList(str.split(",")));
         return set;
     }

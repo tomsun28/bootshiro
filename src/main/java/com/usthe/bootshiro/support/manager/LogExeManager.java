@@ -1,19 +1,25 @@
 package com.usthe.bootshiro.support.manager;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-/* *
- * @Author tomsun28
- * @Description 日志操作任务运行管理器 单例
- * @Date 9:37 2018/4/22
+/**
+ *   日志操作任务运行管理器 单例
+ * @author tomsun28
+ * @date 9:37 2018/4/22
  */
 public class LogExeManager {
 
     private static final int LOG_DELAY_TIME = 10;
 
-    private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(20);
+
+    private ThreadFactory threadFactory = new ThreadFactoryBuilder()
+            .setNameFormat("log-pool-%d").build();
+    private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(20, threadFactory);
 
     private static LogExeManager logExeManager = new LogExeManager();
     private LogExeManager() {

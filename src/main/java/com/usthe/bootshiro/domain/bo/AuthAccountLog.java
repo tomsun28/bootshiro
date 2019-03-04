@@ -2,10 +2,10 @@ package com.usthe.bootshiro.domain.bo;
 
 import java.util.Date;
 
-/* *
- * @Author tomsun28
- * @Description 用户账户操作日志
- * @Date 8:14 2018/4/22
+/**
+ *   用户账户操作日志
+ * @author tomsun28
+ * @date 8:14 2018/4/22
  */
 public class AuthAccountLog {
 

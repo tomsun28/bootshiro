@@ -1,25 +1,16 @@
 package com.usthe.bootshiro.domain.vo;
 
-import lombok.Data;
-
-
 import java.util.Date;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 14:52 2018/3/20
+/**
+ * @author tomsun28
+ * @date 14:52 2018/3/20
  */
-//@Data
-public class MenuTreeNode extends TreeNode {
-
-
+public class MenuTreeNode extends BaseTreeNode {
 
     private String code;
 
     private String name;
-
-
 
     private String uri;
 

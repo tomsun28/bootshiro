@@ -11,12 +11,11 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 21:15 2018/3/3
+/**
+ * @author tomsun28
+ * @date 21:15 2018/3/3
  */
-public class AModularRealmAuthenticator extends ModularRealmAuthenticator {
+public class AonModularRealmAuthenticator extends ModularRealmAuthenticator {
 
     @Override
     protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {

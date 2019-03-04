@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/* *
- * @Author tomsun28
- * @Description realm管理器
- * @Date 17:52 2018/3/3
+/**
+ *   realm管理器
+ * @author tomsun28
+ * @date 17:52 2018/3/3
  */
 @Component
 public class RealmManager {

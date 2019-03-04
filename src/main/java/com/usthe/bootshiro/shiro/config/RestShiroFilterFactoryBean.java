@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 
-/* *
- * @Author tomsun28
- * @Description rest支持的shiroFilterFactoryBean
- * @Date 21:35 2018/4/20
+/**
+ *   rest支持的shiroFilterFactoryBean
+ * @author tomsun28
+ * @date 21:35 2018/4/20
  */
 public class RestShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 

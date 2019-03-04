@@ -1,12 +1,11 @@
 package com.usthe.bootshiro.shiro.token;
 
-import com.usthe.bootshiro.util.AESUtil;
+import com.usthe.bootshiro.util.AesUtil;
 import org.apache.shiro.authc.AuthenticationToken;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 12:34 2018/2/27
+/**
+ * @author tomsun28
+ * @date 12:34 2018/2/27
  */
 public class PasswordToken implements AuthenticationToken{
 
@@ -21,7 +20,7 @@ public class PasswordToken implements AuthenticationToken{
         this.appId = appId;
         this.timestamp = timestamp;
         this.host = host;
-        this.password = AESUtil.aesDecode(password,tokenKey);
+        this.password = AesUtil.aesDecode(password,tokenKey);
         this.tokenKey = tokenKey;
 
     }
@@ -32,10 +31,12 @@ public class PasswordToken implements AuthenticationToken{
         return this.password;
     }
 
+    @Override
     public Object getPrincipal() {
         return this.appId;
     }
 
+    @Override
     public Object getCredentials() {
         return this.password;
     }

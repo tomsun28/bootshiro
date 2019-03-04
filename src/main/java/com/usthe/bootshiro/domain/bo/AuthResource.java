@@ -2,6 +2,11 @@ package com.usthe.bootshiro.domain.bo;
 
 import java.util.Date;
 
+/**
+ *   资源
+ * @author tomsun28
+ * @date 10:22 2018/4/22
+ */
 public class AuthResource {
     private Integer id;
 

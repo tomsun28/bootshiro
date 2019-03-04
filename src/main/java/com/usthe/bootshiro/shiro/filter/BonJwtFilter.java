@@ -27,19 +27,21 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-/* *
- * @Author tomsun28
- * @Description 支持restful url 的过滤链  JWT json web token 过滤器，无状态验证
- * @Date 0:04 2018/4/20
+/**
+ *  支持restful url 的过滤链  JWT json web token 过滤器，无状态验证
+ * @author tomsun28
+ * @date 0:04 2018/4/20
  */
-public class BJwtFilter extends BPathMatchingFilter {
+public class BonJwtFilter extends AbstractPathMatchingFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BJwtFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BonJwtFilter.class);
+    private static final String STR_EXPIRED = "expiredJwt";
 
 
     private StringRedisTemplate redisTemplate;
     private AccountService accountService;
 
+    @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) throws Exception {
         Subject subject = getSubject(servletRequest,servletResponse);
 
@@ -47,8 +49,9 @@ public class BJwtFilter extends BPathMatchingFilter {
         LogExeManager.getInstance().executeLogTask(LogTaskFactory.bussinssLog(WebUtils.toHttp(servletRequest).getHeader("appId"),
                 WebUtils.toHttp(servletRequest).getRequestURI(),WebUtils.toHttp(servletRequest).getMethod(),(short)1,null));
 
+        boolean isJwtPost = (null != subject && !subject.isAuthenticated()) && isJwtSubmission(servletRequest);
         // 判断是否为JWT认证请求
-        if ((null != subject && !subject.isAuthenticated()) && isJwtSubmission(servletRequest)) {
+        if (isJwtPost) {
             AuthenticationToken token = createJwtToken(servletRequest);
             try {
                 subject.login(token);
@@ -56,7 +59,7 @@ public class BJwtFilter extends BPathMatchingFilter {
             }catch (AuthenticationException e) {
 
                 // 如果是JWT过期
-                if ("expiredJwt".equals(e.getMessage())) {
+                if (STR_EXPIRED.equals(e.getMessage())) {
                     // 这里初始方案先抛出令牌过期，之后设计为在Redis中查询当前appId对应令牌，其设置的过期时间是JWT的两倍，此作为JWT的refresh时间
                     // 当JWT的有效时间过期后，查询其refresh时间，refresh时间有效即重新派发新的JWT给客户端，
                     // refresh也过期则告知客户端JWT时间过期重新认证
@@ -69,7 +72,8 @@ public class BJwtFilter extends BPathMatchingFilter {
                         // 重新申请新的JWT
                         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
                         String roles = accountService.loadAccountRole(appId);
-                        long refreshPeriodTime = 36000L;  //seconds为单位,10 hours
+                        //seconds为单位,10 hours
+                        long refreshPeriodTime = 36000L;
                         String newJwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(),appId,
                                 "token-server",refreshPeriodTime >> 1,roles,null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
@@ -106,6 +110,7 @@ public class BJwtFilter extends BPathMatchingFilter {
         }
     }
 
+    @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         Subject subject = getSubject(servletRequest,servletResponse);
 
@@ -144,7 +149,13 @@ public class BJwtFilter extends BPathMatchingFilter {
         return new JwtToken(ipHost,deviceInfo,jwt,appId);
     }
 
-    // 验证当前用户是否属于mappedValue任意一个角色
+    /**
+     * description 验证当前用户是否属于mappedValue任意一个角色
+     *
+     * @param subject 1
+     * @param mappedValue 2
+     * @return boolean
+     */
     private boolean checkRoles(Subject subject, Object mappedValue){
         String[] rolesArray = (String[]) mappedValue;
         return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role.trim()));

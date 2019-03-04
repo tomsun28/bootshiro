@@ -14,10 +14,9 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.springframework.stereotype.Component;
 
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 18:01 2018/3/3
+/**
+ * @author tomsun28
+ * @date 18:01 2018/3/3
  */
 @Component
 public class JwtMatcher implements CredentialsMatcher {
@@ -31,10 +30,11 @@ public class JwtMatcher implements CredentialsMatcher {
         try{
             jwtAccount = JsonWebTokenUtil.parseJwt(jwt,JsonWebTokenUtil.SECRET_KEY);
         } catch(SignatureException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
-            throw new AuthenticationException("errJwt"); // 令牌错误
+            // 令牌错误
+            throw new AuthenticationException("errJwt");
         } catch(ExpiredJwtException e){
-
-            throw new AuthenticationException("expiredJwt"); // 令牌过期
+            // 令牌过期
+            throw new AuthenticationException("expiredJwt");
         } catch(Exception e){
             throw new AuthenticationException("errJwt");
         }

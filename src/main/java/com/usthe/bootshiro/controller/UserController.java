@@ -21,14 +21,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/* *
- * @Author tomsun28
- * @Description 用户相关操作
- * @Date 21:05 2018/3/17
+/**
+ *   用户相关操作
+ * @author tomsun28
+ * @date 21:05 2018/3/17
  */
 @RestController
 @RequestMapping("/user")
-public class UserController extends BasicAction{
+public class UserController extends BaseAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
@@ -67,7 +67,7 @@ public class UserController extends BasicAction{
     public Message authorityUserRole(HttpServletRequest request) {
         Map<String,String> map = getRequestBody(request);
         String uid = map.get("uid");
-        int roleId = Integer.valueOf(String.valueOf(map.get("roleId")));
+        int roleId = Integer.parseInt(map.get("roleId"));
         boolean flag = userService.authorityUserRole(uid,roleId);
         return flag ? new Message().ok(6666,"authority success") : new Message().error(1111,"authority error");
     }

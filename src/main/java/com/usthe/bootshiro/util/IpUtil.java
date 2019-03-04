@@ -5,15 +5,17 @@ import org.apache.commons.lang.text.StrTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
-/* *
- * @Author tomsun28
- * @Description 获取真实IP
- * @Date 17:03 2018/4/25
+/**
+ *  获取真实IP
+ * @author tomsun28
+ * @date 17:03 2018/4/25
  */
 public class IpUtil {
 
     private static final String N255 = "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     private static final Pattern PATTERN = Pattern.compile("^(?:" + N255 + "\\.){3}" + N255 + "$");
+    private static final String X_FORWARDED_FOR = "x-forwarded-for";
+
 
     private IpUtil() {
 
@@ -47,7 +49,7 @@ public class IpUtil {
     public static String getIpFromRequest(HttpServletRequest request) {
         String ip;
         boolean found = false;
-        if ((ip = request.getHeader("x-forwarded-for")) != null) {
+        if ((ip = request.getHeader(X_FORWARDED_FOR)) != null) {
             StrTokenizer tokenizer = new StrTokenizer(ip, ",");
             while (tokenizer.hasNext()) {
                 ip = tokenizer.nextToken().trim();

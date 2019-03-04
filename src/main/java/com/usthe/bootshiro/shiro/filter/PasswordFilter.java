@@ -15,17 +15,16 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/* *
- * @Author tomsun28
- * @Description 基于 用户名密码 的认证过滤器
- * @Date 20:18 2018/2/10
+/**
+ *   基于 用户名密码 的认证过滤器
+ * @author tomsun28
+ * @date 20:18 2018/2/10
  */
 public class PasswordFilter extends AccessControlFilter {
 
@@ -38,11 +37,8 @@ public class PasswordFilter extends AccessControlFilter {
 
         Subject subject = getSubject(request,response);
         // 如果其已经登录，再此发送登录请求
-        if(null != subject && subject.isAuthenticated()){
-            return true;
-        }
         //  拒绝，统一交给 onAccessDenied 处理
-        return false;
+        return null != subject && subject.isAuthenticated();
     }
 
     @Override
@@ -107,7 +103,6 @@ public class PasswordFilter extends AccessControlFilter {
             return true;
         }
         // 之后添加对账户的找回等
-
         // response 告知无效请求
         Message message = new Message().error(1111,"error request");
         RequestResponseUtil.responseWrite(JSON.toJSONString(message),response);
@@ -119,8 +114,8 @@ public class PasswordFilter extends AccessControlFilter {
         String tokenKey = RequestResponseUtil.getParameter(request,"tokenKey");
 
         return (request instanceof HttpServletRequest)
-                && ((HttpServletRequest) request).getMethod().toUpperCase().equals("GET")
-                && null != tokenKey && "get".equals(tokenKey);
+                && "GET".equals(((HttpServletRequest) request).getMethod().toUpperCase())
+                &&  "get".equals(tokenKey);
     }
 
     private boolean isPasswordLoginPost(ServletRequest request) {
@@ -131,12 +126,11 @@ public class PasswordFilter extends AccessControlFilter {
         String methodName = map.get("methodName");
         String appId = map.get("appId");
         return (request instanceof HttpServletRequest)
-                && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
+                && "POST".equals(((HttpServletRequest) request).getMethod().toUpperCase())
                 && null != password
                 && null != timestamp
-                && null != methodName
                 && null != appId
-                && methodName.equals("login");
+                && "login".equals(methodName);
     }
 
     private boolean isAccountRegisterPost(ServletRequest request) {
@@ -147,12 +141,11 @@ public class PasswordFilter extends AccessControlFilter {
         String methodName = map.get("methodName");
         String password = map.get("password");
         return (request instanceof HttpServletRequest)
-                && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
+                && "POST".equals(((HttpServletRequest) request).getMethod().toUpperCase())
                 && null != username
                 && null != password
-                && null != methodName
                 && null != uid
-                && methodName.equals("register");
+                && "register".equals(methodName);
     }
 
     private AuthenticationToken createPasswordToken(ServletRequest request) throws Exception {

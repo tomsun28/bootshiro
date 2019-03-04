@@ -9,10 +9,10 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/* *
- * @Author tomsun28
- * @Description durid监控页面配置 默认地址 localhost:8080/druid/login.html
- * @Date 15:40 2018/3/5
+/**
+ *  durid 监控页面配置 默认地址 localhost:8080/druid/login.html
+ * @author tomsun28
+ * @date 15:40 2018/3/5
  */
 @Configuration
 public class DruidConfiguration {
@@ -26,9 +26,9 @@ public class DruidConfiguration {
         LOGGER.info("init Druid Servlet Configuration ");
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         // IP白名单
-//        servletRegistrationBean.addInitParameter("allow", "192.168.2.25,116.196.81.106,127.0.0.1");
+        //("allow", "192.168.2.25,116.196.81.106,127.0.0.1");
         // IP黑名单(共同存在时，deny优先于allow)
-//        servletRegistrationBean.addInitParameter("deny", "");
+        //("deny", "");
         //控制台管理用户
         servletRegistrationBean.addInitParameter("loginUsername", "admin");
         servletRegistrationBean.addInitParameter("loginPassword", "admin");
@@ -37,6 +37,7 @@ public class DruidConfiguration {
         return servletRegistrationBean;
     }
     @Bean
+    @SuppressWarnings("unchecked")
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");

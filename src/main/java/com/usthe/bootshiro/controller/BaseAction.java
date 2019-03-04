@@ -5,18 +5,18 @@ import com.usthe.bootshiro.util.RequestResponseUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/* *
- * @Author tomsun28
- * @Description controller基础抽象类
- * @Date 11:09 2018/3/20
+/**
+ *   controller基础抽象类
+ * @author tomsun28
+ * @date 11:09 2018/3/20
  */
-public abstract class BasicAction {
+public abstract class BaseAction {
 
-
-    /* *
-     * @Description获得来的request中的 key value数据封装到map返回
-     * @Param [request]
-     * @Return java.util.Map<java.lang.String,java.lang.String>
+    /**
+     * description 获得来的request中的 key value数据封装到map返回
+     *
+     * @param request 1
+     * @return java.util.Map<java.lang.String,java.lang.String>
      */
     @SuppressWarnings("rawtypes")
     protected Map<String, String> getRequestParameter(HttpServletRequest request) {

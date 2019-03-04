@@ -14,17 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/* *
- * @Author tomsun28
- * @Description Filter 管理器
- * @Date 11:16 2018/2/28
+/**
+ *  Filter 管理器
+ * @author tomsun28
+ * @date 11:16 2018/2/28
  */
 @Component
 public class ShiroFilterChainManager {
@@ -42,19 +41,27 @@ public class ShiroFilterChainManager {
         this.accountService = accountService;
     }
 
-    // 初始化获取过滤链
+    /**
+     * description 初始化获取过滤链
+     *
+     * @return java.util.Map<java.lang.String,javax.servlet.Filter>
+     */
     public Map<String,Filter> initGetFilters() {
         Map<String,Filter> filters = new LinkedHashMap<>();
         PasswordFilter passwordFilter = new PasswordFilter();
         passwordFilter.setRedisTemplate(redisTemplate);
         filters.put("auth",passwordFilter);
-        BJwtFilter jwtFilter = new BJwtFilter();
+        BonJwtFilter jwtFilter = new BonJwtFilter();
         jwtFilter.setRedisTemplate(redisTemplate);
         jwtFilter.setAccountService(accountService);
         filters.put("jwt",jwtFilter);
         return filters;
     }
-    // 初始化获取过滤链规则
+    /**
+     * description 初始化获取过滤链规则
+     *
+     * @return java.util.Map<java.lang.String,java.lang.String>
+     */
     public Map<String,String> initGetFilterChain() {
         Map<String,String> filterChain = new LinkedHashMap<>();
         // -------------anon 默认过滤器忽略的URL
@@ -68,16 +75,18 @@ public class ShiroFilterChainManager {
             List<RolePermRule> rolePermRules = this.shiroFilterRulesProvider.loadRolePermRules();
             if (null != rolePermRules) {
                 rolePermRules.forEach(rule -> {
-                    StringBuilder Chain = rule.toFilterChain();
-                    if (null != Chain) {
-                        filterChain.putIfAbsent(rule.getUrl(),Chain.toString());
+                    StringBuilder chain = rule.toFilterChain();
+                    if (null != chain) {
+                        filterChain.putIfAbsent(rule.getUrl(),chain.toString());
                     }
                 });
             }
         }
         return filterChain;
     }
-    // 动态重新加载过滤链规则
+    /**
+     * description 动态重新加载过滤链规则
+     */
     public void reloadFilterChain() {
             ShiroFilterFactoryBean shiroFilterFactoryBean = SpringContextHolder.getBean(ShiroFilterFactoryBean.class);
             AbstractShiroFilter abstractShiroFilter = null;
@@ -89,7 +98,7 @@ public class ShiroFilterChainManager {
                 shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
                 shiroFilterFactoryBean.setFilterChainDefinitionMap(this.initGetFilterChain());
                 shiroFilterFactoryBean.getFilterChainDefinitionMap().forEach((k,v) -> filterChainManager.createChain(k,v));
-            }catch (Exception e) {
+            } catch (Exception e) {
                 LOGGER.error(e.getMessage(),e);
             }
     }

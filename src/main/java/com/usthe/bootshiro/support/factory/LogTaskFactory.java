@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.TimerTask;
 
-/* *
- * @Author tomsun28
- * @Description 日志操作任务工厂
- * @Date 9:44 2018/4/22
+/**
+ *  日志操作任务工厂
+ * @author tomsun28
+ * @date 9:44 2018/4/22
  */
 public class LogTaskFactory {
 

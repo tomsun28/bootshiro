@@ -14,7 +14,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-
+/**
+ *
+ * @author tomsun28
+ * @date
+ */
 @SpringBootApplication
 @MapperScan("com.usthe.bootshiro.dao")
 @EnableCaching

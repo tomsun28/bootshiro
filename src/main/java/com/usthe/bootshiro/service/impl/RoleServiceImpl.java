@@ -8,14 +8,12 @@ import com.usthe.bootshiro.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 12:28 2018/3/26
+/**
+ * @author tomsun28
+ * @date 12:28 2018/3/26
  */
 @Service("RoleService")
 public class RoleServiceImpl implements RoleService {

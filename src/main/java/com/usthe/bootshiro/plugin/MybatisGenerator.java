@@ -12,16 +12,21 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * @author from internet
+ * @date 9:48 2018/2/14
+ */
 public class MybatisGenerator {
 
     public static void main(String[] args) throws Exception {
         String today = "2018-03-19";
+        long timeEx = 1000*60*60*24;
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
         Date now =sdf.parse(today);
         Date d = new Date();
 
-        if(d.getTime()>now.getTime()+1000*60*60*24){
+        if(d.getTime()>now.getTime()+timeEx){
             System.err.println("——————未成成功运行——————");
             System.err.println("——————未成成功运行——————");
             System.err.println("本程序具有破坏作用，应该只运行一次，如果必须要再运行，需要修改today变量为今天，如:" + sdf.format(new Date()));

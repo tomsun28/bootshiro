@@ -7,10 +7,9 @@ import com.usthe.bootshiro.util.XssUtil;
 
 import java.io.IOException;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 21:14 2018/4/16
+/**
+ * @author tomsun28
+ * @date 21:14 2018/4/16
  */
 public class XssSqlStringJsonSerializer extends JsonSerializer<String> {
 

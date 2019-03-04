@@ -8,10 +8,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 21:24 2018/4/16
+/**
+ * @author tomsun28
+ * @date 21:24 2018/4/16
  */
 @Order(1)
 @WebFilter(filterName = "xssFilter", urlPatterns = "/*", asyncSupported = true)

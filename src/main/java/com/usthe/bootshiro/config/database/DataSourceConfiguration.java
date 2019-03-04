@@ -10,10 +10,9 @@ import org.springframework.context.annotation.Primary;
 
 import java.sql.SQLException;
 
-/* *
- * @Author tomsun28
- * @Description 
- * @Date 15:45 2018/3/5
+/**
+ * @author tomsun28
+ * @date 15:45 2018/3/5
  */
 @Configuration
 public class DataSourceConfiguration {
@@ -59,8 +58,13 @@ public class DataSourceConfiguration {
     @Value("${spring.datasource.useGlobalDataSourceStat}")
     private boolean useGlobalDataSourceStat;
 
-    @Bean     //声明其为Bean实例
-    @Primary  //在同样的DataSource中，首先使用被标注的DataSource
+    /**
+     * description 声明其为Bean实例  在同样的DataSource中，首先使用被标注的DataSource
+     *
+     * @return com.alibaba.druid.pool.DruidDataSource
+     */
+    @Bean
+    @Primary
     public DruidDataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         /*数据源主要配置*/
