@@ -2,7 +2,8 @@
   
 [管理系统](http://47.110.55.246)  
 [druid sql监控](http://47.110.55.246/api/druid/login.html)  admin/admin  
-[Swagger api文档](http://47.110.55.246/api/swagger-ui.html)
+[Swagger api文档](http://47.110.55.246/api/swagger-ui.html)  
+[java doc](https://apidoc.gitee.com/tomsun28/bootshiro)  
 
 # bootshiro
 
