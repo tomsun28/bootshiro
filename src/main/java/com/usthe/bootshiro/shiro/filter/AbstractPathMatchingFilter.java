@@ -14,6 +14,8 @@ import javax.servlet.ServletResponse;
  */
 public abstract class AbstractPathMatchingFilter extends PathMatchingFilter {
 
+    private static final String DEFAULT_PATH_SEPARATOR = "/";
+
     public AbstractPathMatchingFilter() {
 
     }
@@ -28,8 +30,14 @@ public abstract class AbstractPathMatchingFilter extends PathMatchingFilter {
     @Override
     protected boolean pathsMatch(String path, ServletRequest request) {
         String requestURI = this.getPathWithinApplication(request);
+        if (requestURI != null && requestURI.endsWith(DEFAULT_PATH_SEPARATOR)) {
+            requestURI = requestURI.substring(0, requestURI.length() - 1);
+        }
         // path: url==method eg: http://api/menu==GET   需要解析出path中的url和httpMethod
         String[] strings = path.split("==");
+        if (strings[0] != null && strings[0].endsWith(DEFAULT_PATH_SEPARATOR)) {
+            strings[0] = strings[0].substring(0 , strings[0].length() - 1);
+        }
         if (strings.length <= 1) {
             // 分割出来只有URL
             return this.pathsMatch(strings[0], requestURI);

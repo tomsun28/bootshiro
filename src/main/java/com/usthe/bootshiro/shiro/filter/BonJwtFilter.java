@@ -114,12 +114,8 @@ public class BonJwtFilter extends AbstractPathMatchingFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         Subject subject = getSubject(servletRequest,servletResponse);
 
-        // 未认证的情况
-        if (null == subject || !subject.isAuthenticated()) {
-            // 告知客户端JWT认证失败需跳转到登录页面
-            Message message = new Message().error(1006,"error jwt");
-            RequestResponseUtil.responseWrite(JSON.toJSONString(message),servletResponse);
-        }else {
+        // 未认证的情况上面已经处理  这里处理未授权
+        if (subject != null && subject.isAuthenticated()){
             //  已经认证但未授权的情况
             // 告知客户端JWT没有权限访问此资源
             Message message = new Message().error(1008,"no permission");
