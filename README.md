@@ -1,7 +1,7 @@
 **线上演示**  
   
-[管理系统](http://47.110.55.246)  
-[druid sql监控](http://47.110.55.246/api/druid/login.html)  admin/admin  
+[管理系统](http://47.110.55.246)  资源不足暂时关闭演示
+[druid sql监控](http://47.110.55.246/api/druid/login.html)  admin/admin 
 [Swagger api文档](http://47.110.55.246/api/swagger-ui.html)  
 [java doc](https://apidoc.gitee.com/tomsun28/bootshiro)  
 
