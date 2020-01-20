@@ -341,6 +341,8 @@ INSERT INTO `auth_role_resource` VALUES (226, 102, 154, '2019-02-18 03:14:01', '
 INSERT INTO `auth_role_resource` VALUES (227, 102, 179, '2019-02-20 05:51:05', '2019-02-20 05:51:05');
 INSERT INTO `auth_role_resource` VALUES (228, 102, 178, '2019-02-20 07:52:28', '2019-02-20 07:52:28');
 INSERT INTO `auth_role_resource` VALUES (229, 102, 180, '2019-02-20 07:56:28', '2019-02-20 07:56:28');
+INSERT INTO `auth_role_resource` VALUES (230, 103, 117, '2018-04-17 14:47:50', '2018-04-17 14:47:50');
+INSERT INTO `auth_role_resource` VALUES (231, 103, 109, '2018-04-17 14:47:54', '2018-04-17 14:47:54');
 
 -- ----------------------------
 -- Table structure for auth_user
