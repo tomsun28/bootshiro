@@ -370,7 +370,7 @@ CREATE TABLE `auth_user`  (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES ('1', '1', '55EC49B5AEF567AFDDC25D322E9FD644', '79sz6j', NULL, NULL, NULL, NULL, NULL, 1, '2018-04-26 19:21:04', '2018-04-26 11:21:04', NULL);
+INSERT INTO `auth_user` VALUES ('admin', 'admin', '8419233822896A77C98CBBA2720EA832', 'm0lps7', NULL, NULL, NULL, NULL, NULL, 1, '2020-01-20 22:51:43', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for auth_user_role
@@ -389,6 +389,6 @@ CREATE TABLE `auth_user_role`  (
 -- ----------------------------
 -- Records of auth_user_role
 -- ----------------------------
-INSERT INTO `auth_user_role` VALUES (15, '282870345', 103, '2018-04-09 22:44:47', '2018-04-09 22:44:47');
+INSERT INTO `auth_user_role` VALUES (2, 'admin', 100, '2020-01-20 22:51:43', '2020-01-20 22:51:43');
 
 SET FOREIGN_KEY_CHECKS = 1;
