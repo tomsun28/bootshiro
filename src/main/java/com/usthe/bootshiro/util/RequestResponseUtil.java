@@ -58,8 +58,8 @@ public class RequestResponseUtil {
             return (Map<String,String>)request.getAttribute(STR_BODY);
         } else {
             try {
-                Map<String,String > maps = JSON.parseObject(request.getInputStream(),Map.class);
-                dataMap.putAll(maps);
+                Map<String, Object> maps = JSON.parseObject(request.getInputStream(),Map.class);
+                maps.forEach((key, value) -> dataMap.put(key, String.valueOf(value)));
                 request.setAttribute(STR_BODY,dataMap);
             }catch (IOException e) {
                 e.printStackTrace();
@@ -123,7 +123,7 @@ public class RequestResponseUtil {
 
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
-        PrintWriter printWriter = null;
+        PrintWriter printWriter;
         try {
             printWriter = WebUtils.toHttp(response).getWriter();
             printWriter.write(outStr);
