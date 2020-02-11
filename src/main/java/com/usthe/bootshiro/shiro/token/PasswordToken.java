@@ -1,6 +1,5 @@
 package com.usthe.bootshiro.shiro.token;
 
-import com.usthe.bootshiro.util.AesUtil;
 import org.apache.shiro.authc.AuthenticationToken;
 
 /**
@@ -14,14 +13,12 @@ public class PasswordToken implements AuthenticationToken{
     private String password;
     private String timestamp;
     private String host;
-    private String tokenKey;
 
-    public PasswordToken(String appId, String password, String timestamp, String host,String tokenKey) throws Exception {
+    public PasswordToken(String appId, String password, String timestamp, String host) {
         this.appId = appId;
         this.timestamp = timestamp;
         this.host = host;
-        this.password = AesUtil.aesDecode(password,tokenKey);
-        this.tokenKey = tokenKey;
+        this.password = password;
 
     }
     public void setPassword(String password) {
@@ -63,13 +60,5 @@ public class PasswordToken implements AuthenticationToken{
 
     public void setHost(String host) {
         this.host = host;
-    }
-
-    public String getTokenKey() {
-        return tokenKey;
-    }
-
-    public void setTokenKey(String tokenKey) {
-        this.tokenKey = tokenKey;
     }
 }

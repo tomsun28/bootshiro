@@ -4,6 +4,7 @@ package com.usthe.bootshiro.shiro.filter;
 import com.alibaba.fastjson.JSON;
 import com.usthe.bootshiro.domain.vo.Message;
 import com.usthe.bootshiro.shiro.token.PasswordToken;
+import com.usthe.bootshiro.util.AesUtil;
 import com.usthe.bootshiro.util.CommonUtil;
 import com.usthe.bootshiro.util.IpUtil;
 import com.usthe.bootshiro.util.RequestResponseUtil;
@@ -32,6 +33,8 @@ public class PasswordFilter extends AccessControlFilter {
 
     private StringRedisTemplate redisTemplate;
 
+    private boolean isEncryptPassword;
+
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 
@@ -42,7 +45,7 @@ public class PasswordFilter extends AccessControlFilter {
     }
 
     @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
 
         // 判断若为获取登录注册加密动态秘钥请求
         if (isPasswordTokenGet(request)) {
@@ -69,7 +72,7 @@ public class PasswordFilter extends AccessControlFilter {
         // 判断是否是登录请求
         if(isPasswordLoginPost(request)){
 
-            AuthenticationToken authenticationToken = null;
+            AuthenticationToken authenticationToken;
             try {
                 authenticationToken = createPasswordToken(request);
             }catch (Exception e) {
@@ -156,12 +159,18 @@ public class PasswordFilter extends AccessControlFilter {
         String password = map.get("password");
         String host = IpUtil.getIpFromRequest(WebUtils.toHttp(request));
         String userKey = map.get("userKey");
-        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_"+host.toUpperCase()+userKey);
-        return new PasswordToken(appId,password,timestamp,host,tokenKey);
+        if (isEncryptPassword) {
+            String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_"+host.toUpperCase()+userKey);
+            password = AesUtil.aesDecode(password,tokenKey);
+        }
+        return new PasswordToken(appId,password,timestamp,host);
     }
 
     public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
+    public void setEncryptPassword(boolean encryptPassword) {
+        isEncryptPassword = encryptPassword;
+    }
 }

@@ -13,6 +13,7 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,9 @@ public class AccountController extends BaseAction {
 
     @Autowired
     private UserService userService;
+
+    @Value("${bootshiro.enableEncryptPassword}")
+    private boolean isEncryptPassword;
 
     /**
      * description 登录签发 JWT ,这里已经在 passwordFilter 进行了登录认证
@@ -110,12 +114,14 @@ public class AccountController extends BaseAction {
 
         authUser.setUid(uid);
 
-        // 从Redis取出密码传输加密解密秘钥
-        String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey);
-        String realPassword = AesUtil.aesDecode(password, tokenKey);
+        if (isEncryptPassword) {
+            // 从Redis取出密码传输加密解密秘钥
+            String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase()+userKey);
+            password = AesUtil.aesDecode(password, tokenKey);
+        }
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
-        authUser.setPassword(Md5Util.md5(realPassword + salt));
+        authUser.setPassword(Md5Util.md5(password + salt));
         authUser.setSalt(salt);
         authUser.setCreateTime(new Date());
         if (!StringUtils.isEmpty(params.get(STR_USERNAME))) {

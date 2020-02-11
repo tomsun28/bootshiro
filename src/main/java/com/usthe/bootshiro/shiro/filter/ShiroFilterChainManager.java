@@ -12,6 +12,7 @@ import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import javax.servlet.Filter;
@@ -34,6 +35,9 @@ public class ShiroFilterChainManager {
     private final StringRedisTemplate redisTemplate;
     private final AccountService accountService;
 
+    @Value("${bootshiro.enableEncryptPassword}")
+    private boolean isEncryptPassword;
+
     @Autowired
     public ShiroFilterChainManager(ShiroFilterRulesProvider shiroFilterRulesProvider,StringRedisTemplate redisTemplate,AccountService accountService){
         this.shiroFilterRulesProvider = shiroFilterRulesProvider;
@@ -50,6 +54,7 @@ public class ShiroFilterChainManager {
         Map<String,Filter> filters = new LinkedHashMap<>();
         PasswordFilter passwordFilter = new PasswordFilter();
         passwordFilter.setRedisTemplate(redisTemplate);
+        passwordFilter.setEncryptPassword(isEncryptPassword);
         filters.put("auth",passwordFilter);
         BonJwtFilter jwtFilter = new BonJwtFilter();
         jwtFilter.setRedisTemplate(redisTemplate);

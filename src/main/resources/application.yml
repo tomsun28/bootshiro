@@ -98,6 +98,9 @@ jasypt:
     password: e!swhdg&d763jo
 
 
+bootshiro:
+  enableEncryptPassword: true
+
 ---
 # 开发环境配置(配置项只包括环境不同项)
 spring:
