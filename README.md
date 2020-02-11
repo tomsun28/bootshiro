@@ -83,6 +83,7 @@ ps(之前是写在下面的太长有点乱)
 - 运行BootshiroApplication
 - bootshiro就可以提供api了 http://localhost:8080
 - 推荐使用postman进行api调试
+- 项目中的postman_test_example.json文件就是postman样例,导入即可
 
 2.docker本地启动  
 
