@@ -182,7 +182,7 @@ thanks:
 [zhangkaitao](http://jinnianshilongnian.iteye.com/blog/2018936)的跟我学shiro   
 网络上前辈们的教程文章开源项目
 
-ide support by [![jetBrains Open Source](/image/jetbrains.svg)](https://www.jetbrains.com/?from=bootshiro)
+Thanks Open Source license support by   [![jetBrains Open Source](/image/jetbrains.svg)](https://www.jetbrains.com/?from=bootshiro)
 <br>
 <br>
 <br>
