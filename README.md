@@ -1,11 +1,22 @@
+## 推荐一个作者全新认证鉴权项目`sureness`，配置少灵活度高，长期支持  
+[sureness gitee地址](https://gitee.com/tomsun28/sureness) https://gitee.com/tomsun28/sureness    
+[sureness github地址](https://github.com/tomsun28/sureness) https://github.com/tomsun28/sureness   
+   
+>  面对`restful api`的认证鉴权,基于`RABC`主要关注于对`restful api`的保护  
+>  原生支持 `restful api, websocket protection`  
+>  原生支持动态权限(权限配置的动态加载)  
+>  原生支持 `jwt`, `Basic Auth` ... 可扩展自定义支持的认证方式  
+>  基于改进的字典匹配树大大提高性能  
+>  一个jar包就搞定  
+
+
+# bootshiro
+
 **线上演示**  
-  
 [管理系统](http://47.110.55.246)    
 [druid sql监控](http://47.110.55.246/api/druid/login.html)  admin/admin 
 [Swagger api文档](http://47.110.55.246/api/swagger-ui.html)  
 [java doc](https://apidoc.gitee.com/tomsun28/bootshiro)  
-
-# bootshiro
 
 - ```bootshiro```是基于```springboot+shiro+jwt```的真正```restful URL```资源无状态认证权限管理系统的后端,前端[usthe](https://gitee.com/tomsun28/usthe)  
 - 区别于一般,提供页面可配置式的,动态的 ```restful api``` 安全管理支持  
