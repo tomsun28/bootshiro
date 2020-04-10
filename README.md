@@ -2,7 +2,7 @@
 [sureness gitee地址](https://gitee.com/tomsun28/sureness) https://gitee.com/tomsun28/sureness    
 [sureness github地址](https://github.com/tomsun28/sureness) https://github.com/tomsun28/sureness   
    
->  面对`restful api`的认证鉴权,基于`RABC`主要关注于对`restful api`的保护  
+>  面对`restful api`的认证鉴权,基于`RBAC`主要关注于对`restful api`的保护  
 >  原生支持 `restful api, websocket protection`  
 >  原生支持动态权限(权限配置的动态加载)  
 >  原生支持 `jwt`, `Basic Auth` ... 可扩展自定义支持的认证方式  
