@@ -1,4 +1,4 @@
-## 推荐一个全新认证鉴权项目 sureness - 面向restful api的权限认证, 配置少灵活度高,长期支持  
+## 强烈自荐一个全新认证鉴权项目 sureness - 面向restful api的权限认证框架, 配置少灵活度高,长期支持  
 
 [sureness主页 - su.usthe.com](https://su.usthe.com)  
 [sureness github地址](https://github.com/tomsun28/sureness)  
@@ -12,6 +12,14 @@
 >  支持多种认证策略, `jwt, basic auth` ... 可扩展自定义支持的认证方式   
 >  基于改进的字典匹配树拥有的高性能  
 >  良好的扩展接口, demo和文档, 一个jar包就搞定  
+
+```
+<dependency>
+    <groupId>com.usthe.sureness</groupId>
+    <artifactId>sureness-core</artifactId>
+    <version>0.1</version>
+</dependency>
+```
 
 # bootshiro
 
