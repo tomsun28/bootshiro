@@ -3,9 +3,6 @@ server:
 
 spring:
   datasource:
-#      url: jdbc:mysql://localhost:12345/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
-#      username: root
-#      password: admin
       driver-class-name: com.mysql.jdbc.Driver
       platform: mysql
       type: com.alibaba.druid.pool.DruidDataSource
@@ -93,10 +90,6 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
-jasypt:
-  encryptor:
-    password: e!swhdg&d763jo
-
 
 bootshiro:
   enableEncryptPassword: true
@@ -108,7 +101,7 @@ spring:
     datasource:
       url: jdbc:mysql://47.110.55.246:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
-      password: ENC(vp7cbF0sE/lRsThrcwdiA/WoeG1mIXzy)
+      password: 123456
     redis:
       # 服务器IP地址
       host: 47.110.55.246
@@ -125,7 +118,7 @@ spring:
     datasource:
       url: jdbc:mysql://127.0.0.1:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
-      password: ENC(X118nhUgaLMJ7niJyBao5E35QYgQaq3o)
+      password: 123456
     redis:
       # 服务器IP地址
       host: 127.0.0.1
@@ -142,7 +135,7 @@ spring:
     datasource:
       url: jdbc:mysql://172.16.215.193:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: root
-      password: ENC(vp7cbF0sE/lRsThrcwdiA/WoeG1mIXzy)
+      password: 123456
     redis:
       # 服务器IP地址
       host: 172.16.215.193
