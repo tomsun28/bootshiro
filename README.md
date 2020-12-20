@@ -43,8 +43,7 @@
 - 授权菜单在第一次登录时已经获取存储到```sessionStorage```防止重复获取,您授权变更菜单之后想要看的效果需要关闭页面重新打开(或者清除```sessionStorage```之后会自动获取授权菜单)
 - have fun  
 
-**学习交流QQ群**  **482621971**  
-生活不易，(5月中后)求接私活
+
 
 ## 项目的基础框架设计：  
 
@@ -164,12 +163,12 @@ docker run -d -p 8085:8080 --name $JOB_NAME -v /opt/dockerWorkspace/tomcat/$JOB_
 
 
 ## 仓库 
- 
+
 gitee(main rep):  
- 
+
  [bootshiro](https://gitee.com/tomsun28/bootshiro)  
  [usthe](https://gitee.com/tomsun28/usthe) 
- 
+
 github: 
 
 [bootshiro](https://github.com/tomsun28/bootshiro)  
