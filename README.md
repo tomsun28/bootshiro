@@ -1,23 +1,29 @@
-## 强烈自荐一个全新认证鉴权项目 sureness - 面向restful api的权限认证框架, 配置少灵活度高,长期支持  
+## 强烈自荐一个全新项目 sureness - 面向restful api的高性能认证鉴权框架    
 
-[sureness主页 - su.usthe.com](https://su.usthe.com)  
-[sureness github地址](https://github.com/tomsun28/sureness)  
-[sureness gitee地址](https://gitee.com/tomsun28/sureness) 
+[sureness主页 - su.usthe.com](https://su.usthe.com) [sureness-github地址](https://github.com/tomsun28/sureness) [sureness-gitee地址](https://gitee.com/tomsun28/sureness)   
+欢迎star使用      
 
-> `sureness` 是我们在使用 `java` 权限框架 `shiro` 之后,吸取其良好设计加上一些想法实现的全新认证鉴权项目  
->  面对 `restful api` 的认证鉴权,基于 `rbac` (用户-角色-资源)主要关注于对 `restful api` 的安全保护  
->  无特定框架依赖(本质就是过滤器处拦截判断,已有springboot,quarkus,javalin,ktor等demo)  
->  支持动态修改权限配置(动态修改哪些api需要被认证，可以被谁访问)    
->  支持主流http容器  servlet 和 jax-rs  
->  支持多种认证策略, `jwt, basic auth` ... 可扩展自定义支持的认证方式   
->  基于改进的字典匹配树拥有的高性能  
->  良好的扩展接口, demo和文档, 一个jar包就搞定  
+在主流的前后端分离架构中，如何通过有效快速的认证鉴权来保护后端提供的`restful api`变得尤为重要。对现存框架，不原生支持`rest`的`apache shiro`，
+还是深度绑定`spring`，较慢性能，学习曲线陡峭的`spring security`，或多或少都不是我们的理想型。   
+于是乎`sureness`诞生了，我们希望能解决这些，提供一个面向**restful api**，**无框架依赖**，可以**动态修改权限**，**多认证策略**，**更快速度**，**易用易扩展**的认证鉴权框架。
+
+
+> `sureness` 是我们在深度使用权限框架 `apache shiro` 之后,吸取其一些优点全新设计开发的一个认证鉴权框架  
+>  面向 `restful api` 的认证鉴权,基于 `rbac` (用户-角色-资源)主要关注于对 `restful api` 的安全保护  
+>  无特定框架依赖(本质就是过滤器处拦截判断,已有`springboot,quarkus,javalin,ktor`等集成样例)  
+>  支持动态修改权限配置(动态修改配置每个`rest api`谁有权访问)    
+>  支持主流`http`容器  `servlet` 和 `jax-rs`  
+>  支持多种认证策略, `jwt, basic auth, digest auth` ... 可扩展自定义支持的认证方式   
+>  基于改进的字典匹配树拥有的高性能    
+>  良好的扩展接口, 样例和文档  
+
+>`sureness`的低配置，易扩展，不耦合其他框架，希望能帮助开发者对自己的项目多场景快速安全的进行保护
 
 ```
 <dependency>
     <groupId>com.usthe.sureness</groupId>
     <artifactId>sureness-core</artifactId>
-    <version>0.1</version>
+    <version>0.4.5</version>
 </dependency>
 ```
 
