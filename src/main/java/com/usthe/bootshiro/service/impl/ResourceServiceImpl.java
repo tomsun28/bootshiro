@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author tomsun28
@@ -84,6 +87,18 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<AuthResource> getNotAuthorityMenusByRoleId(Integer roleId) throws DataAccessException {
         return authResourceMapper.selectNotAuthorityMenusByRoleId(roleId);
+    }
+
+    @Override
+    public Set<String> getAllEnableResourcePath() {
+        List<String> enablePath = authResourceMapper.selectEnablePathData();
+        return new HashSet<>(enablePath);
+    }
+
+    @Override
+    public Set<String> getAllDisableResourcePath() {
+        List<String> disablePath = authResourceMapper.selectDisablePathData();
+        return new HashSet<>(disablePath);
     }
 
 }

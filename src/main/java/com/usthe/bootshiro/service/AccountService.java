@@ -1,7 +1,7 @@
 package com.usthe.bootshiro.service;
 
 import com.usthe.bootshiro.domain.bo.AuthUser;
-import com.usthe.bootshiro.domain.vo.Account;
+import com.usthe.sureness.provider.SurenessAccount;
 
 /**
  * @author tomsun28
@@ -15,7 +15,7 @@ public interface AccountService {
      * @param appId 1
      * @return com.usthe.bootshiro.domain.vo.Account
      */
-    Account loadAccount(String appId);
+    SurenessAccount loadAccount(String appId);
     /**
      * description TODO
      *
