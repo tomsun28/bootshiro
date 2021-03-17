@@ -77,7 +77,7 @@ CREATE TABLE `auth_resource`  (
   `TYPE` smallint(4) NULL DEFAULT NULL COMMENT '类型 1:菜单menu 2:资源element(rest-api) 3:资源分类',
   `METHOD` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问方式 GET POST PUT DELETE PATCH',
   `ICON` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `STATUS` smallint(4) NULL DEFAULT 1 COMMENT '状态   1:正常、9：禁用',
+  `STATUS` smallint(4) NULL DEFAULT 1 COMMENT '状态   1:正常、9：过滤保护',
   `CREATE_TIME` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `UPDATE_TIME` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`ID`) USING BTREE

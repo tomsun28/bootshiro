@@ -148,4 +148,16 @@ public interface AuthResourceMapper {
      * @throws DataAccessException when
      */
     List<AuthResource> selectNotAuthorityMenusByRoleId(Integer roleId) throws DataAccessException;
+
+    /**
+     * Get uri resource and resource-role relationship chain, eg: /api/v2/host===post===[role2,role3,role4]
+     * @return resource-role chain set
+     */
+    List<String> selectEnablePathData();
+
+    /**
+     * Get disabled uri resources eg: /api/v2/host===post
+     * @return resouce set
+     */
+    List<String> selectDisablePathData();
 }

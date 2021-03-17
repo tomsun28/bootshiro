@@ -225,4 +225,21 @@
 		)
     </select>
 
+    <select id="selectEnablePathData" resultType="java.lang.String">
+        select  CONCAT(LOWER(re.URI), "===",LOWER(re.method), "===[", IFNULL(GROUP_CONCAT(DISTINCT rol.CODE), ""), "]") as path
+        from auth_resource re
+                 LEFT JOIN auth_role_resource ro on re.id = ro.RESOURCE_ID
+                 LEFT JOIN auth_role rol on ro.ROLE_ID = rol.ID
+        where re.type = 2
+        GROUP BY
+            re.URI,re.ID
+    </select>
+
+    <select id="selectDisablePathData" resultType="java.lang.String">
+        select  CONCAT(LOWER(re.URI), "===",LOWER(re.method)) as path
+        from auth_resource re
+        where re.TYPE = 2 and re.STATUS = 9
+        order by re.ID;
+    </select>
+
 </mapper>

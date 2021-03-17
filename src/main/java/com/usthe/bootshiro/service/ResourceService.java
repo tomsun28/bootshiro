@@ -3,6 +3,7 @@ package com.usthe.bootshiro.service;
 import com.usthe.bootshiro.domain.bo.AuthResource;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author tomsun28
@@ -97,10 +98,22 @@ public interface ResourceService {
     List<AuthResource> getNotAuthorityApisByRoleId(Integer roleId);
 
     /**
-     * description TODO
+     * description
      *
      * @param roleId 1
      * @return java.util.List<com.usthe.bootshiro.domain.bo.AuthResource>
      */
     List<AuthResource> getNotAuthorityMenusByRoleId(Integer roleId);
+
+    /**
+     * get enabled resource-path-role eg: /api/v2/host===post===[role2,role3,role4]
+     * @return resource-path-role
+     */
+    Set<String> getAllEnableResourcePath();
+
+    /**
+     * get disable resource-path-role eg: /api/v2/host===post===[role2,role3,role4]
+     * @return resource-path-role
+     */
+    Set<String> getAllDisableResourcePath();
 }
