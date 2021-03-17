@@ -1,4 +1,6 @@
-## 强烈自荐一个全新项目 sureness - 面向restful api的高性能认证鉴权框架    
+**此项目正在由sureness替换apache shiro重构中，若您需使用apache shiro版本，请见[shiro分支](https://gitee.com/tomsun28/bootshiro/tree/shiro/)**
+
+#### 推荐一个全新面向restful api的高性能认证鉴权框架 - sureness    
 
 [sureness主页 - su.usthe.com](https://su.usthe.com) [sureness-github地址](https://github.com/tomsun28/sureness) [sureness-gitee地址](https://gitee.com/tomsun28/sureness)   
 欢迎star使用      
