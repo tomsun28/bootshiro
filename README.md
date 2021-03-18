@@ -1,11 +1,13 @@
-**此项目正在由sureness替换apache shiro重构中，若您需使用apache shiro版本，请见[shiro分支](https://gitee.com/tomsun28/bootshiro/tree/shiro/)**
+**此项目正在由sureness替换apache shiro重构进行中，若您需使用apache shiro版本，请见[shiro分支](https://gitee.com/tomsun28/bootshiro/tree/shiro/)**
 
 #### 推荐一个全新面向restful api的高性能认证鉴权框架 - sureness    
 
-[sureness主页 - su.usthe.com](https://su.usthe.com) [sureness-github地址](https://github.com/tomsun28/sureness) [sureness-gitee地址](https://gitee.com/tomsun28/sureness)   
-欢迎star使用      
+[sureness主页 - su.usthe.com](https://su.usthe.com)   
+[Gitee仓库](https://gitee.com/tomsun28/sureness)   
+[Github仓库](https://github.com/tomsun28/sureness)   
+欢迎使用star         
 
-#### 📫 背景
+#### 📫 背景   
 
 在主流的前后端分离架构中，如何通过有效快速的认证鉴权来保护后端提供的`restful api`变得尤为重要。对现存框架，不原生支持`rest`的`apache shiro`，
 还是深度绑定`spring`，较慢性能，学习曲线陡峭的`spring security`，或多或少都不是我们的理想型。   
@@ -24,7 +26,7 @@
 
 >`sureness`的低配置，易扩展，不耦合其他框架，希望能帮助开发者对自己的项目多场景快速安全的进行保护
 
-##### 🔍 框架对比
+##### 🔍 框架对比    
 
 | ~         | sureness | shiro | spring security |
 | ---       | ---      | ---   | ---  |
@@ -39,13 +41,6 @@
 | **性能速度** | 较快 | 较慢 | 较慢|
 | **学习曲线** | 简单 | 简单 | 陡峭|
 
-```
-<dependency>
-    <groupId>com.usthe.sureness</groupId>
-    <artifactId>sureness-core</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
 
 # bootshiro
 
