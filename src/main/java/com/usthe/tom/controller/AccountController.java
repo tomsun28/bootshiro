@@ -1,9 +1,14 @@
 package com.usthe.tom.controller;
 
+
+
 import com.usthe.tom.pojo.dto.Account;
 import com.usthe.tom.pojo.dto.Message;
 import com.usthe.tom.service.AccountService;
 import com.usthe.sureness.util.JsonWebTokenUtil;
+import com.usthe.tom.support.log.LogExeManager;
+import com.usthe.tom.support.log.LogTaskFactory;
+import com.usthe.tom.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +40,7 @@ public class AccountController {
     private static final String TOKEN_SPLIT = "--";
 
     @PostMapping("/token")
-    public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account) {
+    public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account, HttpServletRequest request) {
         boolean authenticatedFlag = accountService.authenticateAccount(account);
         if (!authenticatedFlag) {
             Message message = Message.builder()
@@ -54,6 +60,7 @@ public class AccountController {
         if (log.isDebugEnabled()) {
             log.debug("issue token success, account: {} -- token: {}", account, jwt);
         }
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(account.getUsername(), IpUtil.getIpFromRequest(request), true, "登录成功"));
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
@@ -82,15 +89,17 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Message> accountRegister(@RequestBody @Validated Account account) {
+    public ResponseEntity<Message> accountRegister(@RequestBody @Validated Account account, HttpServletRequest request) {
         if (accountService.registerAccount(account)) {
             Map<String, String> responseData = Collections.singletonMap("success", "sign up success, login after");
             Message message = Message.builder().data(responseData).build();
             if (log.isDebugEnabled()) {
                 log.debug("account: {}, sign up success", account);
             }
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getUsername(), IpUtil.getIpFromRequest(request), true, "注册成功"));
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
         } else {
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getUsername(), IpUtil.getIpFromRequest(request), false, "注册失败"));
             Message message = Message.builder()
                     .errorMsg("username already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);

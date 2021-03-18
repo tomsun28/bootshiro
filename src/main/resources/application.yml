@@ -1,145 +1,44 @@
 server:
-  port: 8080
-
+  port: 8081
 spring:
-  datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      platform: mysql
-      type: com.alibaba.druid.pool.DruidDataSource
-      # 下面为连接池的补充设置，应用到上面所有数据源中
-      # 初始化大小，最小，最大
-      # druid 配置: https://github.com/alibaba/druid/wiki/
-      initialSize: 1
-      minIdle: 1
-      maxActive: 20
-      # 配置获取连接等待超时的时间
-      maxWait: 60000
-      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      timeBetweenEvictionRunsMillis: 60000
-      # 配置一个连接在池中最小生存的时间，单位是毫秒
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      # 打开PSCache，并且指定每个连接上PSCache的大小
-      poolPreparedStatements: true
-      maxPoolPreparedStatementPerConnectionSize: 20
-      # 配置监控统计拦截的filters，stat用于监控界面，'wall'用于防火墙防御sql注入, slf4j用于druid记录sql日志
-      filters: stat,slf4j,wall
-      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-      # 合并多个DruidDataSource的监控数据
-      useGlobalDataSourceStat: false
-
-  # redis
-  redis:
-    # 数据库索引，默认0
-    database: 0
-#    # 服务器IP地址
-#    host: 127.0.0.1
-#    # 连接端口
-#    port: 6379
-#    # Redis服务器连接密码（默认为空）
-#    password:
-
-    jedis:
-      pool:
-        # 连接池最大连接数（使用负值表示没有限制）
-        max-active: 800
-        # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: 10000
-        # 连接池中的最大空闲连接
-        max-idle: 20
-        # 连接池中的最小空闲连接
-        min-idle: 2
-    # 连接超时时间（毫秒）
-    timeout: 30000
-  cache:
-    type: redis
-
-
-  # 设置使用哪个环境的配置
-  # 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
-  #   测试环境：java -jar bootshiro.jar --spring.profiles.active=test
-  #   生产环境：java -jar bootshiro.jar --spring.profiles.active=prod
   profiles:
     active: dev
 
-
-
-
-
-mybatis:
-  # 指向实体类包路径
-  type-aliases-package: com.usthe.bootshiro.domain.bo
-  # mapper xml 文件地址
-  mapper-locations: classpath:mapper/*.xml
-  # 检查 mybatis 配置是否存在，一般命名为 mybatis-config.xml
-  check-config-location: true
-  # 执行模式。默认是 SIMPLE
-  executor-type: simple
-
-
-
-#pagehelper分页插件
-pagehelper:
-
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
-
-
-bootshiro:
-  enableEncryptPassword: true
+jasypt:
+  encryptor:
+    password: e!swhdg&d763jo
 
 ---
-# 开发环境配置(配置项只包括环境不同项)
 spring:
-    profiles: dev
-    datasource:
-      url: jdbc:mysql://47.110.55.246:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: root
-      password: admintomsun
-    redis:
-      # 服务器IP地址
-      host: 47.110.55.246
-      # 连接端口
-      port: 6368
-      # Redis服务器连接密码（默认为空）
-      password:
+  profiles: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ENC(vp7cbF0sE/lRsThrcwdiA/WoeG1mIXzy)
+    url: jdbc:mysql://47.110.55.246:3306/tom?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    platform: mysql
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+    # 每次重启都会根据data.sql schema.sql重建表数据, 设置 NEVER 就不启动重建
+    # Each restart will rebuild the table data according to data.sql schema.sql
+    # setting NEVER will not start the reconstruction
+    initialization-mode: always
+  jpa:
+    database: mysql
+    show-sql: true
 
 ---
-# 测试环境配置(配置项只包括不同项)
-
 spring:
-    profiles: test
-    datasource:
-      url: jdbc:mysql://127.0.0.1:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: root
-      password: 123456
-    redis:
-      # 服务器IP地址
-      host: 127.0.0.1
-      # 连接端口
-      port: 6368
-      # Redis服务器连接密码（默认为空）
-      password:
-
----
-# 生产环境配置(配置项只包括不同项)
-
-spring:
-    profiles: prod
-    datasource:
-      url: jdbc:mysql://172.16.215.193:3306/usthe?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: root
-      password: 123456
-    redis:
-      # 服务器IP地址
-      host: 172.16.215.193
-      # 连接端口
-      port: 6368
-      # Redis服务器连接密码（默认为空）
-      password:
+  profiles: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ENC(vp7cbF0sE/lRsThrcwdiA/WoeG1mIXzy)
+    url: jdbc:mysql://47.110.55.246:3306/tom?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    platform: mysql
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+    initialization-mode: always
+  jpa:
+    database: mysql
+    show-sql: true

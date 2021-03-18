@@ -1,263 +1,492 @@
 {
 	"info": {
-		"_postman_id": "f3d38197-8051-419d-9500-77e1f074efee",
-		"name": "bootshiro echo",
+		"_postman_id": "d8ee1dc8-1ea0-4068-8c34-4a4729c0565e",
+		"name": "sureness-sample-tom",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "bootshiro-login",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "bf78a840-a6cd-420d-a614-d8eed4028b51",
-						"type": "text/javascript",
-						"exec": [
-							"",
-							"pm.sendRequest(\"http://localhost:8080/account/register?tokenKey=get\", function (err, response) {",
-							"    var key = response.json().data.tokenKey;",
-							"    var userKey = response.json().data.userKey;",
-							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
-							"     console.log(userKey);",
-							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
-							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
-							"    ",
-							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
-							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
-							"    ",
-							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
-							"",
-							"    pm.environment.set(\"password\", password.toString());",
-							"    pm.environment.set(\"userKey\", userKey.toString());",
-							"    ",
-							"    ",
-							"});",
-							"",
-							""
-						]
-					}
-				}
-			],
+			"name": "http://localhost:8081/auth/token - use admin account",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "",
-						"value": "",
-						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n      \"appId\": \"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"login\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/account/login",
+					"raw": "http://localhost:8081/auth/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
-						"account",
-						"login"
+						"auth",
+						"token"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "bootshiro-login-no-encrpty",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "bf78a840-a6cd-420d-a614-d8eed4028b51",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "http://localhost:8081/auth/token - use user account",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "",
-						"value": "",
-						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n      \"appId\": \"tom\",\r\n      \"password\": \"1234\",\r\n      \"methodName\": \"login\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+					"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"user\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/account/login",
+					"raw": "http://localhost:8081/auth/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
-						"account",
-						"login"
+						"auth",
+						"token"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "bootshiro-jwt",
+			"name": "http://localhost:8081/auth/token - use no noRole account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"noRole\",\n\t\"password\": \"noRole\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/auth/token - use no guest account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"guest\",\n\t\"password\": \"guest\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - basic- use noRole",
 			"request": {
 				"auth": {
-					"type": "bearer"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "noRole",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "noRole",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/role/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - baisc auth - use admin",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/role/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - basic auth - use guest",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "guest",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "guest",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/role/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role - basic auth - use guest",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "guest",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "guest",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"test_role\",\n\t\"code\": \"test_role\",\n\t\"status\": 1,\n\t\"description\": \"this is test role add\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role - basic auth - use user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"test_role\",\n\t\"code\": \"test_role\",\n\t\"status\": 1,\n\t\"description\": \"this is test role add\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - jwt auth",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNocjEEOwiAQRe8y65IwCBQ4hlvjotAhVqs1DBoT492l7F5e_vtfuNYFAliUPs3aCrIuCW1nFDHlUaBVqJOLJpkIA_ArtnHd7o0X5s43egim8qayy6lCQOOUd15JHIA-zy4OUo5dlG2lFp46KDjvR0fKhfgCIU8r0-8PAAD__w.f-3klWWDpEO3uDLlx2S53DV2cYernwVEDwcC6z1JexocbZoxRKmASTOuky1qMCxy_hV8-RbuMjDmI3ASa_FQOw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/role/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - custom auth",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/role/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"role",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/role/1/2 - custom token auth - use admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [
 					{
-						"key": "authorization",
-						"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw"
-					},
-					{
-						"key": "appId",
-						"value": "tom"
+						"key": "Token",
+						"value": "admin--1607013327518--36000--03b70f83b73e411d879c03853f362868",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/user/role/tom?",
+					"raw": "http://localhost:8081/role/1/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
-						"user",
 						"role",
-						"tom"
-					],
-					"query": [
-						{
-							"key": "jwt",
-							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw",
-							"disabled": true
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/auth/custom/token - use admin account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "bootshiro-register",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "e2075c45-db6d-436b-96cb-3ffd11b974c9",
-						"type": "text/javascript",
-						"exec": [
-							"",
-							"pm.sendRequest(\"http://localhost:8080/account/register?tokenKey=get\", function (err, response) {",
-							"    var key = response.json().data.tokenKey;",
-							"    var userKey = response.json().data.userKey;",
-							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
-							"     console.log(userKey);",
-							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
-							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
-							"    ",
-							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
-							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
-							"    ",
-							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
-							"",
-							"    pm.environment.set(\"password\", password.toString());",
-							"    pm.environment.set(\"userKey\", userKey.toString());",
-							"    ",
-							"    ",
-							"});",
-							"",
-							""
-						]
 					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n      \"uid\": \"tom\",\r\n      \"username\":\"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"register\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/account/register",
+					"raw": "http://localhost:8081/auth/custom/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
-						"account",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "bootshiro-register-no-encrpty",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "e2075c45-db6d-436b-96cb-3ffd11b974c9",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n      \"uid\": \"tom33\",\r\n      \"username\":\"tom33\",\r\n      \"password\": \"1234\",\r\n      \"methodName\": \"register\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/account/register",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"account",
-						"register"
+						"auth",
+						"custom",
+						"token"
 					]
 				}
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
