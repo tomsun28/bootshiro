@@ -96,8 +96,8 @@ DROP TABLE IF EXISTS  auth_account_log ;
 CREATE TABLE auth_account_log
 (
     id         bigint not null auto_increment comment 'ID',
-    log_name   bigint not null comment '日志名称(login,register,logout)',
-    username   bigint not null comment 'username',
+    log_name   varchar(255) not null comment '日志名称(login,register,logout)',
+    username   varchar(255) not null comment 'username',
     success    boolean comment '是否执行成功(0失败1成功)',
     message    varchar(255) comment '具体消息',
     remote_ip  varchar(255) comment '登录远程IP',
@@ -113,8 +113,8 @@ DROP TABLE IF EXISTS  auth_operation_log ;
 CREATE TABLE auth_operation_log
 (
     id         bigint not null auto_increment comment 'ID',
-    log_name   bigint not null comment '日志名称(login,register,logout)',
-    username   bigint not null comment 'username',
+    log_name   varchar(255) not null comment '日志名称(login,register,logout)',
+    username   varchar(255) not null comment 'username',
     api        varchar(255) comment 'API',
     method     varchar(255) comment '请求方法',
     success    boolean comment '是否执行成功(0失败1成功)',
