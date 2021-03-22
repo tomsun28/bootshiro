@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,6 +74,23 @@ public class GlobalExceptionHandler {
         log.info("[sample-tom]-[data status conflict warning]-{}", errorMessage, exception);
         Message message = Message.builder().errorMsg(errorMessage).build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+    }
+
+    /**
+     * handle Request method not supported
+     * @param exception Request method not supported
+     * @return response
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    ResponseEntity<Message> handleMethodNotSupportException(HttpRequestMethodNotSupportedException exception) {
+        String errorMessage = "Request method not supported";
+        if (exception != null && exception.getMessage() != null) {
+            errorMessage = exception.getMessage();
+        }
+        log.info("[sample-tom]-[Request method not supported]-{}", errorMessage);
+        Message message = Message.builder().errorMsg(errorMessage).build();
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(message);
     }
 
     /**

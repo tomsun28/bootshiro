@@ -12,11 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author tomsun28
@@ -31,42 +26,34 @@ public class RoleController {
     private RoleService roleService;
 
 
-    @GetMapping("/resource/{roleId}/{currentPage}/{pageSize}")
-    public ResponseEntity<Message> getResourceOwnByRole(@PathVariable @NotBlank Long roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
-        if (currentPage == null){
-            currentPage = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 10;
-        }
+    @GetMapping("/resource/{roleId}")
+    public ResponseEntity<Message> getResourceOwnByRole(@PathVariable Long roleId, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
+        currentPage = currentPage == null ? 0 : currentPage;
+        pageSize = pageSize == null ? 8 : pageSize;
         Page<AuthResource> resourcePage = roleService.getPageResourceOwnRole(roleId, currentPage, pageSize);
         Message message = Message.builder().data(resourcePage).build();
         return ResponseEntity.ok().body(message);
     }
 
-    @GetMapping("/resource/-/{roleId}/{currentPage}/{pageSize}")
-    public ResponseEntity<Message> getResourceNotOwnByRole(@PathVariable @NotBlank Long roleId, @PathVariable Integer currentPage, @PathVariable Integer pageSize) {
-        if (currentPage == null){
-            currentPage = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 10;
-        }
+    @GetMapping("/resource/-/{roleId}")
+    public ResponseEntity<Message> getResourceNotOwnByRole(@PathVariable Long roleId, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
+        currentPage = currentPage == null ? 0 : currentPage;
+        pageSize = pageSize == null ? 8 : pageSize;
         Page<AuthResource> resourcePage = roleService.getPageResourceNotOwnRole(roleId, currentPage, pageSize);
         Message message = Message.builder().data(resourcePage).build();
         return ResponseEntity.ok().body(message);
     }
 
     @PostMapping("/authority/resource/{roleId}/{resourceId}")
-    public ResponseEntity<Message> authorityRoleResource(@PathVariable @NotBlank Long roleId,
-                                                         @PathVariable @NotBlank Long resourceId) {
+    public ResponseEntity<Message> authorityRoleResource(@PathVariable Long roleId,
+                                                         @PathVariable Long resourceId) {
         roleService.authorityRoleResource(roleId,resourceId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/authority/resource/{roleId}/{resourceId}")
-    public ResponseEntity<Message> deleteAuthorityRoleResource(@PathVariable @NotBlank Long roleId,
-                                                         @PathVariable @NotBlank Long resourceId) {
+    public ResponseEntity<Message> deleteAuthorityRoleResource(@PathVariable Long roleId,
+                                                         @PathVariable Long resourceId) {
         roleService.deleteAuthorityRoleResource(roleId,resourceId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -100,7 +87,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{roleId}")
-    public ResponseEntity<Message> deleteRole(@PathVariable @NotBlank Long roleId) {
+    public ResponseEntity<Message> deleteRole(@PathVariable Long roleId) {
         if (roleService.deleteRole(roleId)) {
             if (log.isDebugEnabled()) {
                 log.debug("delete role success: {}", roleId);
@@ -114,24 +101,13 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/{currentPage}/{pageSize}")
-    public ResponseEntity<Message> getRole(@PathVariable Integer currentPage, @PathVariable Integer pageSize ) {
-        if (Objects.isNull(currentPage) || Objects.isNull(pageSize)) {
-            // no pageable
-            Optional<List<AuthRole>> roleListOptional = roleService.getAllRole();
-            if (roleListOptional.isPresent()) {
-                Message message = Message.builder().data(roleListOptional.get()).build();
-                return ResponseEntity.ok().body(message);
-            } else {
-                Message message = Message.builder().data(new ArrayList<>()).build();
-                return ResponseEntity.ok().body(message);
-            }
-        } else {
-            // pageable
-            Page<AuthRole> rolePage = roleService.getPageRole(currentPage, pageSize);
-            Message message = Message.builder().data(rolePage).build();
-            return ResponseEntity.ok().body(message);
-        }
+    @GetMapping
+    public ResponseEntity<Message> getRole(@RequestParam Integer currentPage, @RequestParam Integer pageSize ) {
+        currentPage = currentPage == null ? 0 : currentPage;
+        pageSize = pageSize == null ? 8 : pageSize;
+        Page<AuthRole> rolePage = roleService.getPageRole(currentPage, pageSize);
+        Message message = Message.builder().data(rolePage).build();
+        return ResponseEntity.ok().body(message);
     }
 
 }

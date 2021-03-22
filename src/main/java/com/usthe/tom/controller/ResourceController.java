@@ -11,11 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author tomsun28
@@ -56,7 +51,7 @@ public class ResourceController {
     }
 
     @DeleteMapping("/{resourceId}")
-    public ResponseEntity<Message> deleteResource(@PathVariable @NotBlank Long resourceId ) {
+    public ResponseEntity<Message> deleteResource(@PathVariable Long resourceId ) {
         if (resourceService.deleteResource(resourceId)) {
             if (log.isDebugEnabled()) {
                 log.debug("delete resource success: {}", resourceId);
@@ -70,23 +65,12 @@ public class ResourceController {
     }
 
     @GetMapping("/{currentPage}/{pageSize}")
-    public ResponseEntity<Message> getResource(@PathVariable Integer currentPage, @PathVariable Integer pageSize ) {
-        if (Objects.isNull(currentPage) || Objects.isNull(pageSize)) {
-            // no pageable
-            Optional<List<AuthResource>> resourceListOptional = resourceService.getAllResource();
-            if (resourceListOptional.isPresent()) {
-                Message message = Message.builder().data(resourceListOptional.get()).build();
-                return ResponseEntity.ok().body(message);
-            } else {
-                Message message = Message.builder().data(new ArrayList<>(0)).build();
-                return ResponseEntity.ok().body(message);
-            }
-        } else {
-            // pageable
-            Page<AuthResource> resourcePage = resourceService.getPageResource(currentPage, pageSize);
-            Message message = Message.builder().data(resourcePage.get()).build();
-            return ResponseEntity.ok().body(message);
-        }
+    public ResponseEntity<Message> getResource(@RequestParam Integer currentPage, @RequestParam Integer pageSize ) {
+        currentPage = currentPage == null ? 0 : currentPage;
+        pageSize = pageSize == null ? 8 : pageSize;
+        Page<AuthResource> resourcePage = resourceService.getPageResource(currentPage, pageSize);
+        Message message = Message.builder().data(resourcePage.get()).build();
+        return ResponseEntity.ok().body(message);
     }
 
 }
