@@ -65,9 +65,7 @@ public class ResourceController {
     }
 
     @GetMapping("/{currentPage}/{pageSize}")
-    public ResponseEntity<Message> getResource(@RequestParam Integer currentPage, @RequestParam Integer pageSize ) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getResource(@RequestParam(defaultValue = "0") Integer currentPage, @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthResource> resourcePage = resourceService.getPageResource(currentPage, pageSize);
         Message message = Message.builder().data(resourcePage.get()).build();
         return ResponseEntity.ok().body(message);

@@ -28,14 +28,14 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public Page<AuthAccountLog> getAccountLogs(Integer currentPage, Integer pageSize) {
-        Sort sort = Sort.by(Sort.Order.desc("gmt_create"));
+        Sort sort = Sort.by(Sort.Order.desc("gmtCreate"));
         PageRequest pageRequest = PageRequest.of(currentPage, pageSize, sort);
         return accountLogDao.findAll(pageRequest);
     }
 
     @Override
     public Page<AuthOperationLog> getOperationLogs(Integer currentPage, Integer pageSize) {
-        Sort sort = Sort.by(Sort.Order.desc("gmt_create"));
+        Sort sort = Sort.by(Sort.Order.desc("gmtCreate"));
         PageRequest pageRequest = PageRequest.of(currentPage, pageSize, sort);
         return operationLogDao.findAll(pageRequest);
     }

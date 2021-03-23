@@ -9,6 +9,7 @@ import com.usthe.sureness.util.JsonWebTokenUtil;
 import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
 import com.usthe.tom.util.IpUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,7 @@ public class AccountController {
 
     private static final String TOKEN_SPLIT = "--";
 
+    @ApiOperation(value = "站内登录,签发token", notes = "适用 username|email|phone + password")
     @PostMapping("/token")
     public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account, HttpServletRequest request) {
         boolean authenticatedFlag = accountService.authenticateAccount(account);
@@ -50,9 +52,9 @@ public class AccountController {
             }
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
         }
-        List<String> ownRole = accountService.loadAccountRoles(account.getUsername());
+        List<String> ownRole = accountService.loadAccountRoles(account.getIdentifier());
         long refreshPeriodTime = 36000L;
-        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), account.getUsername(),
+        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), account.getIdentifier(),
                 "tom-auth-server", refreshPeriodTime >> 1, ownRole,
                 null, false);
         Map<String, String> responseData = Collections.singletonMap("token", jwt);
@@ -60,7 +62,7 @@ public class AccountController {
         if (log.isDebugEnabled()) {
             log.debug("issue token success, account: {} -- token: {}", account, jwt);
         }
-        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(account.getUsername(), IpUtil.getIpFromRequest(request), true, "登录成功"));
+        LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(account.getIdentifier(), IpUtil.getIpFromRequest(request), true, "登录成功"));
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
@@ -76,10 +78,10 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
         }
         long refreshPeriodTime = 36000L;
-        String token = account.getUsername() + TOKEN_SPLIT + System.currentTimeMillis()
+        String token = account.getIdentifier() + TOKEN_SPLIT + System.currentTimeMillis()
                 + TOKEN_SPLIT + refreshPeriodTime
                 + TOKEN_SPLIT + UUID.randomUUID().toString().replace("-", "");
-        TokenStorage.addToken(account.getUsername(), token);
+        TokenStorage.addToken(account.getIdentifier(), token);
         Map<String, String> responseData = Collections.singletonMap("customToken", token);
         Message message = Message.builder().data(responseData).build();
         if (log.isDebugEnabled()) {
@@ -88,6 +90,7 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
+    @ApiOperation(value = "站内注册", notes = "适用 username|email|phone + password")
     @PostMapping("/register")
     public ResponseEntity<Message> accountRegister(@RequestBody @Validated Account account, HttpServletRequest request) {
         if (accountService.registerAccount(account)) {
@@ -96,10 +99,10 @@ public class AccountController {
             if (log.isDebugEnabled()) {
                 log.debug("account: {}, sign up success", account);
             }
-            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getUsername(), IpUtil.getIpFromRequest(request), true, "注册成功"));
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getIdentifier(), IpUtil.getIpFromRequest(request), true, "注册成功"));
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
         } else {
-            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getUsername(), IpUtil.getIpFromRequest(request), false, "注册失败"));
+            LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getIdentifier(), IpUtil.getIpFromRequest(request), false, "注册失败"));
             Message message = Message.builder()
                     .errorMsg("username already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);

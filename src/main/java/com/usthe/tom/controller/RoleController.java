@@ -27,18 +27,18 @@ public class RoleController {
 
 
     @GetMapping("/resource/{roleId}")
-    public ResponseEntity<Message> getResourceOwnByRole(@PathVariable Long roleId, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getResourceOwnByRole(@PathVariable Long roleId,
+                                                        @RequestParam(defaultValue = "0") Integer currentPage,
+                                                        @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthResource> resourcePage = roleService.getPageResourceOwnRole(roleId, currentPage, pageSize);
         Message message = Message.builder().data(resourcePage).build();
         return ResponseEntity.ok().body(message);
     }
 
     @GetMapping("/resource/-/{roleId}")
-    public ResponseEntity<Message> getResourceNotOwnByRole(@PathVariable Long roleId, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getResourceNotOwnByRole(@PathVariable Long roleId,
+                                                           @RequestParam(defaultValue = "0") Integer currentPage,
+                                                           @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthResource> resourcePage = roleService.getPageResourceNotOwnRole(roleId, currentPage, pageSize);
         Message message = Message.builder().data(resourcePage).build();
         return ResponseEntity.ok().body(message);
@@ -102,9 +102,8 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<Message> getRole(@RequestParam Integer currentPage, @RequestParam Integer pageSize ) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getRole(@RequestParam(defaultValue = "0") Integer currentPage,
+                                           @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthRole> rolePage = roleService.getPageRole(currentPage, pageSize);
         Message message = Message.builder().data(rolePage).build();
         return ResponseEntity.ok().body(message);

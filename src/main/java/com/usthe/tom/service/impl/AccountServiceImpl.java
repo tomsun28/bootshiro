@@ -33,12 +33,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean authenticateAccount(Account account) {
-        Optional<AuthUser> authUserOptional = authUserDao.findAuthUserByUsername(account.getUsername());
+        Optional<AuthUser> authUserOptional = authUserDao.findAuthUserByUsername(account.getIdentifier());
         if (!authUserOptional.isPresent()) {
             return false;
         }
         AuthUser authUser = authUserOptional.get();
-        String password = account.getPassword();
+        String password = account.getCredential();
         if (password == null) {
             return false;
         }
@@ -61,8 +61,8 @@ public class AccountServiceImpl implements AccountService {
             return false;
         }
         String salt = SurenessCommonUtil.getRandomString(6);
-        String password = Md5Util.md5(account.getPassword() + salt);
-        AuthUser authUser = AuthUser.builder().username(account.getUsername())
+        String password = Md5Util.md5(account.getCredential() + salt);
+        AuthUser authUser = AuthUser.builder().username(account.getIdentifier())
                 .password(password).salt(salt).status(1).build();
         authUserDao.save(authUser);
         return true;
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean isAccountExist(Account account) {
-        Optional<AuthUser> authUserOptional = authUserDao.findAuthUserByUsername(account.getUsername());
+        Optional<AuthUser> authUserOptional = authUserDao.findAuthUserByUsername(account.getIdentifier());
         return authUserOptional.isPresent();
     }
 

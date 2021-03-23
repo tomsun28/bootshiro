@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author tomsun28
@@ -18,12 +20,23 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class Account {
 
-    @NotBlank(message = "username can not null")
-    @Length(min = 3, max = 100, message = "username length in 3-100")
-    private String username;
+    /**
+     * 登录类型  password github phone email ..
+     */
+    @NotNull(message = "authType can not null")
+    @Range(min = 1, max = 4, message = "1.password 2.github 3.email 4.phone")
+    private Integer authType;
 
-    @NotBlank(message = "password can not null")
-    @Length(min = 3, max = 100, message = "password length in 3-100")
-    private String password;
+    /**
+     * 用户标识
+     */
+    @NotBlank(message = "identifier can not null")
+    private String identifier;
+
+    /**
+     * 密钥
+     */
+    @NotBlank(message = "credential can not null")
+    private String credential;
 
 }

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d8ee1dc8-1ea0-4068-8c34-4a4729c0565e",
-		"name": "sureness-sample-tom",
+		"_postman_id": "d231ece4-4404-48fa-946a-9c441057e363",
+		"name": "sureness-tom",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+					"raw": "{\n    \"authType\": \"1\",\n\t\"identifier\": \"admin\",\n\t\"credential\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +55,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"user\"\n}",
+					"raw": "{\n    \"authType\": \"1\",\n\t\"identifier\": \"admin\",\n\t\"credential\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -91,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"noRole\",\n\t\"password\": \"noRole\"\n}",
+					"raw": "{\n    \"authType\": \"1\",\n\t\"identifier\": \"admin\",\n\t\"credential\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"guest\",\n\t\"password\": \"guest\"\n}",
+					"raw": "{\n    \"authType\": \"1\",\n\t\"identifier\": \"admin\",\n\t\"credential\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -150,7 +150,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - basic- use noRole",
+			"name": "http://localhost:8081/role - basic- use noRole",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -186,7 +186,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - baisc auth - use admin",
+			"name": "http://localhost:8081/log/account - baisc auth - use admin",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -206,23 +206,22 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/role/1/2",
+					"raw": "http://localhost:8081/log/account",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"role",
-						"1",
-						"2"
+						"log",
+						"account"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - basic auth - use guest",
+			"name": "http://localhost:8081/role - basic auth - use guest",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -358,7 +357,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - jwt auth",
+			"name": "http://localhost:8081/role - jwt auth",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -373,55 +372,51 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/role/1/2",
+					"raw": "http://localhost:8081/role",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"role",
-						"1",
-						"2"
+						"role"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - custom auth",
+			"name": "http://localhost:8081/role - custom auth",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "username",
-						"value": "admin",
-						"type": "text"
+						"type": "text",
+						"value": "admin"
 					},
 					{
 						"key": "password",
-						"value": "admin",
-						"type": "text"
+						"type": "text",
+						"value": "admin"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8081/role/1/2",
+					"raw": "http://localhost:8081/role",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"role",
-						"1",
-						"2"
+						"role"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8081/role/1/2 - custom token auth - use admin",
+			"name": "http://localhost:8081/role - custom token auth - use admin",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -430,21 +425,19 @@
 				"header": [
 					{
 						"key": "Token",
-						"value": "admin--1607013327518--36000--03b70f83b73e411d879c03853f362868",
-						"type": "text"
+						"type": "text",
+						"value": "admin--1607013327518--36000--03b70f83b73e411d879c03853f362868"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8081/role/1/2",
+					"raw": "http://localhost:8081/role",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"role",
-						"1",
-						"2"
+						"role"
 					]
 				}
 			},
@@ -464,7 +457,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+					"raw": "{\n    \"authType\": \"1\",\n\t\"identifier\": \"admin\",\n\t\"credential\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -487,6 +480,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

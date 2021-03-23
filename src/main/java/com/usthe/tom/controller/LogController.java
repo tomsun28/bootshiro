@@ -25,9 +25,8 @@ public class LogController {
 
     @ApiOperation(value = "获取日志记录", httpMethod = "GET")
     @RequestMapping("/account")
-    public ResponseEntity<Message> getAccountLogList(@RequestParam Integer currentPage, @RequestParam Integer pageSize ) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getAccountLogList(@RequestParam(defaultValue = "0") Integer currentPage,
+                                                     @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthAccountLog> accountLogs = logService.getAccountLogs(currentPage, pageSize);
         Message message = Message.builder().data(accountLogs).build();
         return ResponseEntity.ok().body(message);
@@ -35,9 +34,8 @@ public class LogController {
 
     @ApiOperation(value = "获取用户操作api日志列表", httpMethod = "GET")
     @RequestMapping("/operation")
-    public ResponseEntity<Message> getOperationLogList(@RequestParam Integer currentPage, @RequestParam Integer pageSize) {
-        currentPage = currentPage == null ? 0 : currentPage;
-        pageSize = pageSize == null ? 8 : pageSize;
+    public ResponseEntity<Message> getOperationLogList(@RequestParam(defaultValue = "0") Integer currentPage,
+                                                       @RequestParam(defaultValue = "8") Integer pageSize) {
         Page<AuthOperationLog> accountLogs = logService.getOperationLogs(currentPage, pageSize);
         Message message = Message.builder().data(accountLogs).build();
         return ResponseEntity.ok().body(message);
