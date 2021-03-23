@@ -3,6 +3,8 @@ package com.usthe.tom.sureness;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.usthe.sureness.mgt.SurenessSecurityManager;
 import com.usthe.sureness.processor.exception.*;
+import com.usthe.tom.support.log.LogExeManager;
+import com.usthe.tom.support.log.LogTaskFactory;
 import com.usthe.tom.sureness.processor.RefreshExpiredTokenException;
 import com.usthe.sureness.subject.SubjectSum;
 import com.usthe.sureness.util.SurenessContextHolder;
@@ -41,6 +43,7 @@ public class SurenessFilterExample implements Filter {
             // if bind, please remove it when end
             if (subject != null) {
                 SurenessContextHolder.bindSubject(subject);
+                LogExeManager.getInstance().executeLogTask(LogTaskFactory.operatorLog((String) subject.getPrincipal(), (String) subject.getTargetResource(), true, "允许访问"));
             }
         } catch (ProcessorNotFoundException | UnknownAccountException | UnsupportedSubjectException e4) {
             logger.debug("this request is illegal");

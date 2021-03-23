@@ -70,12 +70,13 @@ public class LogTaskFactory {
         };
     }
 
-    public static TimerTask operatorLog(String username, String api, String method, Boolean succeed, String message) {
+    public static TimerTask operatorLog(String username, String resource, Boolean succeed, String message) {
         return new TimerTask() {
             @Override
             public void run() {
                 try {
-                    AuthOperationLog operationLog = LogFactory.createOperationLog(username, "业务操作日志", api, method, succeed, message);
+                    String[] resourceTmp = resource.split("===");
+                    AuthOperationLog operationLog = LogFactory.createOperationLog(username, "业务操作日志", resourceTmp[0], resourceTmp[1], succeed, message);
                     operationLogDao.save(operationLog);
                 } catch (Exception e) {
                     LOGGER.error("写入业务操作日志异常", e);
