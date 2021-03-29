@@ -66,30 +66,6 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
-    @PostMapping("/custom/token")
-    public ResponseEntity<Message> issueCustomToken(@RequestBody @Validated Account account) {
-        boolean authenticatedFlag = accountService.authenticateAccount(account);
-        if (!authenticatedFlag) {
-            Message message = Message.builder()
-                    .errorMsg("username or password not incorrect").build();
-            if (log.isDebugEnabled()) {
-                log.debug("account: {} authenticated fail", account);
-            }
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
-        }
-        long refreshPeriodTime = 36000L;
-        String token = account.getIdentifier() + TOKEN_SPLIT + System.currentTimeMillis()
-                + TOKEN_SPLIT + refreshPeriodTime
-                + TOKEN_SPLIT + UUID.randomUUID().toString().replace("-", "");
-        TokenStorage.addToken(account.getIdentifier(), token);
-        Map<String, String> responseData = Collections.singletonMap("customToken", token);
-        Message message = Message.builder().data(responseData).build();
-        if (log.isDebugEnabled()) {
-            log.debug("issue token success, account: {} -- token: {}", account, token);
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
-    }
-
     @ApiOperation(value = "站内注册", notes = "适用 username|email|phone + password")
     @PostMapping("/register")
     public ResponseEntity<Message> accountRegister(@RequestBody @Validated Account account, HttpServletRequest request) {

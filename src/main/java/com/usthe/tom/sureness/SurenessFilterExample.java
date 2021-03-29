@@ -5,7 +5,6 @@ import com.usthe.sureness.mgt.SurenessSecurityManager;
 import com.usthe.sureness.processor.exception.*;
 import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
-import com.usthe.tom.sureness.processor.RefreshExpiredTokenException;
 import com.usthe.sureness.subject.SubjectSum;
 import com.usthe.sureness.util.SurenessContextHolder;
 import org.slf4j.Logger;
@@ -59,12 +58,6 @@ public class SurenessFilterExample implements Filter {
             logger.debug("this account credential is incorrect or expired");
             responseWrite(ResponseEntity
                     .status(HttpStatus.FORBIDDEN).body(e3.getMessage()), servletResponse);
-            return;
-        } catch (RefreshExpiredTokenException e4) {
-            logger.debug("this account credential token is expired, return refresh value");
-            Map<String, String> refreshTokenMap = Collections.singletonMap("refresh-token", e4.getMessage());
-            responseWrite(ResponseEntity
-                    .status(HttpStatus.FORBIDDEN).body(refreshTokenMap), servletResponse);
             return;
         } catch (UnauthorizedException e5) {
             logger.debug("this account can not access this resource");

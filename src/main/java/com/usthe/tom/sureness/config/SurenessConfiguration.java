@@ -13,9 +13,6 @@ import com.usthe.sureness.processor.support.PasswordProcessor;
 import com.usthe.sureness.provider.SurenessAccountProvider;
 import com.usthe.sureness.provider.annotation.AnnotationPathTreeProvider;
 import com.usthe.sureness.provider.ducument.DocumentPathTreeProvider;
-import com.usthe.tom.sureness.processor.CustomTokenProcessor;
-import com.usthe.tom.sureness.subject.CustomPasswdSubjectCreator;
-import com.usthe.tom.sureness.subject.CustomTokenSubjectCreator;
 import com.usthe.sureness.subject.SubjectFactory;
 import com.usthe.sureness.subject.SurenessSubjectFactory;
 import com.usthe.sureness.subject.creater.BasicSubjectServletCreator;
@@ -61,10 +58,6 @@ public class SurenessConfiguration {
         passwordProcessor.setAccountProvider(accountProvider);
         processorList.add(passwordProcessor);
 
-        // use custom token processor
-        CustomTokenProcessor customTokenProcessor = new CustomTokenProcessor();
-        customTokenProcessor.setAccountProvider(accountProvider);
-        processorList.add(customTokenProcessor);
         return new DefaultProcessorManager(processorList);
     }
 
@@ -98,11 +91,7 @@ public class SurenessConfiguration {
                 // use default basic auth subject creator
                 new BasicSubjectServletCreator(),
                 // use default jwt subject creator
-                new JwtSubjectServletCreator(),
-                // use custom password creator
-                new CustomPasswdSubjectCreator(),
-                // use custom token creator
-                new CustomTokenSubjectCreator()));
+                new JwtSubjectServletCreator()));
         return subjectFactory;
     }
 
