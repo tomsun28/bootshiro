@@ -36,4 +36,5 @@ excludedResource:
   - /**/*.png===get
   - /**/*.gif===get
   - /swagger-resources/**===get
-  - /v2/api-docs===get
+  - /v3/api-docs===get
+  - /swagger-ui/**===get

@@ -8,23 +8,20 @@ import com.usthe.tom.service.AccountService;
 import com.usthe.sureness.util.JsonWebTokenUtil;
 import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
+import com.usthe.tom.util.CommonUtil;
 import com.usthe.tom.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author tomsun28
@@ -37,6 +34,9 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     private static final String TOKEN_SPLIT = "--";
 
@@ -83,5 +83,19 @@ public class AccountController {
                     .errorMsg("username already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
+    }
+
+    @ApiOperation(value = "获取账户信息传输密钥", notes = "适用 password 加密")
+    @GetMapping("/transfer/key")
+    public ResponseEntity<Message> transferKey(HttpServletRequest request) {
+        // 动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期30秒用完即丢弃
+        String transferKey = CommonUtil.getRandomString(8);
+        String userKey = CommonUtil.getRandomString(4);
+        String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + userKey;
+        redisTemplate.opsForValue().set(saveKey, transferKey,30, TimeUnit.SECONDS);
+        Map<String, String> responseMap = new HashMap<>(4);
+        responseMap.put("transferKey", transferKey);
+        responseMap.put("userKey", userKey);
+        return ResponseEntity.ok().body(Message.builder().data(responseMap).build());
     }
 }
