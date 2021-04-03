@@ -3,6 +3,7 @@ package com.usthe.tom;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
@@ -12,6 +13,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableOpenApi
 @SpringBootApplication
 @ServletComponentScan
+@EnableCaching
 public class TomApplication {
 
     public static void main(String[] args) {

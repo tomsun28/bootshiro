@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private AuthResourceDao authResourceDao;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public boolean addResource(AuthResource authResource) {
@@ -80,13 +84,23 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Set<String> getAllEnableResourcePath() {
-        Optional<List<String>> optional = authResourceDao.getEnableResourcePathRoleData();
-        return optional.<Set<String>>map(HashSet::new).orElseGet(() -> new HashSet<>(0));
+        Set<String> enableResource = redisTemplate.opsForSet().members("tom-enable-resource");
+        if (enableResource == null || enableResource.isEmpty()) {
+            Optional<List<String>> optional = authResourceDao.getEnableResourcePathRoleData();
+            enableResource =  optional.<Set<String>>map(HashSet::new).orElseGet(() -> new HashSet<>(0));
+        }
+        enableResource.forEach(resource -> redisTemplate.opsForSet().add("tom-enable-resource", resource));
+        return enableResource;
     }
 
     @Override
     public Set<String> getAllDisableResourcePath() {
-        Optional<List<String>> optional = authResourceDao.getDisableResourcePathData();
-        return optional.<Set<String>>map(HashSet::new).orElseGet(() -> new HashSet<>(0));
+        Set<String> disableResource = redisTemplate.opsForSet().members("tom-disable-resource");
+        if (disableResource == null || disableResource.isEmpty()) {
+            Optional<List<String>> optional = authResourceDao.getDisableResourcePathData();
+            disableResource =  optional.<Set<String>>map(HashSet::new).orElseGet(() -> new HashSet<>(0));
+        }
+        disableResource.forEach(resource -> redisTemplate.opsForSet().add("tom-disable-resource", resource));
+        return disableResource;
     }
 }

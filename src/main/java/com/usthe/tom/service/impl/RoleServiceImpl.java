@@ -9,10 +9,12 @@ import com.usthe.tom.pojo.entity.AuthRole;
 import com.usthe.tom.pojo.entity.AuthRoleResourceBind;
 import com.usthe.tom.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private TreePathRoleMatcher treePathRoleMatcher;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Override
     public boolean isRoleExist(AuthRole authRole) {
         AuthRole role = AuthRole.builder()
@@ -47,6 +52,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Cacheable(value = "role", key = "#authRole.id", unless = "#result eq null")
     public boolean addRole(AuthRole authRole) {
         if (isRoleExist(authRole)) {
             return false;
@@ -112,6 +118,8 @@ public class RoleServiceImpl implements RoleService {
         roleResourceBindDao.saveAndFlush(bind);
         // refresh resource path data tree
         treePathRoleMatcher.rebuildTree();
+        redisTemplate.delete("tom-enable-resource");
+        redisTemplate.delete("tom-disable-resource");
     }
 
     @Override
@@ -119,5 +127,7 @@ public class RoleServiceImpl implements RoleService {
         roleResourceBindDao.deleteRoleResourceBind(roleId, resourceId);
         // refresh resource path data tree
         treePathRoleMatcher.rebuildTree();
+        redisTemplate.delete("tom-enable-resource");
+        redisTemplate.delete("tom-disable-resource");
     }
 }

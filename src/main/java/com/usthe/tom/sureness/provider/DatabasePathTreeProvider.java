@@ -23,7 +23,6 @@ public class DatabasePathTreeProvider implements PathTreeProvider {
     @Override
     public Set<String> providePathData() {
         return SurenessCommonUtil.attachContextPath(getContextPath(), resourceService.getAllEnableResourcePath());
-
     }
 
     @Override
