@@ -4,6 +4,8 @@ import com.usthe.tom.pojo.dto.Message;
 import com.usthe.tom.service.AccountService;
 import com.usthe.sureness.subject.SubjectSum;
 import com.usthe.sureness.util.SurenessContextHolder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户管理")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -27,7 +30,7 @@ public class UserController {
     @Autowired
     private AccountService accountService;
 
-
+    @ApiOperation(value = "获取用户拥有角色")
     @GetMapping("/role")
     public ResponseEntity<Message> getUserRoles() {
         SubjectSum subject = SurenessContextHolder.getBindSubject();
@@ -39,6 +42,7 @@ public class UserController {
         return ResponseEntity.ok(Message.builder().data(roles).build());
     }
 
+    @ApiOperation(value = "新增用户角色")
     @PostMapping("/authority/role/{appId}/{roleId}")
     public ResponseEntity<Message> authorityUserRole(@PathVariable String appId, @PathVariable Long roleId) {
         SubjectSum subject = SurenessContextHolder.getBindSubject();
@@ -54,6 +58,7 @@ public class UserController {
         return flag ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
+    @ApiOperation(value = "删除用户角色")
     @DeleteMapping("/authority/role/{appId}/{roleId}")
     public ResponseEntity<Message> deleteAuthorityUserRole(@PathVariable String appId, @PathVariable Long roleId) {
         SubjectSum subject = SurenessContextHolder.getBindSubject();

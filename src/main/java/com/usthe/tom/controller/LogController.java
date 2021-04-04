@@ -4,6 +4,7 @@ import com.usthe.tom.pojo.dto.Message;
 import com.usthe.tom.pojo.entity.AuthAccountLog;
 import com.usthe.tom.pojo.entity.AuthOperationLog;
 import com.usthe.tom.service.LogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/log")
+@Api(tags = "日志管理")
 public class LogController {
 
     @Autowired

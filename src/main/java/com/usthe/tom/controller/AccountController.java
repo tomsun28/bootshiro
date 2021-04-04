@@ -10,6 +10,7 @@ import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
 import com.usthe.tom.util.CommonUtil;
 import com.usthe.tom.util.IpUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@Api(tags = "注册认证")
 public class AccountController {
 
     @Autowired

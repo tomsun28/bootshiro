@@ -4,6 +4,8 @@ import com.usthe.tom.pojo.dto.Message;
 import com.usthe.tom.pojo.entity.AuthResource;
 import com.usthe.tom.pojo.entity.AuthRole;
 import com.usthe.tom.service.RoleService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,12 +22,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/role")
 @Slf4j
+@Api(tags = "角色管理")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-
+    @ApiOperation(value = "获取角色拥有的资源")
     @GetMapping("/resource/{roleId}")
     public ResponseEntity<Message> getResourceOwnByRole(@PathVariable Long roleId,
                                                         @RequestParam(defaultValue = "0") Integer currentPage,
@@ -35,6 +38,7 @@ public class RoleController {
         return ResponseEntity.ok().body(message);
     }
 
+    @ApiOperation(value = "获取角色未拥有的资源")
     @GetMapping("/resource/-/{roleId}")
     public ResponseEntity<Message> getResourceNotOwnByRole(@PathVariable Long roleId,
                                                            @RequestParam(defaultValue = "0") Integer currentPage,
@@ -44,6 +48,7 @@ public class RoleController {
         return ResponseEntity.ok().body(message);
     }
 
+    @ApiOperation(value = "赋权角色资源")
     @PostMapping("/authority/resource/{roleId}/{resourceId}")
     public ResponseEntity<Message> authorityRoleResource(@PathVariable Long roleId,
                                                          @PathVariable Long resourceId) {
@@ -51,6 +56,7 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @ApiOperation(value = "取消赋权角色资源")
     @DeleteMapping("/authority/resource/{roleId}/{resourceId}")
     public ResponseEntity<Message> deleteAuthorityRoleResource(@PathVariable Long roleId,
                                                          @PathVariable Long resourceId) {
@@ -58,6 +64,7 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @ApiOperation(value = "新增角色")
     @PostMapping
     public ResponseEntity<Message> addRole(@RequestBody @Validated AuthRole authRole) {
         if (roleService.addRole(authRole)) {
@@ -72,6 +79,7 @@ public class RoleController {
         }
     }
 
+    @ApiOperation(value = "更新资源")
     @PutMapping
     public ResponseEntity<Message> updateRole(@RequestBody @Validated AuthRole authRole) {
         if (roleService.updateRole(authRole)) {
@@ -86,6 +94,7 @@ public class RoleController {
         }
     }
 
+    @ApiOperation(value = "删除资源")
     @DeleteMapping("/{roleId}")
     public ResponseEntity<Message> deleteRole(@PathVariable Long roleId) {
         if (roleService.deleteRole(roleId)) {
@@ -101,6 +110,7 @@ public class RoleController {
         }
     }
 
+    @ApiOperation(value = "获取资源")
     @GetMapping
     public ResponseEntity<Message> getRole(@RequestParam(defaultValue = "0") Integer currentPage,
                                            @RequestParam(defaultValue = "8") Integer pageSize) {
