@@ -38,3 +38,4 @@ excludedResource:
   - /swagger-resources/**===get
   - /v3/api-docs===get
   - /swagger-ui/**===get
+  - /auth/**===*

@@ -3,10 +3,12 @@ package com.usthe.tom.sureness;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.usthe.sureness.mgt.SurenessSecurityManager;
 import com.usthe.sureness.processor.exception.*;
+import com.usthe.tom.pojo.dto.Message;
 import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
 import com.usthe.sureness.subject.SubjectSum;
 import com.usthe.sureness.util.SurenessContextHolder;
+import com.usthe.tom.sureness.processor.RefreshExpiredTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -52,12 +55,26 @@ public class SurenessFilterExample implements Filter {
         } catch (DisabledAccountException | ExcessiveAttemptsException e2 ) {
             logger.debug("the account is disabled");
             responseWrite(ResponseEntity
-                    .status(HttpStatus.FORBIDDEN).body(e2.getMessage()), servletResponse);
+                    .status(HttpStatus.UNAUTHORIZED).body(e2.getMessage()), servletResponse);
             return;
-        } catch (IncorrectCredentialsException | ExpiredCredentialsException e3) {
-            logger.debug("this account credential is incorrect or expired");
+        } catch (IncorrectCredentialsException e3) {
+            logger.debug("this account credential is incorrect");
             responseWrite(ResponseEntity
-                    .status(HttpStatus.FORBIDDEN).body(e3.getMessage()), servletResponse);
+                    .status(HttpStatus.UNAUTHORIZED).body(e3.getMessage()), servletResponse);
+            return;
+        } catch (ExpiredCredentialsException e3) {
+            logger.debug("this account credential is expired");
+            Message message = Message.builder().errorMsg("expired").build();
+            responseWrite(ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED).body(message), servletResponse);
+            return;
+        } catch (RefreshExpiredTokenException e3) {
+            logger.debug("this account credential is expired");
+            Map<String, String> dataMap = new HashMap<>();
+            dataMap.put("token", e3.getMessage());
+            Message message = Message.builder().data(dataMap).errorMsg("refreshToken").build();
+            responseWrite(ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED).body(message), servletResponse);
             return;
         } catch (UnauthorizedException e5) {
             logger.debug("this account can not access this resource");

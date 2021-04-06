@@ -26,13 +26,13 @@
 		<mysql.version>8.0.16</mysql.version>
 
 		<commons-lang.version>2.6</commons-lang.version>
-	</properties>F
+	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.usthe.sureness</groupId>
 			<artifactId>sureness-core</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>

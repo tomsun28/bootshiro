@@ -39,4 +39,9 @@ public class Account {
     @NotBlank(message = "credential can not null")
     private String credential;
 
+    /**
+     * 用户请求标识随机串
+     */
+    private String userKey;
+
 }

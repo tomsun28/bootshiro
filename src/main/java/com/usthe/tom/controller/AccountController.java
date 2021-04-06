@@ -8,6 +8,7 @@ import com.usthe.tom.service.AccountService;
 import com.usthe.sureness.util.JsonWebTokenUtil;
 import com.usthe.tom.support.log.LogExeManager;
 import com.usthe.tom.support.log.LogTaskFactory;
+import com.usthe.tom.util.AesUtil;
 import com.usthe.tom.util.CommonUtil;
 import com.usthe.tom.util.IpUtil;
 import io.swagger.annotations.Api;
@@ -40,11 +41,12 @@ public class AccountController {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    private static final String TOKEN_SPLIT = "--";
-
     @ApiOperation(value = "站内登录,签发token", notes = "适用 username|email|phone + password")
     @PostMapping("/token")
     public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account, HttpServletRequest request) {
+        String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
+        String transferKey = redisTemplate.opsForValue().get(saveKey);
+        account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
         boolean authenticatedFlag = accountService.authenticateAccount(account);
         if (!authenticatedFlag) {
             Message message = Message.builder()
