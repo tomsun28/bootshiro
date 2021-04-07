@@ -46,6 +46,10 @@ public class AccountController {
     public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account, HttpServletRequest request) {
         String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
         String transferKey = redisTemplate.opsForValue().get(saveKey);
+        if (transferKey == null) {
+            Message message = Message.builder().errorMsg("transfer-key has expired").build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
+        }
         account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
         boolean authenticatedFlag = accountService.authenticateAccount(account);
         if (!authenticatedFlag) {
@@ -93,7 +97,7 @@ public class AccountController {
     @GetMapping("/transfer/key")
     public ResponseEntity<Message> transferKey(HttpServletRequest request) {
         // 动态生成秘钥，redis存储秘钥供之后秘钥验证使用，设置有效期30秒用完即丢弃
-        String transferKey = CommonUtil.getRandomString(8);
+        String transferKey = CommonUtil.getRandomString(16);
         String userKey = CommonUtil.getRandomString(4);
         String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + userKey;
         redisTemplate.opsForValue().set(saveKey, transferKey,30, TimeUnit.SECONDS);
