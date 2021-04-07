@@ -36,7 +36,7 @@ public class ResourceController {
             }
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
-            Message message = Message.builder().errorMsg("resource already exist").build();
+            Message message = Message.builder().msg("resource already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
     }
@@ -50,7 +50,7 @@ public class ResourceController {
             }
             return ResponseEntity.ok().build();
         } else {
-            Message message = Message.builder().errorMsg("resource not exist").build();
+            Message message = Message.builder().msg("resource not exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
     }
@@ -64,7 +64,7 @@ public class ResourceController {
             }
             return ResponseEntity.ok().build();
         } else {
-            Message message = Message.builder().errorMsg("delete resource fail, please try again later").build();
+            Message message = Message.builder().msg("delete resource fail, please try again later").build();
             log.error("delete resource fail: {}", resourceId);
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(message);
         }

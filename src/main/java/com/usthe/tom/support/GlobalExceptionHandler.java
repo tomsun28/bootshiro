@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         if (log.isDebugEnabled()) {
             log.debug("[sample-tom]-[input argument not valid happen]-{}", errorMessage, exception);
         }
-        Message message = Message.builder().errorMsg(errorMessage.toString()).build();
+        Message message = Message.builder().msg(errorMessage.toString()).build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
             errorMessage = exception.getMessage();
         }
         log.warn("[sample-tom]-[database error happen]-{}", errorMessage, exception);
-        Message message = Message.builder().errorMsg(errorMessage).build();
+        Message message = Message.builder().msg(errorMessage).build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
             errorMessage = exception.getMessage();
         }
         log.info("[sample-tom]-[data status conflict warning]-{}", errorMessage, exception);
-        Message message = Message.builder().errorMsg(errorMessage).build();
+        Message message = Message.builder().msg(errorMessage).build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
             errorMessage = exception.getMessage();
         }
         log.info("[sample-tom]-[Request method not supported]-{}", errorMessage);
-        Message message = Message.builder().errorMsg(errorMessage).build();
+        Message message = Message.builder().msg(errorMessage).build();
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(message);
     }
 
@@ -106,7 +106,7 @@ public class GlobalExceptionHandler {
             errorMessage = exception.getMessage();
         }
         log.error("[sample-tom]-[unknown error happen]-{}", errorMessage, exception);
-        Message message = Message.builder().errorMsg(errorMessage).build();
+        Message message = Message.builder().msg(errorMessage).build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 

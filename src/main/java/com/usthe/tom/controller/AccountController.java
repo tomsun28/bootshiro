@@ -47,14 +47,14 @@ public class AccountController {
         String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
         String transferKey = redisTemplate.opsForValue().get(saveKey);
         if (transferKey == null) {
-            Message message = Message.builder().errorMsg("transfer-key has expired").build();
+            Message message = Message.builder().msg("transfer-key has expired").build();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
         }
         account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
         boolean authenticatedFlag = accountService.authenticateAccount(account);
         if (!authenticatedFlag) {
             Message message = Message.builder()
-                    .errorMsg("username or password not incorrect").build();
+                    .msg("username or password not incorrect").build();
             if (log.isDebugEnabled()) {
                 log.debug("account: {} authenticated fail", account);
             }
@@ -88,7 +88,7 @@ public class AccountController {
         } else {
             LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(account.getIdentifier(), IpUtil.getIpFromRequest(request), false, "注册失败"));
             Message message = Message.builder()
-                    .errorMsg("username already exist").build();
+                    .msg("username already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
     }

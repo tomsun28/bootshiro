@@ -20,7 +20,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +63,7 @@ public class SurenessFilterExample implements Filter {
             return;
         } catch (ExpiredCredentialsException e3) {
             logger.debug("this account credential is expired");
-            Message message = Message.builder().errorMsg("expired").build();
+            Message message = Message.builder().msg("expired").build();
             responseWrite(ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED).body(message), servletResponse);
             return;
@@ -72,7 +71,7 @@ public class SurenessFilterExample implements Filter {
             logger.debug("this account credential is expired");
             Map<String, String> dataMap = new HashMap<>();
             dataMap.put("token", e3.getMessage());
-            Message message = Message.builder().data(dataMap).errorMsg("refreshToken").build();
+            Message message = Message.builder().data(dataMap).msg("refreshToken").build();
             responseWrite(ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED).body(message), servletResponse);
             return;

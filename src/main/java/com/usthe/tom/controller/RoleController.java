@@ -74,7 +74,7 @@ public class RoleController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
             Message message = Message.builder()
-                    .errorMsg("role already exist").build();
+                    .msg("role already exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
     }
@@ -89,7 +89,7 @@ public class RoleController {
             return ResponseEntity.ok().build();
         } else {
             Message message = Message.builder()
-                    .errorMsg("role not exist").build();
+                    .msg("role not exist").build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
     }
@@ -104,7 +104,7 @@ public class RoleController {
             return ResponseEntity.ok().build();
         } else {
             Message message = Message.builder()
-                    .errorMsg("delete role fail, no this role here").build();
+                    .msg("delete role fail, no this role here").build();
             log.debug("delete role fail: {}", roleId);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }

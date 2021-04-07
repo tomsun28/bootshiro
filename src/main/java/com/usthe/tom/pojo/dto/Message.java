@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
  *
  * {
  *   data:{....},
- *   errorMsg: message
+ *   msg: message,
+ *   code: 3432
  * }
  * @author tomsun28
  * @date 23:48 2019/08/01
@@ -27,8 +28,13 @@ public class Message {
     private Object data;
 
     /**
-     * exception message when error happen
+     * exception message when error happen or success message
      */
-    private String errorMsg;
+    private String msg;
+
+    /**
+     * response code, not http code
+     */
+    private Integer code;
 
 }
