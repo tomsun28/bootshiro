@@ -44,13 +44,15 @@ public class AccountController {
     @ApiOperation(value = "站内登录,签发token", notes = "适用 username|email|phone + password")
     @PostMapping("/token")
     public ResponseEntity<Message> issueJwtToken(@RequestBody @Validated Account account, HttpServletRequest request) {
-        String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
-        String transferKey = redisTemplate.opsForValue().get(saveKey);
-        if (transferKey == null) {
-            Message message = Message.builder().msg("transfer-key has expired").build();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
+        if (account.getUserKey() != null) {
+            String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
+            String transferKey = redisTemplate.opsForValue().get(saveKey);
+            if (transferKey == null) {
+                Message message = Message.builder().msg("transfer-key has expired").build();
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
+            }
+            account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
         }
-        account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
         boolean authenticatedFlag = accountService.authenticateAccount(account);
         if (!authenticatedFlag) {
             Message message = Message.builder()
@@ -77,6 +79,15 @@ public class AccountController {
     @ApiOperation(value = "站内注册", notes = "适用 username|email|phone + password")
     @PostMapping("/register")
     public ResponseEntity<Message> accountRegister(@RequestBody @Validated Account account, HttpServletRequest request) {
+        if (account.getUserKey() != null) {
+            String saveKey = "tom-transfer-key-" + IpUtil.getIpFromRequest(request) + account.getUserKey();
+            String transferKey = redisTemplate.opsForValue().get(saveKey);
+            if (transferKey == null) {
+                Message message = Message.builder().msg("transfer-key has expired").build();
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
+            }
+            account.setCredential(AesUtil.aesDecode(account.getCredential(), transferKey));
+        }
         if (accountService.registerAccount(account)) {
             Map<String, String> responseData = Collections.singletonMap("success", "sign up success, login after");
             Message message = Message.builder().data(responseData).build();
