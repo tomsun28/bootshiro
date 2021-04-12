@@ -102,6 +102,7 @@ bootshiro.yaml
 
 
 ## 相关文档  
+
 --------
 
 - [前后端分离实践](https://segmentfault.com/blog/tomsun28)  
@@ -109,10 +110,13 @@ bootshiro.yaml
 - [基于shiro的改造集成真正支持restful请求](https://segmentfault.com/a/1190000014545172)   
 - [签发的用户认证token超时刷新策略](https://segmentfault.com/a/1190000014545422)  
 - [传输密码动态加密解密](https://segmentfault.com/a/1190000014544933)  
-ps(之前是写在下面的太长有点乱)  
 
 
+## 开源推荐   
 
+* **```JustAuth```** 小而全而美的第三方登录开源组件: [https://gitee.com/yadong.zhang/JustAuth](https://gitee.com/yadong.zhang/JustAuth)   
+* **```MaxKey```** 业界领先的企业级开源IAM身份管理和身份认证产品: [https://gitee.com/dromara/MaxKey](https://gitee.com/dromara/MaxKey)    
+* **```PhalApi```** 一个轻量级PHP开源接口框架: [https://www.phalapi.net/](https://www.phalapi.net/)       
 
 ## 部署  
 --------
