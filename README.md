@@ -46,19 +46,19 @@
 
 ##### ✌ 支持样例
 
-- [x] Sureness集成**Spring Boot**样例(配置文件方案) [sample-bootstrap](sample-bootstrap)
-- [x] Sureness集成**Spring Boot**样例(数据库方案) [sample-tom](sample-tom)
-- [x] Sureness集成**Quarkus**样例 [sample-quarkus](samples/quarkus-sureness)
-- [x] Sureness集成**Javalin**样例 [sample-javalin](samples/javalin-sureness)
-- [x] Sureness集成**Ktor**样例 [sample-ktor](samples/ktor-sureness)
-- [x] Sureness集成**Spring Webflux**样例 [sample-spring-webflux](samples/spring-webflux-sureness)
-- [x] Sureness集成**Micronaut**样例 [sample-micronaut](samples/micronaut-sureness)
-- [x] Sureness集成**Jfinal**样例 [sample-jfinal](samples/jfinal-sureness)
-- [x] Sureness集成**Solon**样例 [sample-solon](samples/solon-sureness)
-- [x] Sureness集成**Spring Gateway**样例 [sample-spring-gateway](samples/spring-gateway-sureness)
-- [x] Sureness集成**Zuul**样例 [sample-zuul](samples/zuul-sureness)
-- [x] Sureness使用Session样例 [sureness-session](samples/sureness-session)
-- [x] Sureness分布式缓存Session样例 [sureness-redis-session](samples/sureness-redis-session)
+- [x] Sureness集成**Spring Boot**样例(配置文件方案) [sample-bootstrap](https://gitee.com/dromara/sureness/tree/master/sample-bootstrap)
+- [x] Sureness集成**Spring Boot**样例(数据库方案) [sample-tom](https://gitee.com/dromara/sureness/tree/master/sample-tom)
+- [x] Sureness集成**Quarkus**样例 [sample-quarkus](https://gitee.com/dromara/sureness/tree/master/samples/quarkus-sureness)
+- [x] Sureness集成**Javalin**样例 [sample-javalin](https://gitee.com/dromara/sureness/tree/master/samples/javalin-sureness)
+- [x] Sureness集成**Ktor**样例 [sample-ktor](https://gitee.com/dromara/sureness/tree/master/samples/ktor-sureness)
+- [x] Sureness集成**Spring Webflux**样例 [sample-spring-webflux](https://gitee.com/dromara/sureness/tree/master/samples/spring-webflux-sureness)
+- [x] Sureness集成**Micronaut**样例 [sample-micronaut](https://gitee.com/dromara/sureness/tree/master/samples/micronaut-sureness)
+- [x] Sureness集成**Jfinal**样例 [sample-jfinal](https://gitee.com/dromara/sureness/tree/master/samples/jfinal-sureness)
+- [x] Sureness集成**Solon**样例 [sample-solon](https://gitee.com/dromara/sureness/tree/master/samples/solon-sureness)
+- [x] Sureness集成**Spring Gateway**样例 [sample-spring-gateway](https://gitee.com/dromara/sureness/tree/master/samples/spring-gateway-sureness)
+- [x] Sureness集成**Zuul**样例 [sample-zuul](https://gitee.com/dromara/sureness/tree/master/samples/zuul-sureness)
+- [x] Sureness使用Session样例 [sureness-session](https://gitee.com/dromara/sureness/tree/master/samples/sureness-session)
+- [x] Sureness分布式缓存Session样例 [sureness-redis-session](https://gitee.com/dromara/sureness/tree/master/samples/sureness-redis-session)
 - [x] More samples todo
 
 
