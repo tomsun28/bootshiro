@@ -1,14 +1,23 @@
+自荐下我们新的全职开源项目  **[HertzBeat赫兹节拍](https://gitee.com/usthe/hertzbeat)** - 易用友好的高性能监控告警系统。  
+网站监测，PING连通性，端口可用性，数据库监控，API监控，自定义监控，阈值告警，告警通知。
+
+**代码仓库: [GITHUB](https://github.com/dromara/sureness) | [GITEE](https://gitee.com/usthe/hertzbeat)**   
+**官网: [hertzbeat.com](https://hertzBeat.com) | [tancloud.cn](https://tancloud.cn)**  
+**[在线使用](https://console.tancloud.cn)** https://console.tancloud.cn
+
+欢迎使用，点赞，推荐，全职开源不易，灰常感谢🙏。
+
+----   
+
+## Bootshiro   
+
 **此项目正在由sureness替换apache shiro重构进行中，若您需使用apache shiro版本，请见[shiro分支](https://gitee.com/tomsun28/bootshiro/tree/shiro/)**
 
-#### 推荐一个面向REST API的高性能认证鉴权框架 - Sureness    
+#### 面向REST API的高性能认证鉴权框架 - Sureness    
 
 [Sureness官网](https://su.usthe.com)   
 [Gitee仓库](https://gitee.com/dromara/sureness)   
-[Github仓库](https://github.com/dromara/sureness)    
-
-欢迎对 [Sureness](https://github.com/dromara/sureness) 了解使用，开源不易，觉得不错给个star鼓励哦！    
-
-也欢迎对Sureness有兴趣的朋友一起贡献开发，QQ交流群：390083213    
+[Github仓库](https://github.com/dromara/sureness)
 
 #### 📫 背景
 
