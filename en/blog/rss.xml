@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>TANCLOUD探云 Blog</title>
+        <link>https://hertzbeat.com/en/blog</link>
+        <description>TANCLOUD探云 Blog</description>
+        <lastBuildDate>Sun, 30 Jan 2022 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <copyright>Copyright © 2022 TANCLOUD, Inc.</copyright>
+        <item>
+            <title><![CDATA[开源监控系统HertzBeat]]></title>
+            <link>https://hertzbeat.com/en/blog/2022/01/30/hertz-beat</link>
+            <guid>/2022/01/30/hertz-beat</guid>
+            <pubDate>Sun, 30 Jan 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[易用友好的高性能监控告警系统。]]></description>
+            <content:encoded><![CDATA[<blockquote><p>易用友好的高性能监控告警系统。</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/web-monitor.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/ping-connect.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/port-available.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/database-monitor.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/custom-monitor.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/threshold.svg" alt="tan-cloud"/>
+<img src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/badge/alert.svg" alt="tan-cloud"/></p><h2>📫 前言</h2><blockquote><p>毕业后投入很多业余时间也做了一些开源项目,<a href="https://github.com/dromara/sureness">Sureness</a> <a href="https://gitee.com/tomsun28/bootshiro">Bootshiro</a> <a href="https://github.com/usthe/issues-translate-action">Issues-translate-action</a> ,
+当时上班有空就回答网友问题，下班回家写开源代码，远程帮人看问题，还总感觉时间不够用，当时想如果不去上班能做自己热爱的该多好。<br/>
+<!-- -->年轻就要折腾，何况还是自己很想做的。于是乎，21年底我放弃激励裸辞开始全职开源了(这里感谢老婆大人的全力支持)，也是第一次全职创业。
+自己在APM领域做了多年，当然这次创业加开源的方向也就是老本行APM监控系统，我们开发一个支持多种监控指标(更多监控类型指标正在适配中)，拥有自定义监控，支持阈值告警通知等功能，面向开发者友好的开源监控项目-HertzBeat赫兹跳动。
+想到很多开发者和团队拥有云上资源，可能只需要使用监控服务而并不想部署监控系统，我们也提供了可以直接登陆使用的SAAS云监控版本-<a href="https://console.tancloud.cn">TanCloud探云</a>。<br/>
+<!-- -->希望大家多多支持点赞，非常感谢。</p></blockquote><h2>🎡 <font color="green">介绍</font></h2><blockquote><p><a href="https://github.com/dromara/sureness">HertzBeat赫兹跳动</a> 是由<a href="https://tancloud.cn">TanCloud</a>开源的一个支持网站，API，PING，端口，数据库等监控类型，拥有易用友好的可视化操作界面的开源监控告警项目。<br/>
+<!-- -->当然，我们也提供了对应的<a href="https://console.tancloud.cn">SAAS云监控版本</a>，中小团队和个人无需再为了监控自己的网站资源，而去部署一套繁琐的监控系统，<a href="https://console.tancloud.cn">登陆即可免费开始</a>监控之旅。<br/>
+<!-- -->HertzBeat 支持自定义监控，只用通过配置YML文件我们就可以自定义需要的监控类型和指标，来满足常见的个性化需求。
+HertzBeat 模块化，<code>manager, collector, scheduler, warehouse, alerter</code> 各个模块解耦合，方便理解与定制开发。<br/>
+<!-- -->HertzBeat 支持更自由化的告警配置(计算表达式)，支持告警通知，告警模版<br/>
+<!-- -->欢迎登陆 HertzBeat 的 <a href="https://console.tancloud.cn">云环境TanCloud</a> 试用发现更多。<br/>
+<!-- -->我们正在快速迭代中，欢迎参与加入共建项目开源生态。</p></blockquote><blockquote><p><code>HertzBeat</code>的多类型支持，易扩展，低耦合，希望能帮助开发者和中小团队快速搭建自有监控系统。</p></blockquote><h2>🥐 模块</h2><ul><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/manager">manager</a></strong> 提供监控管理,系统管理基础服务<blockquote><p>提供对监控的管理，监控应用配置的管理，系统用户租户后台管理等。</p></blockquote></li><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/collector">collector</a></strong> 提供监控数据采集服务<blockquote><p>使用通用协议远程采集获取对端指标数据。</p></blockquote></li><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/scheduler">scheduler</a></strong> 提供监控任务调度服务<blockquote><p>采集任务管理，一次性任务和周期性任务的调度分发。</p></blockquote></li><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/warehouse">warehouse</a></strong> 提供监控数据仓储服务<blockquote><p>采集指标结果数据管理，数据落盘，查询，计算统计。</p></blockquote></li><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/alerter">alerter</a></strong> 提供告警服务<blockquote><p>告警计算触发，监控状态联动，告警配置，告警通知。</p></blockquote></li><li><strong><a href="https://github.com/dromara/hertzbeat/tree/master/web-app">web-app</a></strong> 提供可视化控制台页面<blockquote><p>监控告警系统可视化控制台前端(angular+ts+zorro)</p></blockquote></li></ul><p><img src="https://tancloud.gd2.qingstor.com/img/docs/hertzbeat-stru.svg" alt="hertzBeat"/></p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>
