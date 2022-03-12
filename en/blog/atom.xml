@@ -2,14 +2,33 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hertzbeat.com/en/blog</id>
     <title>TANCLOUD探云 Blog</title>
-    <updated>2022-02-28T00:00:00.000Z</updated>
+    <updated>2022-03-10T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hertzbeat.com/en/blog"/>
     <subtitle>TANCLOUD探云 Blog</subtitle>
     <icon>https://hertzbeat.com/en/https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/tancloud-logo.svg</icon>
     <rights>Copyright © 2022 TANCLOUD, Inc.</rights>
     <entry>
-        <title type="html"><![CDATA[HertzBeat赫兹节拍 v1.0.beta.4 发布，易用友好的高性能监控告警系统]]></title>
+        <title type="html"><![CDATA[HertzBeat赫兹节拍 v1.0.beta.5 发布，易用友好的监控告警系统]]></title>
+        <id>/2022/03/10/hertzbeat-v1.0-beta.5</id>
+        <link href="https://hertzbeat.com/en/blog/2022/03/10/hertzbeat-v1.0-beta.5"/>
+        <updated>2022-03-10T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[HertzBeat赫兹跳动是由Dromara孵化，TanCloud开源的一个支持网站，API，PING，端口，数据库，全站等监控类型，支持阈值告警，告警通知(邮箱，webhook，钉钉，企业微信，飞书机器人)，拥有易用友好的可视化操作界面的开源监控告警项目。]]></summary>
+        <content type="html"><![CDATA[<p>HertzBeat赫兹跳动是由Dromara孵化，TanCloud开源的一个支持网站，API，PING，端口，数据库，全站等监控类型，支持阈值告警，告警通知(邮箱，webhook，钉钉，企业微信，飞书机器人)，拥有易用友好的可视化操作界面的开源监控告警项目。</p><p>官网:hertzbeat.com | tancloud.cn</p><p>此升级版本包含了dashboard仪表盘重新设计，阈值表达式支持多指标，丰富了数据库监控类型，新增mariaDB和postgreSQL数据库的监控，控制台页面新增帮助文档等，欢迎使用。   </p><p>版本特性：</p><ol><li>feature 支持mariadb监控类型 (#11)</li><li>feature dashboard仪表盘重构 (#13)</li><li>feature 告警配置支持多指标集合 !10 由 @pengliren 提出 thanks</li><li>feature 支持postgresql数据库的监控 (#16)</li><li>新增监控默认开启探测.</li><li>新增mysql采集指标.</li><li>新增监控大类别，支持自定义监控页面菜单自动渲染</li><li>操作页面新增帮助链接，完善自定义和阈值帮助文档</li><li>feat: 模拟浏览器设置为chrome浏览器 #Issues 14 由@learning-code 贡献 thanks</li></ol><p>BUG修复</p><ol><li>登陆改登录，傻傻分不清.</li><li>文档新增常见问题，采集器http参数优化校验.</li><li>采集器调度第0优先级失败则取消后续的优化.</li><li>bugfix website monitor path Illegal character in path at index</li><li>bugfix深色主题适配问题 (#10)</li><li>fix国际化异常 放开hierarchy接口认证保护</li></ol><p>欢迎在线试用 <a href="https://console.tancloud.cn">https://console.tancloud.cn</a></p><hr/><blockquote><p><a href="https://github.com/dromara/hertzbeat">HertzBeat赫兹跳动</a> 是由<a href="https://dromara.org">Dromara</a>孵化，<a href="https://tancloud.cn">TanCloud</a>开源的一个支持网站，API，PING，端口，数据库等监控类型，拥有易用友好的可视化操作界面的开源监控告警项目。<br/>
+<!-- -->我们也提供了对应的 <strong><a href="https://console.tancloud.cn">SAAS版本监控云</a></strong>，中小团队和个人无需再为了监控自己的网站资源，而去部署一套繁琐的监控系统，<strong><a href="https://console.tancloud.cn">登录即可免费开始</a></strong>。<br/>
+<!-- -->HertzBeat 支持<a href="https://hertzbeat.com/docs/advanced/extend-point">自定义监控</a> ,只用通过配置YML文件我们就可以自定义需要的监控类型和指标，来满足常见的个性化需求。<br/>
+<!-- -->HertzBeat 模块化，<code>manager, collector, scheduler, warehouse, alerter</code> 各个模块解耦合，方便理解与定制开发。<br/>
+<!-- -->HertzBeat 支持更自由化的告警配置(计算表达式)，支持告警通知，告警模版，邮件钉钉微信飞书等及时通知送达<br/>
+<!-- -->欢迎登录 HertzBeat 的 <a href="https://console.tancloud.cn">云环境TanCloud</a> 试用发现更多。<br/>
+<!-- -->我们正在快速迭代中，欢迎参与加入一起共建项目开源生态。</p></blockquote><blockquote><p><code>HertzBeat</code>的多类型支持，易扩展，低耦合，希望能帮助开发者和中小团队快速搭建自有监控系统。</p></blockquote><p>老铁们可以通过演示视频来直观了解功能： <a href="https://www.bilibili.com/video/BV1Vi4y1f7i8">https://www.bilibili.com/video/BV1Vi4y1f7i8</a></p><h5>欢迎联系交流哦</h5><p><strong>微信交流群</strong>   </p><p>加微信号 tan-cloud 或 扫描下面账号二维码拉进微信群。   </p><img alt="tan-cloud" src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/docs/help/tan-cloud-wechat.jpg" width="200"/><p><strong>QQ交流群</strong>  </p><p>加QQ群号 718618151 或 扫描下面的群二维码进群, 验证信息: tancloud</p><img alt="tan-cloud" src="https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/docs/help/qq-qr.jpg" width="200"/><p><strong>仓库地址</strong>      </p><p><a href="https://github.com/dromara/hertzbeat">Github</a> <a href="https://github.com/dromara/hertzbeat">https://github.com/dromara/hertzbeat</a><br/>
+<a href="https://gitee.com/dromara/hertzbeat">Gitee</a> <a href="https://gitee.com/dromara/hertzbeat">https://gitee.com/dromara/hertzbeat</a>    </p><p>看到这里不妨给个Star哦，灰常感谢，弯腰!!</p>]]></content>
+        <author>
+            <name>tom</name>
+            <uri>https://github.com/tomsun28</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HertzBeat赫兹节拍 v1.0.beta.4 发布，易用友好的监控告警系统]]></title>
         <id>/2022/02/28/hertzbeat-v1.0-beta.4</id>
         <link href="https://hertzbeat.com/en/blog/2022/02/28/hertzbeat-v1.0-beta.4"/>
         <updated>2022-02-28T00:00:00.000Z</updated>
