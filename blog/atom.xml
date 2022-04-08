@@ -2,12 +2,34 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hertzbeat.com/blog</id>
     <title>TANCLOUD探云 Blog</title>
-    <updated>2022-03-20T00:00:00.000Z</updated>
+    <updated>2022-04-08T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hertzbeat.com/blog"/>
     <subtitle>TANCLOUD探云 Blog</subtitle>
     <icon>https://hertzbeat.com/https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/tancloud-logo.svg</icon>
     <rights>Copyright © 2022 TANCLOUD, Inc.</rights>
+    <entry>
+        <title type="html"><![CDATA[HertzBeat入GVP啦，并 v1.0.beta.7 发布，易用友好的云监控系统]]></title>
+        <id>/2022/04/08/hertzbeat-v1.0-beta.7</id>
+        <link href="https://hertzbeat.com/blog/2022/04/08/hertzbeat-v1.0-beta.7"/>
+        <updated>2022-04-08T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[HertzBeat赫兹跳动 是一个由Dromara孵化的支持网站，API，PING，端口，数据库，全站，操作系统等监控类型，支持阈值告警，告警通知(邮箱，webhook，钉钉，企业微信，飞书机器人)，拥有易用友好的可视化操作界面的开源监控告警项目。]]></summary>
+        <content type="html"><![CDATA[<p>HertzBeat赫兹跳动 是一个由Dromara孵化的支持网站，API，PING，端口，数据库，全站，操作系统等监控类型，支持阈值告警，告警通知(邮箱，webhook，钉钉，企业微信，飞书机器人)，拥有易用友好的可视化操作界面的开源监控告警项目。</p><p>很高兴Hertzbeat被评定为GVP - Gitee最有价值开源项目！</p><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8899bc4e836943dba2ec9efeec4ff629~tplv-k3u1fbpfcp-watermark.image?" alt="截屏2022-04-08 09.14.44.png"/></p><p>老哥们帮忙在Gitee STAR起来，冲！<a href="https://gitee.com/dromara/hertzbeat">https://gitee.com/dromara/hertzbeat</a></p><p>官网:hertzbeat.com | tancloud.cn</p><p>然后来说说最新的版本，这个版本看这么多feature，其实简单来说主要是这几个</p><p>支持了ORACLE数据库的监控，包括ORACLE的基本信息，表空间，连接数，TPS，QPS等指标</p><p>支持了LINUX的CPU利用率，内存利用率，磁盘占用相关指标，使LINUX监控贴合实际业务</p><p>还有前端参数支持了KEY-VALUE，以后我们就可以在页面上配置HTTP Headers等类似参数了，还有就是参数配置那优化改版，把非常用告警参数隐藏起来了，稍微好看些，然后支持了windows下bat启动脚本，更多的就是稳定性的提升和一些其它的小修复小需求啦！</p><p>版本特性：</p><ol><li>feature 支持oracle数据库监控类型-xgf 由 @gf-8 贡献 thanks</li><li>feature oracle监控支持tablespace,连接数,qps,tps等指标</li><li>feature linux监控支持设置超时时间 (#49)</li><li>feature 检测网站SSL证书是否过期 (#50) 由 @weihongbin 提出 thanks</li><li>feature 页面配置参数支持KEY-VALUE数组(#57)</li><li>feature API和网站监控支持页面配置Headers和Params (#58)(#59)</li><li>feature API和网站监控支持页面配置 basic auth, digest auth (#60)</li><li>feature http 端口跟随SSL是否启用变更443或80 (#61)</li><li>feature 修改默认超时时间3000毫秒为6000毫秒 (#55)</li><li>feature:make tdengine optional, not required (#62)</li><li>feature:support win bat service (#65)</li><li>feature:support hide advanced params define (#68)</li><li>feature:enable auto redirect when 301 302 http code (#69)</li><li>feature:only collect available metrics when detect (#70)</li><li>feature:<!-- -->[website api]<!-- -->monitor support keyword match (#72)</li><li>feature:support linux cpu usage,memory usage,disk free (#76)</li></ol><p>BUG修复</p><ol><li>添加sqlserver关联文档，fix connection指标入库tdengine失败 (#41)</li><li>使用docker部署TDengine，开放tcp访问端口!16 由 @老姜bei 贡献 thanks</li><li>补充sureness配置文档 避免误配导致权限异常</li><li>bugfix:monitors always timeout alert (#67)</li><li>code format and optimization 由 @学习代码的小白 贡献 thanks</li><li>bugfix: remove oracle field - database_type due 11g not support 由 @syongaaa 贡献 thanks</li><li>bugfix:fix linux interface metrics no instance (#75)</li></ol><p>欢迎在线试用 <a href="https://console.tancloud.cn">https://console.tancloud.cn</a>.</p><hr/><blockquote><p><a href="https://github.com/dromara/hertzbeat">HertzBeat赫兹跳动</a> 是一个支持网站，API，PING，端口，数据库，操作系统等监控类型，拥有易用友好的可视化操作界面的开源监控告警项目。<br/>
+<!-- -->我们也提供了对应的 <strong><a href="https://console.tancloud.cn">SAAS版本监控云</a></strong>，中小团队和个人无需再为了监控自己的网站资源，而去部署一套繁琐的监控系统，<strong><a href="https://console.tancloud.cn">登录即可免费开始</a></strong>。<br/>
+<!-- -->HertzBeat 支持<a href="https://hertzbeat.com/docs/advanced/extend-point">自定义监控</a> ,只用通过配置YML文件我们就可以自定义需要的监控类型和指标，来满足常见的个性化需求。<br/>
+<!-- -->HertzBeat 模块化，<code>manager, collector, scheduler, warehouse, alerter</code> 各个模块解耦合，方便理解与定制开发。<br/>
+<!-- -->HertzBeat 支持更自由化的告警配置(计算表达式)，支持告警通知，告警模版，邮件钉钉微信飞书等及时通知送达<br/>
+<!-- -->欢迎登录 HertzBeat 的 <a href="https://console.tancloud.cn">云环境TanCloud</a> 试用发现更多。<br/>
+<!-- -->我们正在快速迭代中，欢迎参与加入一起共建项目开源生态。</p></blockquote><blockquote><p><code>HertzBeat</code>的多类型支持，易扩展，低耦合，希望能帮助开发者和中小团队快速搭建自有监控系统。</p></blockquote><p>老铁们可以通过演示视频来直观了解功能： <a href="https://www.bilibili.com/video/BV1DY4y1i7ts">https://www.bilibili.com/video/BV1DY4y1i7ts</a></p><p>欢迎在线试用 <a href="https://gitee.com/link?target=https%3A%2F%2Fconsole.tancloud.cn">https://console.tancloud.cn</a></p><p>优化后的参数输入界面:
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c4b07908ba5a4b50a094a02dde6a38f3~tplv-k3u1fbpfcp-zoom-1.image" alt="输入图片说明" title="截屏2022-04-07 21.32.52.png"/></p><p>Linux新增指标:
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/92828224f8cd4cac84245aa4217b29e7~tplv-k3u1fbpfcp-zoom-1.image" alt="输入图片说明" title="截屏2022-04-07 17.50.22.png"/></p><p>ORACLE监控:<br/>
+<!-- -->哦豁！oracle环境不在了，之前没有截图，先脑补一张！</p><p><strong>仓库地址</strong></p><p><a href="https://github.com/dromara/hertzbeat">Github</a> <a href="https://github.com/dromara/hertzbeat">https://github.com/dromara/hertzbeat</a><br/>
+<a href="https://gitee.com/dromara/hertzbeat">Gitee</a> <a href="https://gitee.com/dromara/hertzbeat">https://gitee.com/dromara/hertzbeat</a></p><p>看到这里不妨给个Star支持下哦，灰常感谢，弯腰!!</p>]]></content>
+        <author>
+            <name>tom</name>
+            <uri>https://github.com/tomsun28</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HertzBeat赫兹节拍 v1.0.beta.6 发布，Linux监控来啦]]></title>
         <id>/2022/03/20/hertzbeat-v1.0-beta.6</id>
