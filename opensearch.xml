@@ -4,7 +4,7 @@
   <ShortName>TANCLOUD探云</ShortName>
   <Description>Search TANCLOUD探云</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://hertzbeat.com/https://cdn.jsdelivr.net/gh/dromara/hertzbeat@gh-pages/img/tancloud-logo.svg</Image>
+  <Image width="16" height="16" type="image/x-icon">https://hertzbeat.com/img/tancloud-logo.svg</Image>
   <Url type="text/html" method="get" template="https://hertzbeat.com/search?q={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="https://hertzbeat.com/opensearch.xml" />
   <moz:SearchForm>https://hertzbeat.com/</moz:SearchForm>
